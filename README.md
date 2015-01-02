@@ -6,6 +6,8 @@ A collection of ZAP scripts provided by the community - pull requests very welco
 For more information on ZAP scripts see:
 * https://code.google.com/p/zaproxy/wiki/HelpAddonsScriptsScripts
 * https://code.google.com/p/zaproxy/wiki/InternalScripting
+ 
+To discuss any aspect of ZAP scripting please join the zaproxy-scripts group: http://groups.google.com/group/zaproxy-scripts
 
 Please ensure that scripts submitted have the correct extension for the language they are written in.
 
