@@ -16,10 +16,13 @@ function scan(ps, msg, src)
 
     if (msg) 
 	{
-	  if (headers = msg.getResponseHeader().getHeaders("X-Powered-By"));
+		headers = msg.getResponseHeader().getHeaders("X-Powered-By")
+		
+	  if (headers != null)
 		{
+		
        	 ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', '', alertSolution,headers, cweId, wascId, msg);
-		}     
-	}
+		}  
+	 }
     
 }
