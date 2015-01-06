@@ -1,4 +1,7 @@
 // Email finder by freakyclown@gmail.com
+// 20150106 - Updated by kingthorin+owaspzap@gmail.com to handle addresses (such as gmail) with alias portion:
+//     https://support.google.com/mail/answer/12096?hl=en
+//     https://regex101.com/r/sH4vC0/2
 
 
 
@@ -12,7 +15,7 @@ function scan(ps, msg, src) {
     cweId = 0
     wascId = 0
     // regex must appear within /( and )/g
-    re = /([a-zA-Z0-9.#?$*_-]+@[a-zA-Z0-9.#?$*_-]+.[a-zA-Z0-9.-]+)/g
+    re = /([a-zA-Z0-9.#?$*_\+-]+@[a-zA-Z0-9.#?$*_-]+.[a-zA-Z0-9.-]+)/g
 
     url = msg.getRequestHeader().getURI().toString();
 
