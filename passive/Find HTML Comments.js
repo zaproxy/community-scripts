@@ -36,7 +36,7 @@ application.'
 	cweId=615 // https://cwe.mitre.org/data/definitions/615.html
 	wascId=13 // http://projects.webappsec.org/w/page/13246936/Information%20Leakage
 
-	re = /(\<![\s]*--[\-!@#$%^&*:;ÂºÂª.,"'(){}\w\s\/\\[\]]*--[\s]*\>)/g //comments RegEx global match
+	re = /(\<![\s]*--[\-!@#$%^&*:;ºª.,"'(){}\w\s\/\\[\]]*--[\s]*\>)/g //comments RegEx global match
 
 	url = msg.getRequestHeader().getURI().toString();
 	
