@@ -17,7 +17,14 @@ function scan(ps, msg, src) {
     // you can tell the user in the console we are doing stuff by uncommenting the line below
     //println('Finding IPs Under: ' + url);
 
-    if (msg) {
+    // lets check its not one of the files types that are never likely to contain stuff, like pngs and jpegs
+    contenttype = msg.getResponseHeader().getHeader("Content-Type")
+    unwantedfiletypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash']
+	
+	if (unwantedfiletypes.indexOf(""+contenttype) >= 0) {
+		// if we find one of the unwanted headers quit this scan, this saves time and reduces false positives
+    		return
+	}else{
         body = msg.getResponseBody().toString()
 
         if (re.test(body)) {
