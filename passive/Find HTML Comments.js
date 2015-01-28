@@ -35,7 +35,7 @@ application.'
 
 	// this is a rough regular expression to find HTML comments
 	// regex needs to be inside /( and )/g to work
-    re = /(\<![\s]*--[-!@#$%^&*:;"'(){}\w\s\/\\[\]]*--[\s]*\>)/g
+    re = /(\<![\s]*--[\-!@#$%^&*:;ÂºÂª.,"'(){}\w\s\/\\[\]]*--[\s]*\>)/g
 
     // lets check its not one of the files types that are never likely to contain stuff, like pngs and jpegs
     contenttype = msg.getResponseHeader().getHeader("Content-Type")
