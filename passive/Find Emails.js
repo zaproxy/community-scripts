@@ -2,7 +2,9 @@
 // Based on:
 // PassiveHTMLCommentFinder.js
 // kingthorin+owaspzap@gmail.com
-
+// 20150106 - Updated by kingthorin+owaspzap@gmail.com to handle addresses (such as gmail) with alias portion:
+//     https://support.google.com/mail/answer/12096?hl=en
+//     https://regex101.com/r/sH4vC0/2
 
 function scan(ps, msg, src) {
     // first lets set up some details incase we find an email, these will populate the alert later
@@ -16,7 +18,7 @@ function scan(ps, msg, src) {
 
 	// lets build a regular expression that can find email addresses
 	// the regex must appear within /( and )/g
-    re = /([a-zA-Z0-9.#?$*_-]+@[a-zA-Z0-9.#?$*_-]+.[a-zA-Z0-9.-]+)/g
+    re = /([a-zA-Z0-9.#?$*_\+-]+@[a-zA-Z0-9.#?$*_-]+.[a-zA-Z0-9.-]+)/g
 
 	// we need to set the url variable to the request or we cant track the alert later
     url = msg.getRequestHeader().getURI().toString();
