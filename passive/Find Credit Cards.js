@@ -51,11 +51,33 @@ function scan(ps, msg, src)
 			var foundCard = []
 				while (comm = cards[i].exec(body))
 				{
-					foundCard.push(comm[0]);
+					// perform luhn check this checks to make sure its a valid cc number!
+					if (luhncheck(comm[0]) ==0){
+						foundCard.push(comm[0]);}
 				}
 			ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[0], alertDesc[0], url, '', '', foundCard.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 			}
       	}
 
 	}
+}
+function luhncheck(value){
+	// this function is based on work done by DiegoSalazar on github (https://gist.github.com/DiegoSalazar)
+	var nCheck = 0, nDigit = 0, bEven = false;
+	value = value.replace(/\D/g, "");
+ 
+	for (var n = value.length - 1; n >= 0; n--) {
+		var cDigit = value.charAt(n),
+			  nDigit = parseInt(cDigit, 10);
+ 
+		if (bEven) {
+			if ((nDigit *= 2) > 9) nDigit -= 9;
+		}
+ 
+		nCheck += nDigit;
+		bEven = !bEven;
+	}
+	
+	// debug here print ("value: " + value + "  lunh: " +nCheck % 10);
+	return (nCheck % 10);
 }
