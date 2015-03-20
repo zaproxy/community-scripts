@@ -4,7 +4,7 @@
 function scan(ps, msg, src) {
     url = msg.getRequestHeader().getURI().toString();
     body = msg.getResponseHeader().toString()
-    alertRisk = [0, 1, 2, 3] //1=informational, 2=low, 3=medium, 4=high
+    alertRisk = [0, 1, 2, 3] //0=informational, 1=low, 2=medium, 3=high
     alertReliability = [0, 1, 2, 3, 4] //0=fp,1=low,2=medium,3=high,4=confirmed
     alertTitle = ["Strict Transport Security(STS) Header Not Set (script)",
         "Content-Security-Policy (script)",
@@ -51,7 +51,7 @@ function scan(ps, msg, src) {
     re_nosniff = /(X\-Content\-Type\-Options\:.*nosniff.*)/g
     if (!(re_nosniff.test(body))) //if its false
     {
-        ps.raiseAlert(alertRisk[1], alertReliability[3], alertTitle[3], alertDesc[3], url, '', '', '', alertSolution[3], '', cweId[0], wascId[0], msg);
+        ps.raiseAlert(alertRisk[2], alertReliability[2], alertTitle[3], alertDesc[3], url, '', '', '', alertSolution[3], '', cweId[0], wascId[0], msg);
     }
 
     // test xcontent no sniff protection
