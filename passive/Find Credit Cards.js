@@ -34,7 +34,7 @@ function scan(ps, msg, src)
 	// here we are going to check the content type and skip over things that
 	// wont contain credit cards like jpegs and such like
      contenttype = msg.getResponseHeader().getHeader("Content-Type")
-	unwantedfiletypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash']
+	unwantedfiletypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash', 'application/pdf']
 	
 	if (unwantedfiletypes.indexOf(""+contenttype) >= 0) 
 	{
