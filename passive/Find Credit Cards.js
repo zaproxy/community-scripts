@@ -7,9 +7,9 @@ function scan(ps, msg, src)
     body = msg.getResponseBody().toString()
     alertRisk = [0,1,2,3] //1=informational, 2=low, 3=medium, 4=high
     alertReliability = [0,1,2,3,4] //0=fp,1=low,2=medium,3=high,4=confirmed
-    alertTitle = ["Credit Card Number Disclosed (script)",
+    alertTitle = ["Credit Card Number(s) Disclosed (script)",
 		  ""]
-    alertDesc = ["A Credit Card number was discovered.",
+    alertDesc = ["Credit Card number(s) was discovered.",
 		""]
     alertSolution = ["why are you showing Credit and debit card numbers?",
 		    ""]
@@ -55,8 +55,10 @@ function scan(ps, msg, src)
 					if (luhncheck(comm[0]) ==0){
 						foundCard.push(comm[0]);}
 				}
-			ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[0], alertDesc[0], url, '', '', foundCard.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+			if (foundCard.length !=0){
+			ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[0], alertDesc[0], url, '', '', foundCard.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);}
 			}
+
       	}
 
 	}
