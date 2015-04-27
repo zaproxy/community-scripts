@@ -9,7 +9,7 @@
 
 // References:
 // RegEx Testing: http://regex101.com/r/tX1hS1
-// Initial discussion: https://groups.google.com/forum/#!topic/zaproxy-develop/t-1-yI7iErw\
+// Initial discussion: https://groups.google.com/forum/#!topic/zaproxy-develop/t-1-yI7iErw
 // RegEx adapted from work by Stephen Ostermiller: http://ostermiller.org/findhtmlcomment.html
 // Tweak to RegEx provided by thc202
 
@@ -19,7 +19,11 @@
 //		Therefore if you browser is caching you may not see something you expect to.
 
 function scan(ps, msg, src) {
-	// lets set up some details we will need for alerts later if we find some comments
+    // Both can be true, just know that you'll see duplication.
+    RESULT_PER_FINDING = new Boolean(0) // If you want to see results on a per comment basis (i.e.: A single URL may be listed more than once), set this to true (1)
+    RESULT_PER_URL = new Boolean(1) // If you want to see results on a per URL basis (i.e.: all comments for a single URL will be grouped together), set this to true (1)
+	
+    // lets set up some details we will need for alerts later if we find some comments
     alertRisk = 0
     alertReliability = 2
     alertTitle = 'Information Exposure Through HTML Comments (script)'
@@ -49,10 +53,19 @@ application.'
         if (re.test(body)) {
             re.lastIndex = 0
             var foundComments = []
+            var counter=0
             while (comm = re.exec(body)) {
+                if (RESULT_PER_FINDING == true) {
+                    counter = counter+1;
+                    //fakeparam+counter gives us parameter differientiation per comment alert (RESULT_PER_FINDING)
+                    ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, 'fakeparam'+counter, '', comm[0], alertSolution,'' , cweId, wascId, msg);
+                }
                 foundComments.push(comm[0]);
             }
-             ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundComments.toString(), alertSolution,'' , cweId, wascId, msg);
+            if (RESULT_PER_URL == true) 
+            {
+                ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundComments.toString(), alertSolution,'' , cweId, wascId, msg);
+            }
         }
     }
 }
