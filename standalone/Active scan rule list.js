@@ -10,6 +10,7 @@ println('\n');
 
 for (var i=0; i < plugins.length; i++) {
   try {
+    println ('Plugin ID: ' + plugins[i].getId());
     println ('Name: ' + plugins[i].getName());
     println ('Desc: ' + plugins[i].getDescription());
     println ('Risk: ' + plugins[i].getRisk());
