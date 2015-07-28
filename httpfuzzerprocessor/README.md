@@ -1,4 +1,4 @@
 HTTP Fuzzer Processor scripts
 =============================
 
-TBA 
+Scripts that can control the HTTP fuzzer and manage its results.

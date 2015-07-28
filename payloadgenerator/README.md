@@ -1,4 +1,4 @@
 Payload Generator scripts
 =========================
 
-TBA 
+Scripts that can generate payloads to be used in fuzzer.
