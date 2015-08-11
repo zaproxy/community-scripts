@@ -5,7 +5,7 @@
 
 function invokeWith(msg) {
 	string = "curl -i -s -k -X  '"+msg.getRequestHeader().getMethod()+"'  \\\n";
-	header = msg.getRequestHeader().toString();
+	header = msg.getRequestHeader().getHeadersAsString();
 	header = header.split(msg.getRequestHeader().getLineDelimiter());
 	for(i=1;i<header.length;i++){
 		//blacklisting Host (other blacklisting should also specify here
@@ -14,7 +14,7 @@ function invokeWith(msg) {
 			string += " -H '"+header[i].trim()+"' ";
 	}
 	string += " \\\n";
-	body = msg.getRequestBody().toString().trim();
+	body = msg.getRequestBody().toString();
 	if(body.length() != 0){
 		string += "--data-binary $'"+addSlashes(body)+"' \\\n";
 	}
