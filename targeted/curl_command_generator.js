@@ -1,14 +1,17 @@
-//it will generate and copy curl commands based on the request
+//it will generate and copy curl command based on the request
 //released under the Apache v2.0 licence.
 //You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
-//auther:@haseebeqx
+//author:@haseebeqx
 
 function invokeWith(msg) {
-	string = "curl -i -s -k -X  '"+msg.getRequestHeader().getMethod().toString()+"'  \\\n";
+	string = "curl -i -s -k -X  '"+msg.getRequestHeader().getMethod()+"'  \\\n";
 	header = msg.getRequestHeader().toString();
-	header = header.split('\n');
+	header = header.split(msg.getRequestHeader().getLineDelimiter());
 	for(i=1;i<header.length;i++){
-		string += " -H '"+header[i].trim()+"' ";
+		//blacklisting Host (other blacklisting should also specify here
+		keyval = header[i].split(":");
+		if(keyval[0].trim() != "Host")
+			string += " -H '"+header[i].trim()+"' ";
 	}
 	string += " \\\n";
 	body = msg.getRequestBody().toString().trim();
