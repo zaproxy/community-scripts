@@ -3,9 +3,10 @@
 
 function invokeWith(msg) {
 
-		headers = msg.getResponseHeader().getHeader("Server")
+		header = msg.getResponseHeader().getHeader("Server")
+		if (header != null) {
 		org.zaproxy.zap.utils.DesktopUtils.openUrlInBrowser(
-		"http://www.cvedetails.com/google-search-results.php?q=" + encodeURIComponent(headers) + "&sa=Search");
-
-    
+		"http://www.cvedetails.com/google-search-results.php?q=" + encodeURIComponent(header) + "&sa=Search");
+		}
+		
 }
