@@ -20,6 +20,7 @@ function invokeWith(msg) {
 		else
 			string += "\n<form action=\""+ msg.getRequestHeader().getURI().toString() +"\" id=\"formid\" method=\"post\">";
 	}
+	if(body.length()!=0)
 	if(!isJson(body)){	
 	if(ismultipart(msg.getRequestHeader())){
 		type 	=  msg.getRequestHeader().getHeader(org.parosproxy.paros.network.HttpRequestHeader.CONTENT_TYPE);
@@ -38,14 +39,13 @@ function invokeWith(msg) {
 				if(j[ii].length() == 0) //find a blank line
 					break;
 			}
-			if(ii == j.length-1)
-				values[k] = "";
-			else
-				values[k] = "";
+			values[k] = "";
+			if(ii != j.length-1)
 				while(ii < j.length-1){
-					values[k] += j[ii+1].trim();
+					values[k] += j[ii+1]+msg.getRequestHeader().getLineDelimiter();
 					ii++;
 				}
+				values[k] = values[k].substring(0,values[k].length-1);
 			k++;		
 		}
 		for(i=0; i < k;i++)
@@ -91,6 +91,8 @@ function isJson(str)
 
 function ismultipart(header){
 	type = header.getHeader(org.parosproxy.paros.network.HttpRequestHeader.CONTENT_TYPE);
+	if(type == null )
+		return false;
 	if(type.contains("multipart/form-data"))
 			return true;
 	return false;
