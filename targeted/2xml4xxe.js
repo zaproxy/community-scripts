@@ -1,16 +1,17 @@
 // A Script to convert Request body in normal form or JSON to XML
 // and set Content type to application/json.
+// it uses manual request editor where you can edit the convered request 
 // it is not an automated tool in finding XXE 
-// it may be helpful in finding XXE vulnerabilities.
+// it may be helpful in finding XXE or other vulnerabilities.
 // this script is intended to  act as an assistant
 // you can  add anything like [!ENTITY] to test in detail
 // released under the Apache v2.0 licence.
 // You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 // Author : @haseebeqx (GitHub, Twitter)
 // tested on: ZAP 2.4.1
-// note : due to a bug in mozilla Rhino  bdy.charAt(j) had to be replaced with String.fromCharCode(bdy.charAt(j)). so in future you may have to change it back
+// note : due to a bug in mozilla Rhino  bdy.charAt(j) had to be replaced with String.fromCharCode(bdy.charAt(j)). so in future (or in Nashorn) you may have to change it back
 // rule1: pure JSON , no CODE
-// rule2: correct JSON
+// rule2: correct body (make edits only after conversion)
 
 function invokeWith(msg) {
 	body = '<?xml version="1.0" encoding="UTF-8"?>\n';
@@ -206,7 +207,6 @@ function multiToJson(msg){
 						out += ' :{ "' ;
 						opened = true;
 						continue;
-					
 					} 
 					if(String.fromCharCode(bdy.charAt(ii)) == ']' && opened){
 						out += '"';
