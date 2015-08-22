@@ -7,7 +7,7 @@ function invokeWith(msg) {
 	string = "curl -i -s -k -X  '"+msg.getRequestHeader().getMethod()+"'  \\\n";
 	header = msg.getRequestHeader().getHeadersAsString();
 	header = header.split(msg.getRequestHeader().getLineDelimiter());
-	for(i=1;i<header.length;i++){
+	for(i=0;i<header.length;i++){
 		//blacklisting Host (other blacklisting should also specify here
 		keyval = header[i].split(":");
 		if(keyval[0].trim() != "Host")
