@@ -29,20 +29,26 @@ function scan(ps, msg, src) {
 			cookieName=cookiesArr[idx].getName();
 			cookieValue=cookiesArr[idx].getValue();
 			if(cookieName.toLowerCase().contains("bigip") &&
-			  !cookiesArr[idx].getValue().toLowerCase().contains("deleted")) {
+			  !cookieValue.toLowerCase().contains("deleted")) {
 				cookieChunks = cookieValue.split("\\."); //i.e.: 3860990474.36895.0000
 				//Decode IP
-				theIP=decodeIP(cookieChunks[0]);
+				try {
+					theIP=decodeIP(cookieChunks[0]);
+				} catch (e) {
+					return //Something went wrong
+				}
 				//Decode Port
 				thePort=decodePort(cookieChunks[1]);
 
-				if(java.net.Inet4Address.getByName(theIP).isSiteLocalAddress()); { //RFC1918
+				if(isIPv4Local(theIP)) { //RFC1918
 					decodedValue=theIP+':'+thePort;
 					alertOtherInfo=cookieValue+" decoded to "+decodedValue;
 					//ps.raiseAlert(risk, confidence, title, description, url, param, attack, otherinfo, solution, evidence, cweId, wascId, msg);
 					ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, 
 						cookieName, '', alertOtherInfo, alertSolution+'\n'+alertRefs, 
 						cookieValue, cweId, wascId, msg);
+				} else { //Not what we're looking for
+					return 
 				}
 			}
 		}
@@ -54,13 +60,23 @@ function decodeIP(ipChunk) {
 	backwardAddress = backwardIpHex.getHostAddress();
 	ipPieces = backwardAddress.split("\\.");
 	theIP = ipPieces[3]+'.'+ipPieces[2]+'.'+ipPieces[1]+'.'+ipPieces[0]
-	return theIP
+	return(theIP)
 }
 
+function isIPv4Local(ip) {
+	try {
+		if(java.net.Inet4Address.getByName(ip).isSiteLocalAddress())
+			return true //RFC1918 and IPv4
+	} catch (e) {
+		return false //Not IPv4
+	}
+	return false //Not RFC1918
+}
+	
 
 function decodePort(portChunk) {
 	backwardPortHex = java.lang.Integer.toHexString(java.lang.Integer.parseInt(portChunk));
 	assembledPortHex = backwardPortHex.substring(2,4)+backwardPortHex.substring(0,2)
 	thePort = java.lang.Integer.parseInt(assembledPortHex, 16);
-	return(thePort);
+	return(thePort)
 }
