@@ -16,6 +16,7 @@
 // gof_lite.js
 // Author: kingthorin+owaspzap@gmail.com
 // 20150828 - Initial submission 
+// 20150923 - Add check to see and handle if the user has stopped the scan
 
 mutationStrings=["old","conf","1","2","12","123","txt","bac","bak","backup","asd","dsa","a","aa","aaa","tar.gz","tgz","tar","7z","zip","inc","tmp","temp"];
 //If your site/app returns not found content in a 200 Ok message (tsk tsk) you can define a matching string here to be interpreted as an error response
@@ -51,6 +52,9 @@ function scanNode(as, msg) {
 	}
 
 	for(idx in mutationStrings) {
+		if(this.isStop()) { //Check if the user stopped the scan
+			return;
+		}
 		msg = origMsg.cloneRequest(); // Copy requests before reusing them
 		msg.getRequestHeader().getURI().setPath(mutate(msg, '.'+mutationStrings[idx])); //TODO: handle seperators other than period
 	
@@ -112,7 +116,7 @@ function raiseAlert(wasSuccess, msg, origMsg, as) {
 //TODO List
 //Handle various prefixes and suffixes such as:
 // 	* Copy of <filename>
-//	* Copy - <fukename>
+//	* Copy - <filename>
 //	* <filename> (#)
 //	* <filename> - Copy
 //Handle a list of punctuation, such as {'.','_','-',' '}, before extensions
