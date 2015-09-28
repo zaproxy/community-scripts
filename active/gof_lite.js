@@ -52,7 +52,7 @@ function scanNode(as, msg) {
 	}
 
 	for(idx in mutationStrings) {
-		if(this.isStop()) { //Check if the user stopped the scan
+		if(as.isStop()) { //Check if the user stopped the scan
 			return;
 		}
 		msg = origMsg.cloneRequest(); // Copy requests before reusing them
