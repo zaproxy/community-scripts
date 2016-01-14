@@ -21,8 +21,8 @@ function scan(ps, msg, src)
     alertRisk = 3 //High risk hardcoded
     alertReliability = 1 //low confidence hardcoded
     alertTitle = "Database Credentials Exposed"
-    alertDesc = "Database credentials are exposed to the client. Review Other Info carefully and manually inspect the response to confirm"
-    alertSolution = "Do not pass database connection strings, key/value pair data or credentials to the client"
+    alertDesc = "Database credentials are exposed to the client. Review Other Info carefully and manually inspect the response to confirm."
+    alertSolution = "Do not pass database connection strings, key/value pair data or credentials to the client."
     cweId = 0 //?
     wascId = 0  //?
 
@@ -55,22 +55,13 @@ function scan(ps, msg, src)
 	for (var i=0; i < dataSourceCheck.length; i++)
 	{
 
-		//If test the body against our regexp array
-		if(dataSourceCheck[i].test(body)) //test() returns true/false boolean so we know to continue
+		//exec() returns the matching string(s), so keep looking until we find no more matches
+		while (comm = dataSourceCheck[i].exec(body)) 
 		{
-	
-			//set this to 0 as we're in a loop and this is a stateful object, so we always want to make sure
-			//we are starting at the beginning of the response
-			dataSourceCheck[i].lastIndex = 0 
-
-			//exec() returns the matching string(s), so keep looking until we find no more matches
-			while (comm = dataSourceCheck[i].exec(body)) 
-			{
-				//Append additional hits to credsFound array as the above exec() might have multiple matches through the while loop
-				credsFound.push(comm[0]); 
-			}
-
+			//Append additional hits to credsFound array as the above exec() might have multiple matches through the while loop
+			credsFound.push(comm[0]); 
 		}
+
 	}
 
 	//check to see if we found anything
@@ -85,11 +76,11 @@ function scan(ps, msg, src)
 			, alertTitle
 			, alertDesc
 			, url
-			, 'Parm Not Used'
-			, 'Attack Not Used'
-			, credsFound.toString() //these are the matching db credential strings
+			, '' //unused parameter field
+			, '' //unused attack field
+			, credsFound.join("\n") //these are the matching db credential strings
 			, alertSolution
-			, 'See Other Info Section'
+			, credsFound[0] //first finding in the array passed into the evidence field. ZAP will highlight it in the response body.
 			, cweId
 			, wascId
 			, msg);		
