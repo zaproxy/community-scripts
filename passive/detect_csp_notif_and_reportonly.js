@@ -53,12 +53,11 @@ function scan(ps, msg, src) {
 					}
 					reportUrl = reportUrl.replace(cspReportInstruction,"").trim();					
 					//Raise info alert
-					var cspWorkingMode = (!headerName.toLowerCase().endsWith("-report-only")) ? "BLOCKING" : "REPORTING";
+					var cspWorkingMode = (headerName.toLowerCase().indexOf("-report-only") == -1) ? "BLOCKING" : "REPORTING";
 					var description = "The current site CSP policies defined by HTTP response header '" + headerName + "' (behaving in " + cspWorkingMode + " mode) report violation to '" + reportUrl + "'.";
 					var infoLinkRef = "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_CSP_violation_reports";	
 					var solution = "Site owner will be notified at each policies violations, so, start by analyzing if a real monitoring of the notifications is in place before to use fuzzing or to be more aggressive.";				
-					ps.raiseAlert(0, 4, "Content Security Policy violations reporting enabled", description, 
-						url, "HTTP response header '" + headerName + "'", "Non applicable", infoLinkRef, solution, "CSP policies: " + headerValues[j], cweId, wascId, msg);					
+					ps.raiseAlert(0, 3, "Content Security Policy violations reporting enabled", description, url, "HTTP response header '" + headerName + "'", "", infoLinkRef, solution, headerValues[j], cweId, wascId, msg);
 				}
 			}
 		}

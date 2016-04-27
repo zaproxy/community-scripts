@@ -22,41 +22,33 @@ function scan(ps, msg, src) {
 	var wascId = 9;
 	var url = msg.getRequestHeader().getURI().toString();	
 	var cookieHeaderNames = ["Set-Cookie", "Set-Cookie2"];
-	var cookieSameSiteAttributeNameRef = "SameSite";
+	var cookieSameSiteAttributeNameLower = "samesite";
 
 	//Response headers collection
 	var responseHeaders = msg.getResponseHeader();
 
 	//Detect and analyze presence of the cookie headers
-	var cookieSameSiteAttributeNameLower = cookieSameSiteAttributeNameRef.toLowerCase().trim();
 	for(var i = 0 ; i < cookieHeaderNames.length ; i++){
 		var headerName = cookieHeaderNames[i];
 		if(responseHeaders.getHeaders(headerName)){
 			//Check if the cookie header values contains the SameSite attribute
 			var headerValues = responseHeaders.getHeaders(headerName).toArray();
 			for(var j = 0 ; j < headerValues.length ; j++){
-				var cookieValue = headerValues[j].toLowerCase();
-				var cookieAttributes = cookieValue.split(";");
+				var cookieAttributes = headerValues[j].split(";");
 				//Inspect each attribute in order to avoid false-positive spot
 				//by simply searching "samesite=" on the whole cookie header value...
-				var sameSiteAttrFound = false;
-				var sameSiteAttrValue = null;
 				for(var k = 0 ; k < cookieAttributes.length ; k++){
 					var parts = cookieAttributes[k].split("=");
-					if(parts[0].trim() === cookieSameSiteAttributeNameLower){
-						sameSiteAttrFound = true;
-						sameSiteAttrValue = parts[1].trim();
+					if(parts[0].trim().toLowerCase() == cookieSameSiteAttributeNameLower){
+						//Raise info alert
+						var sameSiteAttrValue = parts[1].trim();
+						var cookieName = cookieAttributes[0].split("=")[0].trim();
+						var description = "The current site use the 'SameSite' cookie attribute protection on cookie named '" + cookieName + "', value is set to '" + sameSiteAttrValue + "' protection level.";
+						var infoLinkRef = "https://tools.ietf.org/html/draft-west-first-party-cookies\nhttps://chloe.re/2016/04/13/goodbye-csrf-samesite-to-the-rescue";	
+						var solution = "CSRF possible vulnerabilities presents on the site will be mitigated depending on the browser used by the user (browser defines the support level for this cookie attribute).";				
+						ps.raiseAlert(0, 3, "SameSite cookie attribute protection used", description, url, "Cookie named: '" + cookieName + "'", "", infoLinkRef, solution, sameSiteAttrValue, cweId, wascId, msg);													
 						break;
 					}
-				}
-				//Analyze if the attribute is present and raise info alert
-				if(sameSiteAttrFound){
-					var cookieName = cookieAttributes[0].split("=")[0].trim();
-					var description = "The current site use the 'SameSite' cookie attribute protection on cookie named '" + cookieName + "', value is set to '" + sameSiteAttrValue + "' protection level.";
-					var infoLinkRef = "https://tools.ietf.org/html/draft-west-first-party-cookies\nhttps://chloe.re/2016/04/13/goodbye-csrf-samesite-to-the-rescue";	
-					var solution = "CSRF possible vulnerabilities presents on the site will be mitigated depending on the browser used by the user (browser defines the support level for this cookie attribute).";				
-					ps.raiseAlert(0, 4, "SameSite cookie attribute protection used", description, 
-						url, "Cookie named: '" + cookieName + "'", "Non applicable", infoLinkRef, solution, "Protection level: " + sameSiteAttrValue, cweId, wascId, msg);							
 				}
 			}
 		}
