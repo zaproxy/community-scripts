@@ -7,6 +7,8 @@ Links:
 - https://chloe.re/2016/04/13/goodbye-csrf-samesite-to-the-rescue
 - https://tools.ietf.org/html/draft-west-first-party-cookies
 - https://www.chromestatus.com/feature/4672634709082112
+
+Author: dominique.righetto@gmail.com
 */
 
 function scan(ps, msg, src) {
@@ -22,13 +24,12 @@ function scan(ps, msg, src) {
 	var wascId = 9;
 	var url = msg.getRequestHeader().getURI().toString();	
 	var cookieHeaderNames = ["Set-Cookie", "Set-Cookie2"];
-	var cookieSameSiteAttributeNameRef = "SameSite";
+	var cookieSameSiteAttributeNameLower = "samesite";
 
 	//Response headers collection
 	var responseHeaders = msg.getResponseHeader();
 
 	//Detect and analyze presence of the cookie headers
-	var cookieSameSiteAttributeNameLower = cookieSameSiteAttributeNameRef.toLowerCase().trim();
 	for(var i = 0 ; i < cookieHeaderNames.length ; i++){
 		var headerName = cookieHeaderNames[i];
 		if(responseHeaders.getHeaders(headerName)){
