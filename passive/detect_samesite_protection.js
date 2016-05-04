@@ -7,6 +7,8 @@ Links:
 - https://chloe.re/2016/04/13/goodbye-csrf-samesite-to-the-rescue
 - https://tools.ietf.org/html/draft-west-first-party-cookies
 - https://www.chromestatus.com/feature/4672634709082112
+
+Author: dominique.righetto@gmail.com
 */
 
 function scan(ps, msg, src) {

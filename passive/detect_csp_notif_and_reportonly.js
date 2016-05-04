@@ -12,6 +12,8 @@ Links:
 - http://content-security-policy.com
 - http://www.html5rocks.com/en/tutorials/security/content-security-policy
 - http://www.html5rocks.com/en/tutorials/security/content-security-policy/#reporting
+
+Author: dominique.righetto@gmail.com
 */
 
 function scan(ps, msg, src) {
