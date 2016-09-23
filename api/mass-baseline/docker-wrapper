@@ -1,0 +1,11 @@
+# This dockerfile builds the Mass Baseline wrapper around the ZAP weekly release
+FROM owasp/zap2docker-weekly
+MAINTAINER Simon Bennetts "psiinon@gmail.com"
+
+USER zap
+COPY mass-base* /zap/
+RUN mkdir /zap/wrk
+COPY mass-baseline-default.conf /zap/wrk/mass-baseline-default.conf
+
+USER root
+RUN chown zap /zap/mass-base*
