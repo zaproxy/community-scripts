@@ -4,8 +4,8 @@ This directory contains scripts that allow you to run the [ZAP Baseline](https:/
 
 In order to use these scripts you will need to:
 
-* Change the sites listed in [mass-baseline.sh](https://github.com/zaproxy/community-scripts/api/mass-baseline/mass-baseline.sh)
-* Change the relevant user and repo details in [mass-baseline.sh](https://github.com/zaproxy/community-scripts/api/mass-baseline/mass-baseline.sh)
+* Change the sites listed in [mass-baseline.sh](mass-baseline.sh)
+* Change the relevant user and repo details in [mass-baseline.sh](mass-baseline.sh)
 * Build a docker image (see below)
 * Run the docker image, setting the credentials for your user (see below) if you want to upload the results to your repo wiki
 
