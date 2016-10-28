@@ -25,3 +25,6 @@ else
   # Delete it otherwise it will look like everything passed:/
   rm $1/baseline-results/$2/$date
 fi
+
+# Ensure ZAP has completely shut down, otherwise it can corrupt the db of the next run
+sleep 5 
