@@ -10,16 +10,16 @@ println('\n');
 
 for (var i=0; i < plugins.length; i++) {
   try {
-    println ('Plugin ID: ' + plugins[i].getId());
-    println ('Name: ' + plugins[i].getName());
-    println ('Desc: ' + plugins[i].getDescription());
-    println ('Risk: ' + plugins[i].getRisk());
-    println ('Soln: ' + plugins[i].getSolution());
-    println ('Ref:  ' + plugins[i].getReference());
-    println ('CWE:  ' + plugins[i].getCweId());
-    println ('WASC:  ' + plugins[i].getWascId());
-    println ('');
+    print ('Plugin ID: ' + plugins[i].getId());
+    print ('Name: ' + plugins[i].getName());
+    print ('Desc: ' + plugins[i].getDescription());
+    print ('Risk: ' + plugins[i].getRisk());
+    print ('Soln: ' + plugins[i].getSolution());
+    print ('Ref:  ' + plugins[i].getReference());
+    print ('CWE:  ' + plugins[i].getCweId());
+    print ('WASC:  ' + plugins[i].getWascId());
+    print ('');
   } catch (e) {
-    println (e);
+    print (e);
   }
 }
