@@ -6,7 +6,7 @@ extAscan = org.parosproxy.paros.control.Control.getSingleton().
 
 plugins = extAscan.getPolicyManager().getDefaultScanPolicy().getPluginFactory().getAllPlugin().toArray();
 
-println('\n');
+print('\n');
 
 for (var i=0; i < plugins.length; i++) {
   try {
