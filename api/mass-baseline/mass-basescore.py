@@ -22,9 +22,21 @@ def parse_results (site, date, is_summary_file, file):
       try:
         #print ('Last line: ' + last_line)
         scores = last_line.split('\t')
-        fail = scores[0].split(': ')[1]
-        warn = scores[1].split(': ')[1]
-        ok = scores[4].split(': ')[1]
+        if last_line.startswith('FAIL-NEW:'):
+          # Weekly format is: FAIL-NEW: x    FAIL-INPROG: x    WARN-NEW: x    WARN-INPROG: x    INFO: x    IGNORE: x    PASS: x
+          fail_new = scores[0].split(': ')[1]
+          fail_ip = scores[1].split(': ')[1]
+          warn_new = scores[2].split(': ')[1]
+          warn_ip = scores[3].split(': ')[1]
+          ok = scores[6].split(': ')[1]
+          # Just add the new and in progress scores for now..
+          fail = str(int(fail_new) + int(fail_ip))
+          warn = str(int(warn_new) + int(warn_ip))
+        else:
+          # Stable format is: FAIL: x    WARN: x    INFO: x    IGNORE: x    PASS: x
+          fail = scores[0].split(': ')[1]
+          warn = scores[1].split(': ')[1]
+          ok = scores[4].split(': ')[1]
 
         if len(rra) > 0:
           file.write ('| [' + site + '](' + rra + ')')
