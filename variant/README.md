@@ -1,4 +1,4 @@
-Variant scripts
+Script Input Vector scripts
 ===============
 
-TBA 
+Scripts that can extract input vectors to be used by active scanners.

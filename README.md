@@ -3,11 +3,15 @@ community-scripts
 
 A collection of ZAP scripts provided by the community, i.e. you lot :)
 
+The easiest way to use this repo in ZAP is to install the 'Community Scripts' add-on from the ZAP Marketplace.
+
+If you might want to contribute to the repo then you can also clone it to a local directory and then add that to ZAP using the Options / Scripts screen.
+
 Please upload your scripts via pull requests!
 
 For more information on ZAP scripts see:
-* https://code.google.com/p/zaproxy/wiki/HelpAddonsScriptsScripts
-* https://code.google.com/p/zaproxy/wiki/InternalScripting
+* https://github.com/zaproxy/zap-core-help/wiki/HelpAddonsScriptsScripts
+* https://github.com/zaproxy/zaproxy/wiki/InternalScripting
  
 To discuss any aspect of ZAP scripting please join the zaproxy-scripts group: http://groups.google.com/group/zaproxy-scripts
 
