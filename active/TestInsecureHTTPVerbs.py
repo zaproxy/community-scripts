@@ -51,8 +51,9 @@ def TestTheURIForInsecureVerbs(sas, msg, uri, insecureverbs):
 		try:
 			if printdebugmessages:
 				print ('Testing Initiated for the HTTP VERB: -- \t' + insecureverb + '\n')
+			msg = msg.cloneRequest();
 			PrepareHttpRequest(msg, insecureverb)
-			sas.sendAndReceive(msg)
+			sas.sendAndReceive(msg, False)
 			if printdebugmessages:
 				print('VERB: \t' + insecureverb + '\t-- STATUS: '+ str(msg.getResponseHeader().getStatusCode()) +' -- \tMESSAGE: ' + msg.getResponseHeader().getReasonPhrase() + '\n')
 			ProcessAndPrintAlert(sas, msg, uri, insecureverb)
@@ -63,9 +64,10 @@ def TestTheURIForInsecureVerbs(sas, msg, uri, insecureverbs):
 def scanNode(sas, msg):
 	url = msg.getRequestHeader().getURI().toString()
 	if printdebugmessages:
-    		print('Active scan script called for url = ' + url + '\n');
+    		print('Active scan script called for url = ' + url + '\n')
 		print('Testing for insecure verbs against a list of accepted http response status codes for the url = ' + url + '\n')
-    	msg = msg.cloneRequest();
     	TestTheURIForInsecureVerbs(sas, msg, url, insecureverbs)
 
 
+def scan(sas, msg, param, value):
+    pass
