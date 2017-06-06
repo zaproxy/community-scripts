@@ -6,7 +6,7 @@ if (typeof println == 'undefined') this.println = print;
 
 function invokeWith(msg) {
 	// Debugging can be done using println like this
-	println('Finding comments under ' + msg.getRequestHeader().getURI().toString()); 
+	print('Finding comments under ' + msg.getRequestHeader().getURI().toString()); 
 	prefix = msg.getRequestHeader().getURI().toString();
 
 	extHist = org.parosproxy.paros.control.Control.getSingleton().
