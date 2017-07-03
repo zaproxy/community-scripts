@@ -65,9 +65,10 @@ def clean_zap_session(zap, target_url, config_dict):
 	zap.pscan.enable_all_scanners()
 	zap.ascan.enable_all_scanners()
 	ignored_scanners = ",".join([ i for i in config_dict if config_dict[i] == "IGNORE" ])
-	logging.debug("Ignored scanners: " + ignored_scanners)
-	zap.pscan.disable_scanners(ignored_scanners) # ids*
-	zap.ascan.disable_scanners(ignored_scanners) # ids*
+	if ignored_scanners:
+		logging.info("Ignored scanners: " + ignored_scanners)
+		zap.pscan.disable_scanners(ignored_scanners) # ids*
+		zap.ascan.disable_scanners(ignored_scanners) # ids*
 	# ERR: disabling scanners not affecting scan time, only excluding from final result???
 
 	# Set ascan strength - LOW, MEDIUM, HIGH
