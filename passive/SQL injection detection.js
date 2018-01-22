@@ -56,8 +56,6 @@ function scan(ps, msg, src)
 	frontbase = /(Exception (condition )?\d+. Transaction rollback.)/g
 	hsqldb = /(org\.hsqldb\.jdbc|Unexpected end of command in statement \[|Unexpected token.*in statement \[)/g
 
-    if (msg)
-      {
 	if (mysql.test(body))
 	  {
 	    mysql.lastIndex = 0
@@ -200,5 +198,4 @@ function scan(ps, msg, src)
 	      }
             ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[13], alertDesc[13], url, '', '', foundhsqldb.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
-     }
 }
