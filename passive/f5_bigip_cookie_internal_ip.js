@@ -41,7 +41,7 @@ function scan(ps, msg, src) {
 				try {
 					theIP=decodeIP(cookieChunks[0]);
 				} catch (e) {
-					return //Something went wrong
+					continue //Something went wrong
 				}
 				//Decode Port
 				thePort=decodePort(cookieChunks[1]);
@@ -76,7 +76,7 @@ function scan(ps, msg, src) {
 				}
 
 				else { //Not what we're looking for
-					return 
+					continue
 				}
 			}
 		}
@@ -96,10 +96,8 @@ function decodeIP(ipChunk) {
     	var encodedIP = ipChunk.match(/[0-9a-f]{4}/ig);
     
     	//first, cast array to string
-    	//replace , with :
-    	//replace any 0000 with a empty string
-    	//then finally replace any ::: (or more) with just two :: to align with accepted IPv6 shorthand
-    	ipv6 = encodedIP.toString().replace(/,/g,":").replace(/([0]{4})/g,"").replace(/(:{3,})/g,"::")
+    	//then replace , with :
+    	ipv6 = encodedIP.toString().replace(/,/g,":");
     	return(ipv6)
 
     } else { //not ipv6, so process it as ipv4
