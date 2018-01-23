@@ -14,17 +14,14 @@ function scan(ps, msg, src)
 	
 	uploadForm = /(type\s*=\s*['"]?file['"]?)/g
 	
-	if (msg)
-    {
-		if (uploadForm.test(body))
+	if (uploadForm.test(body))
+	{
+		uploadForm.lastIndex = 0
+		var founduploadForm = []
+		while (comm = uploadForm.exec(body))
 		{
-			uploadForm.lastIndex = 0
-			var founduploadForm = []
-            while (comm = uploadForm.exec(body))
-			{
-				founduploadForm.push(comm[0]);
-			}
-			ps.raiseAlert(alertRisk[0], alertReliability[2], alertTitle[0], alertDesc[0], url, '', '', founduploadForm.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+			founduploadForm.push(comm[0]);
 		}
+		ps.raiseAlert(alertRisk[0], alertReliability[2], alertTitle[0], alertDesc[0], url, '', '', founduploadForm.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	}
 }
