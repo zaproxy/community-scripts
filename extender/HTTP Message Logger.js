@@ -1,6 +1,5 @@
 // This script allows to log to a file the HTTP messages sent/received by ZAP.
 // The main methods are "isMessageToLog" and "writeMessage" which tell when and how to log the messages.
-// The script requires Java 8+ (Nashorn engine).
 
 // Declare classes used throughout the script:
 var Integer = Java.type("java.lang.Integer");
