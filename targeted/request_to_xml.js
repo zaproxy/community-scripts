@@ -29,6 +29,7 @@ function invokeWith(msg) {
 		body += jsonToXML(js);
 	}
 	msg.setRequestBody(body);
+	msg.getRequestHeader().setContentLength(msg.getRequestBody().length());
 	header = msg.getRequestHeader();
 	header.setHeader(org.parosproxy.paros.network.HttpRequestHeader.CONTENT_TYPE,"application/xml");
 	header.setHeader(org.parosproxy.paros.network.HttpRequestHeader.CONTENT_LENGTH,body.length);

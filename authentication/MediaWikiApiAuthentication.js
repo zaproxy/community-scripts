@@ -93,6 +93,7 @@ MWApiAuthenticator.prototype = {
 		msg = this.helper.prepareMessage();
 		msg.setRequestHeader(requestHeader);
 		msg.setRequestBody(requestBody);
+		msg.getRequestHeader().setContentLength(msg.getRequestBody().length());
 
 		println('Sending ' + requestMethod + ' request to ' + requestUri + ' with body: ' + requestBody);
 		this.helper.sendAndReceive(msg);

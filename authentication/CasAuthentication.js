@@ -61,6 +61,7 @@ function authenticate(helper, paramsValues, credentials) {
     var post = helper.prepareMessage();
     post.setRequestHeader(new HttpRequestHeader(HttpRequestHeader.POST, loginUri, HttpHeader.HTTP10));
     post.setRequestBody(requestBody);
+    post.getRequestHeader().setContentLength(post.getRequestBody().length());
     helper.sendAndReceive(post);
     
     /*

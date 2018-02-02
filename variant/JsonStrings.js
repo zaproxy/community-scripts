@@ -65,6 +65,7 @@ function setParameter(helper, msg, param, value, escaped) {
 		return;
 	}
 	msg.getRequestBody().setBody(JSON.stringify(obj));
+	msg.getRequestHeader().setContentLength(msg.getRequestBody().length());
 }
 
 function recursive_set(obj, path, value){
