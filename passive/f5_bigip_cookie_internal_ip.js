@@ -11,6 +11,8 @@
 // 20150828 - Initial submission
 // 20160117 - Updated to include ipv6 variants - jkbowser[at]gmail[dot]com
 
+var Locale = Java.type("java.util.Locale");
+
 function scan(ps, msg, src) {
 	//Setup some details we will need for alerts later if we find something
 	alertRisk = [1, 0]
@@ -34,8 +36,8 @@ function scan(ps, msg, src) {
 		for (idx in cookiesArr) {
 			cookieName=cookiesArr[idx].getName();
 			cookieValue=cookiesArr[idx].getValue();
-			if(cookieName.toLowerCase().contains("bigip") &&
-			  !cookieValue.toLowerCase().contains("deleted")) {
+			if(cookieName.toLowerCase(Locale.ROOT).contains("bigip") &&
+			  !cookieValue.toLowerCase(Locale.ROOT).contains("deleted")) {
 				cookieChunks = cookieValue.split("\."); //i.e.: 3860990474.36895.0000
 				//Decode IP
 				try {
