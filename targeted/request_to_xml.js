@@ -18,7 +18,7 @@ function invokeWith(msg) {
 	reqb = msg.getRequestBody().toString(); 
 	reqh = msg.getRequestHeader().getURI().toString();
 	if(isJson(reqb)){
-		body += jsonToXML(reqb);
+		body += jsonToXML(JSON.parse(reqb));
 	}
 	else if(ismultipart(msg.getRequestHeader())){
 		js = multiToJson(msg);
