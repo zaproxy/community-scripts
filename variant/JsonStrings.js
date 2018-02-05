@@ -4,10 +4,6 @@
 // Note that new custom input vector scripts will initially be disabled
 // Right click the script in the Scripts tree and select "enable"  
 
-// The following handles differences in printing between Java 7's Rhino JS engine
-// and Java 8's Nashorn JS engine
-if (typeof println == 'undefined') this.println = print;
-
 /*
 This variant script can be used as an alternative to the default JSON input vectors
 when one only wants to scan the string fields of the JSON object, not integers.

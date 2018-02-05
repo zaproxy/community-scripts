@@ -1,7 +1,6 @@
 // Author : aine-rb from Sopra Steria (based on the script of thc202 from the OWASP ZAP development team)
 
 // This script is heavily based on the "Simple Form-Based Authentication.js" template
-// It should be interpreted by the Nashorn engine, since Java 8
 // It can be used to authenticate in a webapplication via a form submission followed by a GET request
 // The submit target for the form, the name of the username field, the name of the password field
 // and the URL of the GET target need to be specified after loading the script.
@@ -23,15 +22,16 @@
 //   credentials - an object containing the credentials values, as configured in the Session Properties - Users panel.
 //                      The credential values can be obtained via calls to the getParam(paramName) method. The param
 //				    names are the ones returned by the getCredentialsParamsNames() below
+
+// Make sure any Java classes used explicitly are imported
+var HttpRequestHeader = Java.type('org.parosproxy.paros.network.HttpRequestHeader');
+var HttpHeader = Java.type('org.parosproxy.paros.network.HttpHeader');
+var URI = Java.type('org.apache.commons.httpclient.URI');
+var AuthenticationHelper = Java.type('org.zaproxy.zap.authentication.AuthenticationHelper');
+var Cookie = Java.type('org.apache.commons.httpclient.Cookie');
+
 function authenticate(helper, paramsValues, credentials) {
     print("Authenticating via JavaScript script...");
-
-    // Make sure any Java classes used explicitly are imported
-    var HttpRequestHeader = Java.type('org.parosproxy.paros.network.HttpRequestHeader');
-    var HttpHeader = Java.type('org.parosproxy.paros.network.HttpHeader');
-    var URI = Java.type('org.apache.commons.httpclient.URI');
-    var AuthenticationHelper = Java.type('org.zaproxy.zap.authentication.AuthenticationHelper');
-    var Cookie = Java.type('org.apache.commons.httpclient.Cookie');
 
     // Prepare the login submission request details
     var requestUri = new URI(paramsValues.get("Submission Form URL"), false);

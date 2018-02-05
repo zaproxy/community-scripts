@@ -36,7 +36,7 @@ function scan(ps, msg, src) {
 			cookieValue=cookiesArr[idx].getValue();
 			if(cookieName.toLowerCase().contains("bigip") &&
 			  !cookieValue.toLowerCase().contains("deleted")) {
-				cookieChunks = cookieValue.split(getDelim()); //i.e.: 3860990474.36895.0000
+				cookieChunks = cookieValue.split("\."); //i.e.: 3860990474.36895.0000
 				//Decode IP
 				try {
 					theIP=decodeIP(cookieChunks[0]);
@@ -104,7 +104,7 @@ function decodeIP(ipChunk) {
 
 		backwardIpHex = java.net.InetAddress.getByName(ipChunk);
 		backwardAddress = backwardIpHex.getHostAddress();
-		ipPieces = backwardAddress.split(getDelim());
+		ipPieces = backwardAddress.split("\.");
 		theIP = ipPieces[3]+'.'+ipPieces[2]+'.'+ipPieces[1]+'.'+ipPieces[0]
 		return(theIP)
 	}
@@ -115,7 +115,7 @@ function isLocal(ip) {
 	if(ip.match(/:/g)){ //match on ipv6 notation
 		try {
 			//isSiteLocalAddress only returns true for FEC0, using RFC4193 definition of fc00, matching on beginning string regexp
-			if(java.net.Inet6Address.getByName(ip) && ip.match(/(^fc00)/im)) { 
+			if(java.net.InetAddress.getByName(ip) && ip.match(/(^fc00)/im)) { 
 				return true //it is local per RFC4193
 			} 
 		} catch (e) {
@@ -124,7 +124,7 @@ function isLocal(ip) {
 
 	} else {
 		try {
-			if(java.net.Inet4Address.getByName(ip).isSiteLocalAddress()) {
+			if(java.net.InetAddress.getByName(ip).isSiteLocalAddress()) {
 				return true //RFC1918 and IPv4
 			} 
 		} catch (e) {
@@ -135,23 +135,12 @@ function isLocal(ip) {
 
 function isExternal(ip) {
 	
-	if(ip.match(/:/g)){ //match on ipv6 notation
-		try {
-			if(java.net.Inet6Address.getByName(ip)) { //just testing for valid format to verify it's not encrypted
-				return true //it is a valid IP, likely external
-			} 
-		} catch (e) {
-			return false //Not ipv6, so it's likely an encrypted cookie
-		}
-
-	} else {
-		try {
-			if(java.net.Inet4Address.getByName(ip)) { //just testing for valid format to verify it's not encrypted
-				return true //it is a valid IP, likely external
-			} 
-		} catch (e) {
-			return false //Not ipv4, so it's likely an encrypted cookie
-		}
+	try {
+		if(java.net.InetAddress.getByName(ip)) { //just testing for valid format to verify it's not encrypted
+			return true //it is a valid IP, likely external
+		} 
+	} catch (e) {
+		return false //Not valid IP, so it's likely an encrypted cookie
 	}
 }
 	
@@ -161,14 +150,6 @@ function decodePort(portChunk) { //port processing is same for ipv4 and ipv6
 	assembledPortHex = backwardPortHex.substring(2,4)+backwardPortHex.substring(0,2)
 	thePort = java.lang.Integer.parseInt(assembledPortHex, 16);
 	return(thePort)
-}
-
-function getDelim() {
-    //It seems Rhino and Nashhorn behave differently for splitting on period
-    if (java.lang.System.getProperty("java.version").startsWith("1.8")) {
-        return "\.";
-    }
-    return "\\.";
 }
 
 // TODO List
