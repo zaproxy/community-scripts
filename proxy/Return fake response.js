@@ -18,6 +18,6 @@ function proxyRequest(msg) {
 }
 
 function proxyResponse(msg) {
-	// Dont need to do anything here
+	// Dont need to do anything here, unless you want the request to be sent to the server, then move logic here.
 	return true
 }
