@@ -10,7 +10,7 @@ function proxyRequest(msg) {
             cookie = iterator.next() // This is a HttpCookie
             if (cookie.name == cookieToDrop) {
                 iterator.remove()
-                print('removed' + cookie.name)
+                print('Stripped away: ' + cookie.name)
             }
         }
         msg.getRequestHeader().setCookies(cookies)
