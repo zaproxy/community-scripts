@@ -1,7 +1,7 @@
 import re
 from org.zaproxy.zap.extension.script import ScriptVars
 
-''' find posible Server Side Template Injection using Hunt Methodology - https://github.com/bugcrowd/HUNT'''
+''' find posible Debug & Logic Parameters using Hunt Methodology - https://github.com/bugcrowd/HUNT'''
 ''' HUNT Scanner for ZAP Proxy (Alpha - Contributed by Ricardo Lobo @_sbzo)'''
 
 def scan(ps, msg, src):
