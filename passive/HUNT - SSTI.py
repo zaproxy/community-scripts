@@ -38,6 +38,6 @@ def scan(ps, msg, src):
                         result.append(x)
 
                 if result:
-                    ps.raiseAlert(1, 1, 'Possible SSTI', 'HUNT located the ' + ','.join(result) + ' parameter inside of your application traffic. The ' + ','.join(result) + ' parameter is most often susceptible to Server Side Template Injection. HUNT recommends further manual analysis of the parameter in question.',
+                    ps.raiseAlert(0, 1, 'Possible SSTI', 'HUNT located the ' + ','.join(result) + ' parameter inside of your application traffic. The ' + ','.join(result) + ' parameter is most often susceptible to Server Side Template Injection. HUNT recommends further manual analysis of the parameter in question.',
                     msg.getRequestHeader().getURI().toString(),
                     ','.join(result), '', msg.getRequestHeader().toString()+'\n'+msg.getRequestBody().toString(), '', '', 0, 0, msg);
