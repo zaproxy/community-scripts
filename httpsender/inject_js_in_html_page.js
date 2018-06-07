@@ -8,7 +8,6 @@
  */
 
 FILE = '/tmp/test.js'
-SCRIPT = '\t<script>' + loadScriptFromFile(FILE) + '</script>\n';
 
 function loadScriptFromFile(file) {
     Files = Java.type('java.nio.file.Files');
@@ -36,10 +35,19 @@ function responseReceived(msg, initiator, helper) {
         return true;
     }
 
-    index = body.toString().indexOf('<head>') + '<head>\n'.length();
+    SCRIPT = '<script>' + loadScriptFromFile(FILE) + '</script>';
+
+    indexOfHead = bodyAsStr.indexOf('<head>');
+
+    if (indexOfHead == -1) {
+      index = bodyAsStr.indexOf('<html>') + '<html>'.length();
+      SCRIPT = '<head>' + SCRIPT + '<head>';
+    } else {
+      index = indexOfHead + '<head>'.length();
+    }
 
     newBody = bodyAsStr.slice(0, index) + SCRIPT + bodyAsStr.slice(index);
-    header.setContentLength(newBody.length() + 1);
 
     msg.setResponseBody(newBody);
+    header.setContentLength(msg.getResponseBody().length());
 }
