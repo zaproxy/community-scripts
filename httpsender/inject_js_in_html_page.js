@@ -40,8 +40,9 @@ function responseReceived(msg, initiator, helper) {
     }
 
     SCRIPT = '<script>' + loadScriptFromFile(FILE) + '</script>';
+    index = indexOfHead + '<head>'.length();
 
-    newBody = bodyAsStr.slice(0, indexOfHead) + SCRIPT + bodyAsStr.slice(indexOfHead);
+    newBody = bodyAsStr.slice(0, index) + SCRIPT + bodyAsStr.slice(index);
 
     msg.setResponseBody(newBody);
     header.setContentLength(msg.getResponseBody().length());
