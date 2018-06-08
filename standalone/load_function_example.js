@@ -1,13 +1,14 @@
 //@zaproxy-standalone
 
 // This script will load export.js and a file from the Internet
+// Docs: https://wiki.openjdk.java.net/display/Nashorn/Nashorn+extensions
 
 print('loading scripts from: ' + java.lang.System.getProperty("user.dir"))
 
-var number = 0 // This variable will be overwritten by the loading of export.js
+var number = 0 // This variable will be overwritten by the loading of example_library.js
 
 // Load export.js
-load("./export.js")
+load("./example_library.js")
 
 print(number)
 
