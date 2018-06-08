@@ -29,24 +29,17 @@ function responseReceived(msg, initiator, helper) {
     contentType = header.getHeader('Content-Type');
 
     contentTypeRegex = new RegExp(/text\/html;/g);
+    indexOfHead = bodyAsStr.indexOf('<head>');
 
     if (!contentTypeRegex.test(contentType)
-        || xRequestedWith == 'XMLHttpRequest') {
-        return true;
+        || xRequestedWith == 'XMLHttpRequest'
+        || indexOfHead == -1) {
+        return;
     }
 
     SCRIPT = '<script>' + loadScriptFromFile(FILE) + '</script>';
 
-    indexOfHead = bodyAsStr.indexOf('<head>');
-
-    if (indexOfHead == -1) {
-      index = bodyAsStr.indexOf('<html>') + '<html>'.length();
-      SCRIPT = '<head>' + SCRIPT + '<head>';
-    } else {
-      index = indexOfHead + '<head>'.length();
-    }
-
-    newBody = bodyAsStr.slice(0, index) + SCRIPT + bodyAsStr.slice(index);
+    newBody = bodyAsStr.slice(0, indexOfHead) + SCRIPT + bodyAsStr.slice(indexOfHead);
 
     msg.setResponseBody(newBody);
     header.setContentLength(msg.getResponseBody().length());
