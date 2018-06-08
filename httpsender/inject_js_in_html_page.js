@@ -5,6 +5,7 @@
  *   <head></head> before sending it to the client.
  *   - Code to be added is read from the file which path is `FILE` (this need to
  *   be an absolute path, /tmp/test.js in our case).
+ *   - Only responses to requests sent by the "proxy initiator" will be modified.
  */
 
 FILE = '/tmp/test.js'
