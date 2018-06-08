@@ -22,7 +22,7 @@ function loadScriptFromFile(file) {
 function sendingRequest(msg, initiator, helper) {}
 
 function responseReceived(msg, initiator, helper) {
-    if (initiator == -1) { return; }
+    if (initiator != 1) { return; }
 
     body = msg.getResponseBody();
     bodyAsStr = body.toString();
