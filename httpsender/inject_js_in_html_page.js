@@ -30,7 +30,7 @@ function responseReceived(msg, initiator, helper) {
 
     xRequestedWith = msg.getRequestHeader().getHeader('X-Requested-With');
     contentType = header.getHeader('Content-Type');
-    contentTypeRegex = new RegExp(/text\/html;/g);
+    contentTypeRegex = new RegExp(/text\/html/g);
     indexOfHead = bodyAsStr.indexOf('<head>');
 
     if (!contentTypeRegex.test(contentType)
