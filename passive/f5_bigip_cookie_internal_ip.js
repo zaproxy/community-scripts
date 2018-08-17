@@ -15,48 +15,48 @@ var Locale = Java.type("java.util.Locale");
 
 function scan(ps, msg, src) {
 	//Setup some details we will need for alerts later if we find something
-	alertRisk = [1, 0]
-	alertConfidence = 3
-	alertTitle = ['Internal IP Exposed via F5 BigIP Persistence Cookie'
+	var alertRisk = [1, 0]
+	var alertConfidence = 3
+	var alertTitle = ['Internal IP Exposed via F5 BigIP Persistence Cookie'
 				, 'IP Exposed via F5 BigIP Presistence Cookie']
-	alertDesc = ['The F5 Big-IP Persistence cookie set for this website can be decoded to a specific internal IP and port. An attacker may leverage this information to conduct Social Engineering attacks or other exploits.'
+	var alertDesc = ['The F5 Big-IP Persistence cookie set for this website can be decoded to a specific internal IP and port. An attacker may leverage this information to conduct Social Engineering attacks or other exploits.'
 				,'The F5 Big-IP Persistence cookie set for this website can be decoded to a specific IP and port. An attacker may leverage this information to conduct Social Engineering attacks or other exploits.']
-	alertSolution = 'Configure BIG-IP cookie encryption.'
-	alertRefs = 'https://support.f5.com/kb/en-us/solutions/public/6000/900/sol6917.html'
-	cweId = 311
-	wascId = 13
+	var alertSolution = 'Configure BIG-IP cookie encryption.'
+	var alertRefs = 'https://support.f5.com/kb/en-us/solutions/public/6000/900/sol6917.html'
+	var cweId = 311
+	var wascId = 13
 
-	url = msg.getRequestHeader().getURI().toString();
+	var url = msg.getRequestHeader().getURI().toString();
 	//Only check when a cookie is set
 	if(msg.getResponseHeader().getHeaders("Set-Cookie")) { 
-		cookiesList = msg.getResponseHeader().getHttpCookies(); //Set-Cookie in Response
+		var cookiesList = msg.getResponseHeader().getHttpCookies(); //Set-Cookie in Response
 		cookiesList.addAll(msg.getRequestHeader().getHttpCookies()); //Cookie in Request
-		cookiesArr  = cookiesList.toArray();
+		var cookiesArr  = cookiesList.toArray();
 	
-		for (idx in cookiesArr) {
-			cookieName=cookiesArr[idx].getName();
-			cookieValue=cookiesArr[idx].getValue();
+		for (var idx in cookiesArr) {
+			var cookieName=cookiesArr[idx].getName();
+			var cookieValue=cookiesArr[idx].getValue();
 			if(cookieName.toLowerCase(Locale.ROOT).contains("bigip") &&
 			  !cookieValue.toLowerCase(Locale.ROOT).contains("deleted")) {
-				cookieChunks = cookieValue.split("\."); //i.e.: 3860990474.36895.0000
+				var cookieChunks = cookieValue.split("\."); //i.e.: 3860990474.36895.0000
 				//Decode IP
 				try {
-					theIP=decodeIP(cookieChunks[0]);
+					var theIP=decodeIP(cookieChunks[0]);
 				} catch (e) {
 					continue //Something went wrong
 				}
 				//Decode Port
-				thePort=decodePort(cookieChunks[1]);
+				var thePort=decodePort(cookieChunks[1]);
 
 				if(isLocal(theIP)) { //RFC1918 and RFC4193
 
 					if(theIP.match(/:/g))//matching again just so I can format it correctly with []
 					{
-						decodedValue='[' + theIP +']:' + thePort;	
+						var decodedValue='[' + theIP +']:' + thePort;	
 					} else {
 						decodedValue=theIP+':'+thePort;
 					}
-					alertOtherInfo=cookieValue+" decoded to "+decodedValue;
+					var alertOtherInfo=cookieValue+" decoded to "+decodedValue;
 					//ps.raiseAlert(risk, confidence, title, description, url, param, attack, otherinfo, solution, evidence, cweId, wascId, msg);
 					ps.raiseAlert(alertRisk[0], alertConfidence, alertTitle[0], alertDesc[0], url, 
 						cookieName, '', alertOtherInfo, alertSolution+'\n'+alertRefs, 
@@ -99,15 +99,15 @@ function decodeIP(ipChunk) {
     
     	//first, cast array to string
     	//then replace , with :
-    	ipv6 = encodedIP.toString().replace(/,/g,":");
+    	var ipv6 = encodedIP.toString().replace(/,/g,":");
     	return(ipv6)
 
     } else { //not ipv6, so process it as ipv4
 
-		backwardIpHex = java.net.InetAddress.getByName(ipChunk);
-		backwardAddress = backwardIpHex.getHostAddress();
-		ipPieces = backwardAddress.split("\.");
-		theIP = ipPieces[3]+'.'+ipPieces[2]+'.'+ipPieces[1]+'.'+ipPieces[0]
+		var backwardIpHex = java.net.InetAddress.getByName(ipChunk);
+		var backwardAddress = backwardIpHex.getHostAddress();
+		var ipPieces = backwardAddress.split("\.");
+		var theIP = ipPieces[3]+'.'+ipPieces[2]+'.'+ipPieces[1]+'.'+ipPieces[0]
 		return(theIP)
 	}
 }
@@ -148,9 +148,9 @@ function isExternal(ip) {
 	
 
 function decodePort(portChunk) { //port processing is same for ipv4 and ipv6
-	backwardPortHex = java.lang.Integer.toHexString(java.lang.Integer.parseInt(portChunk));
-	assembledPortHex = backwardPortHex.substring(2,4)+backwardPortHex.substring(0,2)
-	thePort = java.lang.Integer.parseInt(assembledPortHex, 16);
+	var backwardPortHex = java.lang.Integer.toHexString(java.lang.Integer.parseInt(portChunk));
+	var assembledPortHex = backwardPortHex.substring(2,4)+backwardPortHex.substring(0,2)
+	var thePort = java.lang.Integer.parseInt(assembledPortHex, 16);
 	return(thePort)
 }
 

@@ -142,7 +142,7 @@ function scan(as, msg, param, value) {
 		max_attacks = 24
 	}
 
-	for (i in attacks) {
+	for (var i in attacks) {
 		// Dont exceed recommended number of attacks for strength
 		// feel free to disable this locally ;)
 		if (i > max_attacks) {
@@ -167,7 +167,7 @@ function scan(as, msg, param, value) {
 
 		var body = msg.getResponseBody().toString()
 		var re = new RegExp(evidence.join("|"), "i")
-		found = body.match(re)
+		var found = body.match(re)
 		if (found) {	// Change to a test which detects the vulnerability
 			raiseAlert(as, msg, param, attacks[i], found)
 			// Only raise one alert per param

@@ -42,23 +42,23 @@ occurence may indicate that similar backups or alternatives are available elsewh
 site or app.'
 
 function scanNode(as, msg) {
-	origMsg = msg;
-	origURL = origMsg.getRequestHeader().getURI().toString();
-	origPath = origMsg.getRequestHeader().getURI().getPath();
+	var origMsg = msg;
+	var origURL = origMsg.getRequestHeader().getURI().toString();
+	var origPath = origMsg.getRequestHeader().getURI().getPath();
 
 	//Check if no path or root slash so skip i.e.: http://example.com/
 	if(origPath==null || origPath.length()==1) {
 		return;
 	}
 
-	for(idx in mutationStrings) {
+	for (var idx in mutationStrings) {
 		if(as.isStop()) { //Check if the user stopped the scan
 			return;
 		}
 		msg = origMsg.cloneRequest(); // Copy requests before reusing them
 		msg.getRequestHeader().getURI().setPath(mutate(msg, '.'+mutationStrings[idx])); //TODO: handle seperators other than period
 	
-		newURL=msg.getRequestHeader().getURI().toString();
+		var newURL=msg.getRequestHeader().getURI().toString();
 		if(newURL.equals(origURL)) { // Don't bother if no change (perhaps the user alerady proxied a backup/alternative)
 			return;
 		}
@@ -66,7 +66,7 @@ function scanNode(as, msg) {
 		// sendAndReceive(msg, followRedirect, handleAntiCSRFtoken)
 		as.sendAndReceive(msg, false, false);
 
-		statusCode=msg.getResponseHeader().getStatusCode();
+		var statusCode=msg.getResponseHeader().getStatusCode();
 		switch(true) {
 			case (statusCode==200):
 				if(msg.getResponseBody().toString().contains(customErrorString)) {
@@ -91,11 +91,11 @@ function scan(as, msg, param, value) {
 }
 
 function mutate(msg, mutationString) {
-	path = msg.getRequestHeader().getURI().getPath(); //getURI might include query, might need getPath/setPath
+	var path = msg.getRequestHeader().getURI().getPath(); //getURI might include query, might need getPath/setPath
 
 	if(path.toString().endsWith('/')) { //Non-root slash (root slash was skipped earlier)
-		trimmedPath=path.substring(0, path.length()-1);//Everything but the final slash
-		newPath = trimmedPath+mutationString+'/';
+		var trimmedPath=path.substring(0, path.length()-1);//Everything but the final slash
+		var newPath = trimmedPath+mutationString+'/';
 		return(newPath);
 	} else { //File
 		newPath=path+mutationString;
@@ -104,7 +104,7 @@ function mutate(msg, mutationString) {
 }
 
 function raiseAlert(wasSuccess, msg, origMsg, as) {
-	url = msg.getRequestHeader().getURI().toString()
+	var url = msg.getRequestHeader().getURI().toString()
 	if (wasSuccess==true) { //200
 		as.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, 
 			'', '', '', alertSoln, '', cweId, wascId, msg);

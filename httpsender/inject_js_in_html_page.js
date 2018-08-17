@@ -11,11 +11,11 @@
 FILE = '/tmp/test.js'
 
 function loadScriptFromFile(file) {
-    Files = Java.type('java.nio.file.Files');
-    Paths = Java.type('java.nio.file.Paths');
-    String = Java.type('java.lang.String');
+    var Files = Java.type('java.nio.file.Files');
+    var Paths = Java.type('java.nio.file.Paths');
+    var String = Java.type('java.lang.String');
 
-    filePath = Paths.get(file);
+    var filePath = Paths.get(file);
     return new String(Files.readAllBytes(filePath), 'UTF-8');
 }
 
@@ -24,14 +24,14 @@ function sendingRequest(msg, initiator, helper) {}
 function responseReceived(msg, initiator, helper) {
     if (initiator != 1) { return; }
 
-    body = msg.getResponseBody();
-    bodyAsStr = body.toString();
-    header = msg.getResponseHeader();
+    var body = msg.getResponseBody();
+    var bodyAsStr = body.toString();
+    var header = msg.getResponseHeader();
 
-    xRequestedWith = msg.getRequestHeader().getHeader('X-Requested-With');
-    contentType = header.getHeader('Content-Type');
-    contentTypeRegex = new RegExp(/text\/html/g);
-    indexOfHead = bodyAsStr.indexOf('<head>');
+    var xRequestedWith = msg.getRequestHeader().getHeader('X-Requested-With');
+    var contentType = header.getHeader('Content-Type');
+    var contentTypeRegex = new RegExp(/text\/html/g);
+    var indexOfHead = bodyAsStr.indexOf('<head>');
 
     if (!contentTypeRegex.test(contentType)
         || xRequestedWith == 'XMLHttpRequest'
@@ -39,10 +39,10 @@ function responseReceived(msg, initiator, helper) {
         return;
     }
 
-    SCRIPT = '<script>' + loadScriptFromFile(FILE) + '</script>';
-    index = indexOfHead + '<head>'.length();
+    var SCRIPT = '<script>' + loadScriptFromFile(FILE) + '</script>';
+    var index = indexOfHead + '<head>'.length();
 
-    newBody = bodyAsStr.slice(0, index) + SCRIPT + bodyAsStr.slice(index);
+    var newBody = bodyAsStr.slice(0, index) + SCRIPT + bodyAsStr.slice(index);
 
     msg.setResponseBody(newBody);
     header.setContentLength(msg.getResponseBody().length());

@@ -26,7 +26,7 @@ function proxyResponse(msg) {
 		// set CSP header
 		print("Setting CSP header...");
 		var val = "default-src 'self' "; // TODO: INSERT YOUR POLICY HERE 
-		httpHeader = msg.getResponseHeader();
+		var httpHeader = msg.getResponseHeader();
 		httpHeader.setHeader("Content-Security-Policy-Report-Only", val);
 		// test: httpHeader.setHeader("X-XSS-Protection", "1; mode=block")
 		msg.setResponseHeader(httpHeader);
