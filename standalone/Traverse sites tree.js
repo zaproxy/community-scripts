@@ -4,10 +4,9 @@
 // They are only evaluated when you run them. 
 
 function listChildren(node, level) {
-    var indentation = "";
-    for (var i=0;i<level;i++) indentation += "    ";
-    for (var j=0;j<node.getChildCount();j++) {
-        print(indentation + node.getChildAt(j).getNodeName());
+    var j;
+    for (j=0;j<node.getChildCount();j++) {
+        print(Array(level+1).join("    ") + node.getChildAt(j).getNodeName());
         listChildren(node.getChildAt(j), level+1);
     }
 }
