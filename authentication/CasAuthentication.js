@@ -40,14 +40,14 @@ function authenticate(helper, paramsValues, credentials) {
     var casInputValues = getCASInputValues(get.getResponseBody().toString());
     
     // Build the request body using the credentials values and the CAS values obtained from the first request
-    requestBody  = "username="   + encodeURIComponent(credentials.getParam("username"));
+    var requestBody  = "username="   + encodeURIComponent(credentials.getParam("username"));
     requestBody += "&password="  + encodeURIComponent(credentials.getParam("password"));
     requestBody += "&lt="        + encodeURIComponent(casInputValues["lt"]);
     requestBody += "&execution=" + encodeURIComponent(casInputValues["execution"]);
     requestBody += "&_eventId="  + encodeURIComponent(casInputValues["_eventId"]);
     
     // Add any extra post data provided
-    extraPostData = paramsValues.get("extraPostData");
+    var extraPostData = paramsValues.get("extraPostData");
     if (extraPostData != null && !extraPostData.trim().isEmpty()) { 
         requestBody += "&" + extraPostData.trim();
     }
@@ -90,7 +90,7 @@ function authenticate(helper, paramsValues, credentials) {
     client.getParams().setParameter(HttpClientParams.ALLOW_CIRCULAR_REDIRECTS, true);
     
     // Perform a GET request on the protected pages to avoid redirects during the scan
-    for (index in protectedPages) {
+    for (var index in protectedPages) {
         var request = helper.prepareMessage();
         request.setRequestHeader(new HttpRequestHeader(HttpRequestHeader.GET, new URI(protectedPages[index], false), HttpHeader.HTTP10));
         helper.sendAndReceive(request, true);

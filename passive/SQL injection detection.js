@@ -2,11 +2,11 @@
 
 function scan(ps, msg, src)
 {
-    url = msg.getRequestHeader().getURI().toString();
-    body = msg.getResponseBody().toString()
-    alertRisk = [0,1,2,3,4] //1=informational, 2=low, 3=medium, 4=high
-    alertReliability = [0,1,2,3,4] //0=fp,1=low,2=medium,3=high,4=confirmed
-    alertTitle = ["MySQL error Disclosed (script)",
+    var url = msg.getRequestHeader().getURI().toString();
+    var body = msg.getResponseBody().toString()
+    var alertRisk = [0,1,2,3,4] //1=informational, 2=low, 3=medium, 4=high
+    var alertReliability = [0,1,2,3,4] //0=fp,1=low,2=medium,3=high,4=confirmed
+    var alertTitle = ["MySQL error Disclosed (script)",
 		  "Postgresql error Disclosed (script)",
 		  "MSSQL error Disclosed (script)",
 		  "Microsoft Access error Disclosed (script)",
@@ -21,7 +21,7 @@ function scan(ps, msg, src)
 		  "Frontbase error Disclosed (script)",
 		  "HSQLDB error Disclosed (script)",
 		  ""]
-    alertDesc = ["A MySQL error was discovered.",
+    var alertDesc = ["A MySQL error was discovered.",
 		 "A Postgresql error was discovered.",
 		 "A MSSQL error was discovered.",
 		 "A Microsoft Access error was discovered.",
@@ -36,30 +36,31 @@ function scan(ps, msg, src)
 		 "A Frontbase error was discovered",
 		 "A HSQLDB error was discovered",
 		""]
-    alertSolution = ["Ensure proper sanitisation is done on the server side, or don't. I don't care.",
+    var alertSolution = ["Ensure proper sanitisation is done on the server side, or don't. I don't care.",
 		    ""]
-    cweId = [0,1]
-    wascId = [0,1]
+    var cweId = [0,1]
+    var wascId = [0,1]
 
-    mysql = /(SQL syntax.*MySQL|Warning.*mysql_.*|MySqlException \(0x|valid MySQL result|check the manual that corresponds to your (MySQL|MariaDB) server version|MySqlClient\.|com\.mysql\.jdbc\.exceptions)/g
-    postgresql = /(PostgreSQL.*ERROR|Warning.*\Wpg_.*|valid PostgreSQL result|Npgsql\.|PG::SyntaxError:|org\.postgresql\.util\.PSQLException|ERROR:\s\ssyntax error at or near)/g
-    mssql = /(Driver.* SQL[\-\_\ ]*Server|OLE DB.* SQL Server|\bSQL Server.*Driver|Warning.*mssql_.*|\bSQL Server.*[0-9a-fA-F]{8}|[\s\S]Exception.*\WSystem\.Data\.SqlClient\.|[\s\S]Exception.*\WRoadhouse\.Cms\.|Microsoft SQL Native Client.*[0-9a-fA-F]{8})/g
-    msaccess = /(Microsoft Access (\d+ )?Driver|JET Database Engine|Access Database Engine|ODBC Microsoft Access)/g
-    oracle = /(\bORA-\d{5}|Oracle error|Oracle.*Driver|Warning.*\Woci_.*|Warning.*\Wora_.*)/g
-    ibmdb2 = /(CLI Driver.*DB2|DB2 SQL error|\bdb2_\w+\(|SQLSTATE.+SQLCODE)/g
-    informix = /(Exception.*Informix)/g
-    firebird = /(Dynamic SQL Error|Warning.*ibase_.*)/g
-    sqlite = /(SQLite\/JDBCDriver|SQLite.Exception|System.Data.SQLite.SQLiteException|Warning.*sqlite_.*|Warning.*SQLite3::|\[SQLITE_ERROR\])/g
-	sapdb = /(SQL error.*POS([0-9]+).*|Warning.*maxdb.*)/g
-	sybase = /(Warning.*sybase.*|Sybase message|Sybase.*Server message.*|SybSQLException|com\.sybase\.jdbc)/g
-	ingress = /(Warning.*ingres_|Ingres SQLSTATE|Ingres\W.*Driver)/g
-	frontbase = /(Exception (condition )?\d+. Transaction rollback.)/g
-	hsqldb = /(org\.hsqldb\.jdbc|Unexpected end of command in statement \[|Unexpected token.*in statement \[)/g
+    var mysql = /(SQL syntax.*MySQL|Warning.*mysql_.*|MySqlException \(0x|valid MySQL result|check the manual that corresponds to your (MySQL|MariaDB) server version|MySqlClient\.|com\.mysql\.jdbc\.exceptions)/g
+    var postgresql = /(PostgreSQL.*ERROR|Warning.*\Wpg_.*|valid PostgreSQL result|Npgsql\.|PG::SyntaxError:|org\.postgresql\.util\.PSQLException|ERROR:\s\ssyntax error at or near)/g
+    var mssql = /(Driver.* SQL[\-\_\ ]*Server|OLE DB.* SQL Server|\bSQL Server.*Driver|Warning.*mssql_.*|\bSQL Server.*[0-9a-fA-F]{8}|[\s\S]Exception.*\WSystem\.Data\.SqlClient\.|[\s\S]Exception.*\WRoadhouse\.Cms\.|Microsoft SQL Native Client.*[0-9a-fA-F]{8})/g
+    var msaccess = /(Microsoft Access (\d+ )?Driver|JET Database Engine|Access Database Engine|ODBC Microsoft Access)/g
+    var oracle = /(\bORA-\d{5}|Oracle error|Oracle.*Driver|Warning.*\Woci_.*|Warning.*\Wora_.*)/g
+    var ibmdb2 = /(CLI Driver.*DB2|DB2 SQL error|\bdb2_\w+\(|SQLSTATE.+SQLCODE)/g
+    var informix = /(Exception.*Informix)/g
+    var firebird = /(Dynamic SQL Error|Warning.*ibase_.*)/g
+    var sqlite = /(SQLite\/JDBCDriver|SQLite.Exception|System.Data.SQLite.SQLiteException|Warning.*sqlite_.*|Warning.*SQLite3::|\[SQLITE_ERROR\])/g
+	var sapdb = /(SQL error.*POS([0-9]+).*|Warning.*maxdb.*)/g
+	var sybase = /(Warning.*sybase.*|Sybase message|Sybase.*Server message.*|SybSQLException|com\.sybase\.jdbc)/g
+	var ingress = /(Warning.*ingres_|Ingres SQLSTATE|Ingres\W.*Driver)/g
+	var frontbase = /(Exception (condition )?\d+. Transaction rollback.)/g
+	var hsqldb = /(org\.hsqldb\.jdbc|Unexpected end of command in statement \[|Unexpected token.*in statement \[)/g
 
 	if (mysql.test(body))
 	  {
 	    mysql.lastIndex = 0
 	    var foundmysql = []
+	    var comm
             while (comm = mysql.exec(body))
 	      {
                foundmysql.push(comm[0]);
@@ -151,7 +152,7 @@ function scan(ps, msg, src)
 	if (sapdb.test(body))
 	  {
 	    sapdb.lastIndex = 0
-	    var foundvbull = []
+	    var foundsapdb = []
             while (comm = sapdb.exec(body))
 	      {
                foundsapdb.push(comm[0]);

@@ -38,7 +38,7 @@ function parseParameters(helper, msg) {
 function setParameter(helper, msg, param, value, escaped) {
     
     var pos=-1;
-    for each (p in helper.getParamList()) { 
+    for each (var p in helper.getParamList()) { 
     // Will fail to properly position if there are multiple occurrences of the same name
         if (p.getName() == param) {
             pos = p.getPosition();

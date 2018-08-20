@@ -14,7 +14,7 @@ layers of objects, lists and strings seem to work as intended.
 
 function parseParameters(helper, msg) {
 	//we're only interested in JSON requests with non-empty POST bodies
-	header = msg.getRequestHeader()
+	var header = msg.getRequestHeader()
 	if(!header.getHeader("Content-Type")
 		|| !header.getHeader("Content-Type").trim().equalsIgnoreCase("application/json")
 		|| header.getMethod() != "POST"
@@ -23,9 +23,9 @@ function parseParameters(helper, msg) {
 		return;
 	}
 
-	body = msg.getRequestBody().toString();
+	var body = msg.getRequestBody().toString();
 	try{
-		obj = JSON.parse(body);
+		var obj = JSON.parse(body);
 	}
 	catch(err){
 		print("Parsing message body failed: " + err.message);
@@ -42,7 +42,7 @@ function recursive_parse(helper, obj, path){
 		//list of keys that act as the JSON path to the input vector
 		helper.addParamPost(path, obj);
 	}else {
-		for (k in obj){
+		for (var k in obj){
 			recursive_parse(helper, obj[k], path + "." + k)
 		}
 	}
@@ -50,9 +50,9 @@ function recursive_parse(helper, obj, path){
 }
 function setParameter(helper, msg, param, value, escaped) {
 	try{
-		obj = JSON.parse(msg.getRequestBody().toString());
+		var obj = JSON.parse(msg.getRequestBody().toString());
 		//get the path from the parameter name, ignore the "Object"-part
-		path = param.split('.').slice(1);
+		var path = param.split('.').slice(1);
 		//this may fail if "param" has been edited since parsing
 		recursive_set(obj, path, value);
 	}

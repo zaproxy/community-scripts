@@ -37,7 +37,7 @@ function printAlert(alert) {
     // existing alerts is missing then plugin (below) will be null, and hence scanner will end-up being empty
 
     if (alert.getSource() == Alert.Source.ACTIVE) {
-        plugin = pf.getLoadedPlugin(alert.getPluginId());
+        var plugin = pf.getLoadedPlugin(alert.getPluginId());
         if (plugin != null) {
             scanner = plugin.getName();
         }

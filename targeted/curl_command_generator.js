@@ -4,23 +4,23 @@
 //author:@haseebeqx
 
 function invokeWith(msg) {
-	string = "curl -i -s -k -X  '"+msg.getRequestHeader().getMethod()+"'  \\\n";
-	header = msg.getRequestHeader().getHeadersAsString();
+	var string = "curl -i -s -k -X  '"+msg.getRequestHeader().getMethod()+"'  \\\n";
+	var header = msg.getRequestHeader().getHeadersAsString();
 	header = header.split(msg.getRequestHeader().getLineDelimiter());
-	for(i=0;i<header.length;i++){
+	for(var i=0;i<header.length;i++){
 		//blacklisting Host (other blacklisting should also specify here
-		keyval = header[i].split(":");
+		var keyval = header[i].split(":");
 		if(keyval[0].trim() != "Host")
 			string += " -H '"+header[i].trim()+"' ";
 	}
 	string += " \\\n";
-	body = msg.getRequestBody().toString();
+	var body = msg.getRequestBody().toString();
 	if(body.length() != 0){
 		string += "--data-binary $'"+addSlashes(body)+"' \\\n";
 	}
 	string += "'"+msg.getRequestHeader().getURI().toString()+"'";
-	selected = new java.awt.datatransfer.StringSelection(string);
-	clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+	var selected = new java.awt.datatransfer.StringSelection(string);
+	var clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
 	clipboard.setContents(selected,null);
 	print (string);
 }

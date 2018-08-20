@@ -25,7 +25,7 @@ function deleteThis(node) {
 	// change this to match any other criteria you want!
 	if (node.getChildCount() == 0) {
 		// only remove child nodes
-		href = node.getHistoryReference()
+		var href = node.getHistoryReference()
 		if (href != null) {
 			if (href.getStatusCode() == 302) {
 				return true
@@ -39,8 +39,8 @@ function invokeWith(msg) {
 	// Debugging can be done using print like this
 	//print('invokeWith called for url=' + msg.getRequestHeader().getURI().toString())
 
-	sitestree = org.parosproxy.paros.model.Model.getSingleton().getSession().getSiteTree()
-	node = sitestree.findNode(msg, true)
+	var sitestree = org.parosproxy.paros.model.Model.getSingleton().getSession().getSiteTree()
+	var node = sitestree.findNode(msg, true)
 
 	if (node != null) {
 		//print('found node: ' + node.getHierarchicNodeName())
