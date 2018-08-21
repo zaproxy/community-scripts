@@ -1,0 +1,19 @@
+* text=auto
+
+*.conf text
+*.gradle text
+*.gradle.kts text
+*.java text
+*.js text
+*.md text
+*.properties text
+*.py text
+*.txt text
+*.zest text
+*.zst text
+
+*.bat text eol=crlf
+*.sh text eol=lf
+gradlew text eol=lf
+
+*.jar binary
