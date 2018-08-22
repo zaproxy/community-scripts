@@ -52,7 +52,7 @@ function scan(ps, msg, src) {
 		var keyPossibilities1 = new Array(4);
 		var thisBlockAppearsValid = 0;
 		
-		for (keyIdx = 0; keyIdx < 4; keyIdx++) {
+		for (var keyIdx = 0; keyIdx < 4; keyIdx++) {
 			keyPossibilities1[keyIdx] = new Array(96);
 			for (var possibleIdx = 0; possibleIdx < 96; possibleIdx++) {
 				keyPossibilities1[keyIdx][possibleIdx] = 1;
