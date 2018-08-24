@@ -83,7 +83,7 @@ class VerifyScripts {
 
     private static Stream<Arguments> testData(String extension, Consumer<Reader> parser) {
         List<Path> testFiles = getFilesWithExtension(extension);
-        assertThat(files).as("No scripts found with extension %s", extension).isNotEmpty();
+        assertThat(testFiles).as("No scripts found with extension %s", extension).isNotEmpty();
         return testFiles
                 .stream()
                 .map(
