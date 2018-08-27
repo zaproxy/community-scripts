@@ -37,9 +37,7 @@ Export Format:
 """
 
 from org.parosproxy.paros.control import Control
-from org.parosproxy.paros.extension.history import ExtensionHistory
 from org.zaproxy.zap.extension.websocket import ExtensionWebSocket
-from org.zaproxy.zap.extension.websocket import WebSocketChannelDTO
 from org.zaproxy.zap.extension.websocket import WebSocketMessageDTO
 from org.zaproxy.zap.extension.websocket.utility import InvalidUtf8Exception
 

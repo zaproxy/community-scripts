@@ -1,7 +1,6 @@
 //Template for GUI creation
 
 var absframe = Java.type("org.parosproxy.paros.view.AbstractFrame");
-var jpanel = Java.type("javax.swing.JPanel");
 var jlabel = Java.type("javax.swing.JLabel");
 var jmenubar = Java.type("javax.swing.JMenuBar");
 var jmenu = Java.type("javax.swing.JMenu");
