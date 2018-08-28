@@ -3,7 +3,6 @@
 from __future__ import print_function
 import os
 import sys
-import subprocess
 import traceback
 
 def parse_results (site, date, is_summary_file, file):

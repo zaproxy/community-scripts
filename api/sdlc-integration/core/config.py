@@ -9,7 +9,6 @@ target_auth = {
 	"pw": "bar"
 }
 
-import getpass
 # Create prefilled credentials for Jira bugtacker
 jira_auth = {
 	"user": "foo",

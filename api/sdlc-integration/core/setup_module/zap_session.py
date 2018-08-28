@@ -11,7 +11,6 @@ import getopt
 import logging
 import sys
 import urlparse
-from zapv2 import ZAPv2
 import core.shared as shared
 
 logging.basicConfig(level=logging.INFO)

@@ -4,7 +4,6 @@ Template for GUI creation - ported for Python/Jython
 """ 
 
 from org.parosproxy.paros.view import AbstractFrame;
-from javax.swing import JPanel;
 from javax.swing import JLabel;
 from javax.swing import JMenuBar;
 from javax.swing import JMenu;
