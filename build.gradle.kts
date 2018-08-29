@@ -20,7 +20,12 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.2.0")
 
     testImplementation("org.assertj:assertj-core:3.11.0")
+    testImplementation("org.apache.commons:commons-lang3:3.8")
 
+    testRuntimeOnly("org.zaproxy:zap:2.7.0")
+
+    testImplementation("org.codehaus.groovy:groovy-all:2.4.14")
+    testImplementation("org.jruby:jruby-complete:1.7.4")
     testImplementation("org.python:jython-standalone:2.7.1")
 }
 

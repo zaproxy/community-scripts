@@ -34,17 +34,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.script.Compilable;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import org.apache.commons.lang3.SystemUtils;
+import org.codehaus.groovy.jsr223.GroovyScriptEngineFactory;
+import org.jruby.embed.jsr223.JRubyEngineFactory;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.python.core.Options;
 import org.python.jsr223.PyScriptEngineFactory;
 
 /** Verifies that the scripts are parsed without errors. */
@@ -58,13 +63,32 @@ class VerifyScripts {
     }
 
     @ParameterizedTest(name = "{1}")
-    @MethodSource({"scriptsJavaScript", "scriptsPython"})
+    @MethodSource("allScripts")
     void shouldParseScript(
             Consumer<Reader> parser, @SuppressWarnings("unused") String script, Path path)
             throws Exception {
         try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
             parser.accept(reader);
         }
+    }
+
+    @AfterAll
+    private static void verifyAllFilesTested() {
+        assertThat(files).as("Not all files were tested: %s", files).isEmpty();
+    }
+
+    private static Stream<Arguments> allScripts() {
+        return Stream.of(
+                        scriptsGroovy(),
+                        scriptsJavaScript(),
+                        scriptsPython(),
+                        scriptsRuby(),
+                        scriptsZest())
+                .flatMap(s -> s);
+    }
+
+    private static Stream<Arguments> scriptsGroovy() {
+        return testData(".groovy", (Compilable) new GroovyScriptEngineFactory().getScriptEngine());
     }
 
     private static Stream<Arguments> scriptsJavaScript() {
@@ -74,7 +98,22 @@ class VerifyScripts {
     }
 
     private static Stream<Arguments> scriptsPython() {
+        Options.importSite = false;
         return testData(".py", (Compilable) new PyScriptEngineFactory().getScriptEngine());
+    }
+
+    private static Stream<Arguments> scriptsRuby() {
+        if (!SystemUtils.IS_JAVA_1_8) {
+            // Ref: https://github.com/zaproxy/zaproxy/issues/3944
+            return Stream.empty();
+        }
+        return testData(".rb", (Compilable) new JRubyEngineFactory().getScriptEngine());
+    }
+
+    private static Stream<Arguments> scriptsZest() {
+        // Just collect the files for now (Issue 114).
+        getFilesWithExtension(".zst");
+        return Stream.empty();
     }
 
     private static Stream<Arguments> testData(String extension, Compilable engine) {
@@ -82,9 +121,7 @@ class VerifyScripts {
     }
 
     private static Stream<Arguments> testData(String extension, Consumer<Reader> parser) {
-        List<Path> testFiles = getFilesWithExtension(extension);
-        assertThat(testFiles).as("No scripts found with extension %s", extension).isNotEmpty();
-        return testFiles
+        return getFilesWithExtension(extension)
                 .stream()
                 .map(
                         e ->
@@ -105,9 +142,16 @@ class VerifyScripts {
     }
 
     private static List<Path> getFilesWithExtension(String extension) {
-        return files.stream()
-                .filter(f -> f.getFileName().toString().endsWith(extension))
-                .collect(Collectors.toList());
+        List<Path> filteredFiles = new ArrayList<>();
+        files.removeIf(
+                f -> {
+                    if (f.getFileName().toString().endsWith(extension)) {
+                        filteredFiles.add(f);
+                        return true;
+                    }
+                    return false;
+                });
+        return filteredFiles;
     }
 
     private static void readFiles() throws Exception {
@@ -124,11 +168,18 @@ class VerifyScripts {
 
                     @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-                        files.add(file);
+                        if (!isExpectedNonScriptFile(file)) {
+                            files.add(file);
+                        }
                         return FileVisitResult.CONTINUE;
                     }
                 });
 
         Collections.sort(files);
+    }
+
+    private static boolean isExpectedNonScriptFile(Path file) {
+        String fileName = file.getFileName().toString().toLowerCase(Locale.ROOT);
+        return fileName.endsWith(".md");
     }
 }
