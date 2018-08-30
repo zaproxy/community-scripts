@@ -55,7 +55,7 @@ var scriptTypes = listOf(
         "websocketfuzzerprocessor")
 
 val scriptsDir = layout.buildDirectory.dir("scripts")
-val copyScriptsTask by tasks.creating(Copy::class) {
+val syncScriptsDirTask by tasks.creating(Sync::class) {
     into(scriptsDir.get().dir(project.name))
 
     scriptTypes.forEach {
@@ -71,7 +71,7 @@ java {
 
     sourceSets {
         "main" {
-            output.dir(mapOf("builtBy" to copyScriptsTask), scriptsDir)
+            output.dir(mapOf("builtBy" to syncScriptsDirTask), scriptsDir)
         }
     }
 }
