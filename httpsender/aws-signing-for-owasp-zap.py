@@ -7,7 +7,7 @@
 # For AWS Signing Process (aws4): https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
 # Based On: https://docs.aws.amazon.com/general/latest/gr/sigv4-signed-request-examples.html
 
-import sys, time, hashlib, hmac, urlparse, urllib
+import time, hashlib, hmac, urlparse, urllib
 
 def sign(key, msg):
     return hmac.new(key, msg.encode('utf-8'), hashlib.sha256).digest()
