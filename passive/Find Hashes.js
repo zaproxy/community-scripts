@@ -35,14 +35,14 @@ function scan(ps, msg, src)
 
 	// regex must appear within /( and )/g
 
-    var wordpress = /($P$S{31})/g
-    var sha512 = /($6$w{8}S{86})/g
-    var phpbb3 = /($H$S{31})/g
-    var joomla = /(([0-9a-zA-Z]{32}):(w{16,32}))/g
+    var wordpress = /(\$P\$\S{31})/g
+    var sha512 = /(\$6\$\w{8}\S{86})/g
+    var phpbb3 = /(\$H\$\S{31})/g
+    var joomla = /(([0-9a-zA-Z]{32}):(\w{16,32}))/g
     var mysqlold = /([0-7][0-9a-f]{7}[0-7][0-9a-f]{7})/g
-    var drupal = /($S$S{52})/g
-    var blowfish = /($2a$8$(.){75})/g
-    var vbull = /(([0-9a-zA-Z]{32}):(S{3,32}))/g //vbulletin
+    var drupal = /(\$\S\$\S{52})/g
+    var blowfish = /(\$2a\$8\$(.){75})/g
+    var vbull = /(([0-9a-zA-Z]{32}):(\S{3,32}))/g //vbulletin
     var md45 = /([a-f0-9]{32})/g //md4 and md5 and a bunch of others like tiger
 	
 	if (wordpress.test(body)) 
