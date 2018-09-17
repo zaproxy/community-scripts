@@ -29,12 +29,12 @@ function authenticate(helper, paramsValues, credentials) {
 
     // GET with redirects
     doGet(host + firstGet, helper);
-    statusCode = msg.getResponseHeader().getStatusCode();
+    var statusCode = msg.getResponseHeader().getStatusCode();
     while (statusCode == 302) {
         // Add the request/response to ZAP history tab
         AuthenticationHelper.addAuthMessageToHistory(msg);
         // put host before in case of redirect with URI
-        redirectUrl = host + msg.getResponseHeader().getHeader('Location');
+        var redirectUrl = host + msg.getResponseHeader().getHeader('Location');
         doLog("Redirecting to: " + redirectUrl);
         doGet(redirectUrl, helper);
         statusCode = msg.getResponseHeader().getStatusCode();
@@ -47,14 +47,14 @@ function authenticate(helper, paramsValues, credentials) {
 
 
 function doGet(url, helper) {
-    requestUri = new URI(url, false);
-    requestMethod = HttpRequestHeader.GET;
+    var requestUri = new URI(url, false);
+    var requestMethod = HttpRequestHeader.GET;
 
     // Build the GET request header
-    requestHeader = new HttpRequestHeader(requestMethod, requestUri, HttpHeader.HTTP10);
+    var requestHeader = new HttpRequestHeader(requestMethod, requestUri, HttpHeader.HTTP10);
 
     // Build the GET request message
-    msg = helper.prepareMessage();
+    var msg = helper.prepareMessage();
 
     msg.setRequestHeader(requestHeader);
     msg.getRequestHeader().setContentLength(msg.getRequestBody().length());
