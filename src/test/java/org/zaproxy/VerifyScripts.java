@@ -22,6 +22,7 @@ package org.zaproxy;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
@@ -42,6 +43,7 @@ import javax.script.Compilable;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import org.apache.commons.lang3.SystemUtils;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.codehaus.groovy.jsr223.GroovyScriptEngineFactory;
 import org.jruby.embed.jsr223.JRubyEngineFactory;
 import org.junit.jupiter.api.AfterAll;
@@ -54,6 +56,8 @@ import org.python.jsr223.PyScriptEngineFactory;
 
 /** Verifies that the scripts are parsed without errors. */
 class VerifyScripts {
+
+    private static final int SCRIPT_TYPE_DIR_DEPTH = 3;
 
     private static List<Path> files;
 
@@ -161,19 +165,43 @@ class VerifyScripts {
                         .findFirst();
         assertThat(path).as("The scripts directory was not found on the classpath.").isPresent();
 
+        List<Path> unexpectedFiles = new ArrayList<>();
+        MutableInt depth = new MutableInt();
+
         files = new ArrayList<>();
         Files.walkFileTree(
                 Paths.get(path.get()),
                 new SimpleFileVisitor<Path>() {
 
                     @Override
+                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs)
+                            throws IOException {
+                        depth.increment();
+                        return FileVisitResult.CONTINUE;
+                    }
+
+                    @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
+                        if (depth.intValue() != SCRIPT_TYPE_DIR_DEPTH) {
+                            unexpectedFiles.add(file);
+                            return FileVisitResult.CONTINUE;
+                        }
+
                         if (!isExpectedNonScriptFile(file)) {
                             files.add(file);
                         }
                         return FileVisitResult.CONTINUE;
                     }
+
+                    @Override
+                    public FileVisitResult postVisitDirectory(Path dir, IOException exc)
+                            throws IOException {
+                        depth.decrement();
+                        return FileVisitResult.CONTINUE;
+                    }
                 });
+
+        assertThat(unexpectedFiles).as("Files found not in a script type directory.").isEmpty();
 
         Collections.sort(files);
     }
