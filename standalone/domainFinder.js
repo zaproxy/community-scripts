@@ -74,7 +74,7 @@ function nslookup(lookupItem, type) {
         host = java.net.InetAddress.getByName(lookupItem + DOMAIN);
         foundFwd.push(host.getHostName());
         printHost(host);
-        new_ip=host.getHostAddress();
+        var new_ip=host.getHostAddress();
         found_ips.push(new_ip);
       } catch (e) { return }
   }

@@ -20,40 +20,41 @@
 
 function scan(ps, msg, src) {
     // Both can be true, just know that you'll see duplication.
-    RESULT_PER_FINDING = new Boolean(0) // If you want to see results on a per comment basis (i.e.: A single URL may be listed more than once), set this to true (1)
-    RESULT_PER_URL = new Boolean(1) // If you want to see results on a per URL basis (i.e.: all comments for a single URL will be grouped together), set this to true (1)
+    var RESULT_PER_FINDING = new Boolean(0) // If you want to see results on a per comment basis (i.e.: A single URL may be listed more than once), set this to true (1)
+    var RESULT_PER_URL = new Boolean(1) // If you want to see results on a per URL basis (i.e.: all comments for a single URL will be grouped together), set this to true (1)
 	
     // lets set up some details we will need for alerts later if we find some comments
-    alertRisk = 0
-    alertReliability = 2
-    alertTitle = 'Information Exposure Through HTML Comments (script)'
-    alertDesc = 'While adding general comments is very useful, \
+    var alertRisk = 0
+    var alertReliability = 2
+    var alertTitle = 'Information Exposure Through HTML Comments (script)'
+    var alertDesc = 'While adding general comments is very useful, \
 some programmers tend to leave important data, such as: filenames related to the web application, old links \
 or links which were not meant to be browsed by users, old code fragments, etc.'
-    alertSolution = 'Remove comments which have sensitive information about the design/implementation \
+    var alertSolution = 'Remove comments which have sensitive information about the design/implementation \
 of the application. Some of the comments may be exposed to the user and affect the security posture of the \
 application.'
-    cweId = 615
-    wascId = 13
-    url = msg.getRequestHeader().getURI().toString();
+    var cweId = 615
+    var wascId = 13
+    var url = msg.getRequestHeader().getURI().toString();
 
 	// this is a rough regular expression to find HTML comments
 	// regex needs to be inside /( and )/g to work
-    re = /(\<![\s]*--[\-!@#$%^&*:;ºª.,"'(){}\w\s\/\\[\]]*--[\s]*\>)/g
+    var re = /(\<![\s]*--[\-!@#$%^&*:;ºª.,"'(){}\w\s\/\\[\]]*--[\s]*\>)/g
 
     // lets check its not one of the files types that are never likely to contain stuff, like pngs and jpegs
-    contenttype = msg.getResponseHeader().getHeader("Content-Type")
-    unwantedfiletypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash']
+    var contenttype = msg.getResponseHeader().getHeader("Content-Type")
+    var unwantedfiletypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash']
 	
 	if (unwantedfiletypes.indexOf(""+contenttype) >= 0) {
 		// if we find one of the unwanted headers quit this scan, this saves time and reduces false positives
     		return
 	}else{
-        body = msg.getResponseBody().toString()
+        var body = msg.getResponseBody().toString()
         if (re.test(body)) {
             re.lastIndex = 0
             var foundComments = []
             var counter=0
+            var comm
             while (comm = re.exec(body)) {
                 if (RESULT_PER_FINDING == true) {
                     counter = counter+1;

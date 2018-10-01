@@ -1,0 +1,2 @@
+https?://(\w+\.)*example.com/account/.*
+https?://(\w+\.)*example.com/profile.*

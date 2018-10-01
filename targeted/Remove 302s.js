@@ -4,7 +4,7 @@
 // Targeted scripts can only be invoked by you, the user, eg via a right-click option on the Sites or History tabs
 
 function recurseDown(sitestree, node) {
-	//println('recurseDown node: ' + node.getHierarchicNodeName() + " " + node.getChildCount())
+	//print('recurseDown node: ' + node.getHierarchicNodeName() + " " + node.getChildCount())
 	// Loop down through the children first
 	var j;
 	for (j=0;j<node.getChildCount();j++) {
@@ -14,7 +14,7 @@ function recurseDown(sitestree, node) {
 		}
 	}
 	if (deleteThis(node)) {
-		println('Removing node: ' + node.getHierarchicNodeName())
+		print('Removing node: ' + node.getHierarchicNodeName())
 		org.zaproxy.zap.extension.history.PopupMenuPurgeSites.purge(sitestree, node)
 		return true
 	}
@@ -25,7 +25,7 @@ function deleteThis(node) {
 	// change this to match any other criteria you want!
 	if (node.getChildCount() == 0) {
 		// only remove child nodes
-		href = node.getHistoryReference()
+		var href = node.getHistoryReference()
 		if (href != null) {
 			if (href.getStatusCode() == 302) {
 				return true
@@ -36,14 +36,14 @@ function deleteThis(node) {
 }
 
 function invokeWith(msg) {
-	// Debugging can be done using println like this
-	//println('invokeWith called for url=' + msg.getRequestHeader().getURI().toString())
+	// Debugging can be done using print like this
+	//print('invokeWith called for url=' + msg.getRequestHeader().getURI().toString())
 
-	sitestree = org.parosproxy.paros.model.Model.getSingleton().getSession().getSiteTree()
-	node = sitestree.findNode(msg, true)
+	var sitestree = org.parosproxy.paros.model.Model.getSingleton().getSession().getSiteTree()
+	var node = sitestree.findNode(msg, true)
 
 	if (node != null) {
-		//println('found node: ' + node.getHierarchicNodeName())
+		//print('found node: ' + node.getHierarchicNodeName())
 		recurseDown(sitestree, node)
 	}
 
