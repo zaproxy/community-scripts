@@ -1,0 +1,106 @@
+{
+  "about": "This is for authenticating against OWASP Juice Shop",
+  "zestVersion": "0.8",
+  "title": "auth-juice-shop.zst",
+  "description": "",
+  "prefix": "",
+  "type": "StandAlone",
+  "parameters": {
+    "tokenStart": "{{",
+    "tokenEnd": "}}",
+    "tokens": {
+      "authorization": "{{auth}}",
+      "target": "http://localhost:3000"
+    },
+    "elementType": "ZestVariables"
+  },
+  "statements": [
+    {
+      "urlToken": "{{target}}/rest/user/login",
+      "data": "{\"email\":\"bob@bob.com\",\"password\":\"bobby\"}",
+      "method": "POST",
+      "headers": "Proxy-Connection: keep-alive\r\nContent-Type: application/json;charset\u003dUTF-8\r\n",
+      "response": {
+        "urlToken": "{{target}}/rest/user/login",
+        "headers": "\n",
+        "body": "",
+        "statusCode": 200,
+        "responseTimeInMs": 50,
+        "elementType": "ZestResponse"
+      },
+      "assertions": [
+        {
+          "rootExpression": {
+            "code": 200,
+            "not": false,
+            "elementType": "ZestExpressionStatusCode"
+          },
+          "elementType": "ZestAssertion"
+        }
+      ],
+      "followRedirects": true,
+      "cookies": [],
+      "index": 1,
+      "enabled": true,
+      "elementType": "ZestRequest"
+    },
+    {
+      "prefix": "token\":\"",
+      "postfix": "\",",
+      "location": "BODY",
+      "variableName": "auth",
+      "index": 2,
+      "enabled": true,
+      "elementType": "ZestAssignRegexDelimiters"
+    },
+    {
+      "message": "[!] Token below\n{{auth}}",
+      "index": 3,
+      "enabled": true,
+      "elementType": "ZestActionPrint"
+    },
+    {
+      "urlToken": "{{target}}/rest/user/whoami",
+      "data": "",
+      "method": "GET",
+      "headers": "Authorization: Bearer {{auth}}\n",
+      "response": {
+        "urlToken": "{{target}}",
+        "headers": "",
+        "body": "",
+        "statusCode": 304,
+        "responseTimeInMs": 17,
+        "elementType": "ZestResponse"
+      },
+      "assertions": [
+        {
+          "rootExpression": {
+            "code": 200,
+            "not": false,
+            "elementType": "ZestExpressionStatusCode"
+          },
+          "elementType": "ZestAssertion"
+        },
+        {
+          "rootExpression": {
+            "regex": "\\Qemail\\E",
+            "variableName": "response.body",
+            "caseExact": false,
+            "not": false,
+            "elementType": "ZestExpressionRegex"
+          },
+          "elementType": "ZestAssertion"
+        }
+      ],
+      "followRedirects": false,
+      "cookies": [],
+      "index": 4,
+      "enabled": true,
+      "elementType": "ZestRequest"
+    }
+  ],
+  "authentication": [],
+  "index": 0,
+  "enabled": true,
+  "elementType": "ZestScript"
+}

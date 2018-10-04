@@ -1,0 +1,194 @@
+{
+  "about": "For authenticating against OpenVAS Greenbone UI",
+  "zestVersion": "0.8",
+  "title": "openvas-auth.zst",
+  "description": "",
+  "prefix": "",
+  "type": "StandAlone",
+  "parameters": {
+    "tokenStart": "{{",
+    "tokenEnd": "}}",
+    "tokens": {
+      "username": "admin",
+      "password": "admin",
+      "target": "https://localhost",
+      "domain": "localhost"     
+    },
+    "elementType": "ZestVariables"
+  },
+  "statements": [
+    {
+      "urlToken": "{{target}}/login/login.html",
+      "data": "",
+      "method": "GET",
+      "headers": "Upgrade-Insecure-Requests: 1\r\n",
+      "response": {
+        "urlToken": "{{target}}/login/login.html",
+        "headers": "\n",
+        "body": "",
+        "statusCode": 200,
+        "responseTimeInMs": 277,
+        "elementType": "ZestResponse"
+      },
+      "assertions": [
+        {
+          "rootExpression": {
+            "code": 200,
+            "not": false,
+            "elementType": "ZestExpressionStatusCode"
+          },
+          "elementType": "ZestAssertion"
+        }
+      ],
+      "followRedirects": true,
+      "cookies": [],
+      "index": 1,
+      "enabled": true,
+      "elementType": "ZestRequest"
+    },
+    {
+      "urlToken": "{{target}}/omp",
+      "data": "cmd\u003dlogin\u0026text\u003d%2Fomp%3Fr%3D1\u0026login\u003dadmin\u0026password\u003dadmin",
+      "method": "POST",
+      "headers": "Origin: {{target}}\r\nUpgrade-Insecure-Requests: 1\r\nContent-Type:application/x-www-form-urlencoded\n",
+      "response": {
+        "urlToken": "{{target}}/omp",
+        "headers": "",
+        "body": "",
+        "statusCode": 303,
+        "responseTimeInMs": 148,
+        "elementType": "ZestResponse"
+      },
+      "assertions": [
+        {
+          "rootExpression": {
+            "code": 303,
+            "not": false,
+            "elementType": "ZestExpressionStatusCode"
+          },
+          "elementType": "ZestAssertion"
+        },
+        {
+          "rootExpression": {
+            "regex": "GSAD_SID\u003d0",
+            "variableName": "request.header",
+            "caseExact": false,
+            "not": true,
+            "elementType": "ZestExpressionRegex"
+          },
+          "elementType": "ZestAssertion"
+        }
+      ],
+      "followRedirects": false,
+      "cookies": [],
+      "index": 2,
+      "enabled": true,
+      "elementType": "ZestRequest"
+    },
+    {
+      "rootExpression": {
+        "code": 303,
+        "not": true,
+        "elementType": "ZestExpressionStatusCode"
+      },
+      "ifStatements": [
+        {
+          "message": "Could not authenticate",
+          "priority": "HIGH",
+          "index": 4,
+          "enabled": true,
+          "elementType": "ZestActionFail"
+        }
+      ],
+      "elseStatements": [
+        {
+          "prefix": "GSAD_SID\u003d",
+          "postfix": ";",
+          "location": "HEAD",
+          "variableName": "sessionid",
+          "index": 5,
+          "enabled": true,
+          "elementType": "ZestAssignStringDelimiters"
+        },
+        {
+          "prefix": "token\u003d",
+          "postfix": "\"",
+          "location": "BODY",
+          "variableName": "token",
+          "index": 6,
+          "enabled": true,
+          "elementType": "ZestAssignStringDelimiters"
+        },
+        {
+          "replace": "{{token}}",
+          "replacement": "token",
+          "regex": false,
+          "caseExact": false,
+          "variableName": "request.url",
+          "index": 7,
+          "enabled": true,
+          "elementType": "ZestAssignReplace"
+        },
+        {
+          "milliseconds": 200,
+          "index": 8,
+          "enabled": true,
+          "elementType": "ZestActionSleep"
+        },
+        {
+          "message": "!!!!!! {{token}} {{sessionid}}",
+          "index": 9,
+          "enabled": true,
+          "elementType": "ZestActionPrint"
+        },
+        {
+          "urlToken": "{{target}}/omp?r\u003d1\u0026token\u003d{{token}}",
+          "data": "",
+          "method": "GET",
+          "headers": "Upgrade-Insecure-Requests: 1\r\n",
+          "response": {
+            "urlToken": "{{target}}/omp?r\u003d1\u0026token\u003d99ca5a20-badd-469c-84fb-cc7ca891ce46",
+            "headers": "",
+            "body": "",
+            "statusCode": 200,
+            "responseTimeInMs": 285,
+            "elementType": "ZestResponse"
+          },
+          "assertions": [
+            {
+              "rootExpression": {
+                "code": 200,
+                "not": false,
+                "elementType": "ZestExpressionStatusCode"
+              },
+              "elementType": "ZestAssertion"
+            }
+          ],
+          "followRedirects": true,
+          "cookies": [
+            {
+              "cookieDomain": "{{domain}}",
+              "cookiePath": "/",
+              "isSecure": false,
+              "hasPathAttribute": false,
+              "hasDomainAttribute": false,
+              "cookieVersion": 0,
+              "name": "GSAD_SID",
+              "value": "{{sessionid}}"
+            }
+          ],
+          "index": 10,
+          "enabled": true,
+          "elementType": "ZestRequest"
+        }
+      ],
+      "index": 3,
+      "enabled": true,
+      "elementType": "ZestConditional"
+    }
+  ],
+  "authentication": [],
+  "index": 0,
+  "enabled": true,
+  "elementType": "ZestScript"
+}

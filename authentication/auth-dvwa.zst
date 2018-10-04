@@ -1,0 +1,169 @@
+{
+  "about": "This is for authenticating against DVWA",
+  "zestVersion": "0.8",
+  "title": "auth-dvwa.zst",
+  "description": "",
+  "prefix": "",
+  "type": "StandAlone",
+  "parameters": {
+    "tokenStart": "{{",
+    "tokenEnd": "}}",
+    "tokens": {
+      "password": "password",
+      "username": "admin",
+      "target": "http://localhost/"
+    },
+    "elementType": "ZestVariables"
+  },
+  "statements": [
+    {
+      "urlToken": "{{target}}/login.php",
+      "data": "",
+      "method": "GET",
+      "headers": "Proxy-Connection: keep-alive\r\nUpgrade-Insecure-Requests: 1\r\n",
+      "response": {
+        "urlToken": "{{target}}/login.php",
+        "headers": "",
+        "body": "",
+        "statusCode": 200,
+        "responseTimeInMs": 30,
+        "elementType": "ZestResponse"
+      },
+      "assertions": [
+        {
+          "rootExpression": {
+            "code": 200,
+            "not": false,
+            "elementType": "ZestExpressionStatusCode"
+          },
+          "elementType": "ZestAssertion"
+        },
+        {
+          "rootExpression": {
+            "regex": "\\Quser_token\\E",
+            "variableName": "response.body",
+            "caseExact": false,
+            "not": false,
+            "elementType": "ZestExpressionRegex"
+          },
+          "elementType": "ZestAssertion"
+        }
+      ],
+      "followRedirects": true,
+      "cookies": [],
+      "index": 1,
+      "enabled": true,
+      "elementType": "ZestRequest"
+    },
+    {
+      "prefix": "name\u003d\u0027user_token\u0027 value\u003d\u0027",
+      "postfix": "\u0027 /\u003e",
+      "location": "BODY",
+      "variableName": "user-token",
+      "index": 2,
+      "enabled": true,
+      "elementType": "ZestAssignStringDelimiters"
+    },
+    {
+      "message": "[auth-dwa] Token is {{user-token}}",
+      "index": 3,
+      "enabled": true,
+      "elementType": "ZestActionPrint"
+    },
+    {
+      "urlToken": "{{target}}/login.php",
+      "data": "username\u003d{{username}}\u0026password\u003d{{password}}\u0026Login\u003dLogin\u0026user_token\u003d{{user-token}}",
+      "method": "POST",
+      "headers": "",
+      "assertions": [
+        {
+          "rootExpression": {
+            "code": 200,
+            "not": false,
+            "elementType": "ZestExpressionStatusCode"
+          },
+          "elementType": "ZestAssertion"
+        }
+      ],
+      "followRedirects": true,
+      "cookies": [
+        {
+          "cookieDomain": "",
+          "cookiePath": "/",
+          "isSecure": false,
+          "hasPathAttribute": false,
+          "hasDomainAttribute": false,
+          "cookieVersion": 0,
+          "name": "security",
+          "value": "low"
+        }
+      ],
+      "index": 4,
+      "enabled": true,
+      "elementType": "ZestRequest"
+    },
+    {
+      "prefix": "PHPSESSID\u003d",
+      "postfix": ";",
+      "location": "HEAD",
+      "variableName": "phpsessid",
+      "index": 5,
+      "enabled": true,
+      "elementType": "ZestAssignStringDelimiters"
+    },
+    {
+      "message": "[auth-dwa] PHPSESSID \u003d {{phpsessid}}",
+      "index": 6,
+      "enabled": true,
+      "elementType": "ZestActionPrint"
+    },
+    {
+      "urlToken": "{{target}}index.php",
+      "data": "",
+      "method": "GET",
+      "headers": "Cookie: PHPSESSID\u003d{{phpsessid}};",
+      "assertions": [
+        {
+          "rootExpression": {
+            "code": 200,
+            "not": false,
+            "elementType": "ZestExpressionStatusCode"
+          },
+          "elementType": "ZestAssertion"
+        }
+      ],
+      "followRedirects": true,
+      "cookies": [],
+      "index": 7,
+      "enabled": true,
+      "elementType": "ZestRequest"
+    },
+    {
+      "variableName": "activeSession",
+      "script": "/opt/.ZAP/scripts/scripts/standalone/set-session.js",
+      "parameters": [
+        [
+          "sessid",
+          "PHPSESSID\u003d{{phpsessid}}"
+        ],
+        [
+          "site",
+          "{{target}}"
+        ]
+      ],
+      "index": 8,
+      "enabled": true,
+      "elementType": "ZestActionInvoke"
+    },
+    {
+      "message": "[auth-dwa] Session set \u003d {{activeSession}}",
+      "index": 9,
+      "enabled": true,
+      "elementType": "ZestActionPrint"
+    }
+  ],
+  "authentication": [],
+  "index": 0,
+  "enabled": true,
+  "elementType": "ZestScript"
+}
