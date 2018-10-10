@@ -51,7 +51,7 @@ function authenticate(helper, paramsValues, credentials) {
 
 function doGet(url, helper) {
     //decode URI. Useful when there are encoded parameters in the URI
-    requestUri = new URI(decodeURIComponent(url), false);
+    var requestUri = new URI(decodeURIComponent(url), false);
     var requestMethod = HttpRequestHeader.GET;
 
     // Build the GET request header
