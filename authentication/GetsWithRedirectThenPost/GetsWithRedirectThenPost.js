@@ -28,7 +28,7 @@ function authenticate(helper, paramsValues, credentials) {
     var firstGet = paramsValues.get("Fist get URI with leading slash, without trailing slash")
 
     // GET with redirects
-    doGet(host + firstGet, helper);
+    var msg = doGet(host + firstGet, helper);
     var statusCode = msg.getResponseHeader().getStatusCode();
     while (statusCode == 302) {
         // Add the request/response to ZAP history tab
@@ -36,22 +36,26 @@ function authenticate(helper, paramsValues, credentials) {
         // put host before in case of redirect with URI
         var redirectUrl = host + msg.getResponseHeader().getHeader('Location');
         doLog("Redirecting to: " + redirectUrl);
-        doGet(redirectUrl, helper);
+        msg = doGet(redirectUrl, helper);
         statusCode = msg.getResponseHeader().getStatusCode();
     }
 
+    // Add last get to ZAP history
+    AuthenticationHelper.addAuthMessageToHistory(msg);
+
     // Post the authentication
-    doPost(helper, paramsValues, credentials);
+    msg = doPost(helper, paramsValues, credentials);
     return msg;
 }
 
 
 function doGet(url, helper) {
-    var requestUri = new URI(url, false);
+    //decode URI. Useful when there are encoded parameters in the URI
+    requestUri = new URI(decodeURIComponent(url), false);
     var requestMethod = HttpRequestHeader.GET;
 
     // Build the GET request header
-    var requestHeader = new HttpRequestHeader(requestMethod, requestUri, HttpHeader.HTTP10);
+    var requestHeader = new HttpRequestHeader(requestMethod, requestUri, HttpHeader.HTTP11);
 
     // Build the GET request message
     var msg = helper.prepareMessage();
@@ -64,6 +68,7 @@ function doGet(url, helper) {
     // false= do not follow redirect
     helper.sendAndReceive(msg, false);
     doLog("Received response status code: " + msg.getResponseHeader().getStatusCode());
+    return msg;
 }
 
 
@@ -91,8 +96,7 @@ function doPost(helper, paramsValues, credentials) {
     // In case of redirect on the POST with the cookie not being set into the state, see TwoStepAuthentication.js
     helper.sendAndReceive(msg, true);
     doLog("Received response status code: " + msg.getResponseHeader().getStatusCode());
-    // Add the request/response to ZAP history tab
-    AuthenticationHelper.addAuthMessageToHistory(msg);
+    return msg;
 }
 
 

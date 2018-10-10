@@ -82,9 +82,8 @@ Expected result:
     * get1.php: code 302
     * get2.php: code 302
     * get3.php: code 302
-    * post.php: code 200
     * get4.php: code 200
-       * You'll notice that get4.php is displayed after post.php although it really happened before. This is because the POST is inserted in ZAP history by the authentication script while the last get is inserted by ZAP after the execution of the script.
+    * post.php: code 200
        
 Every new minute, the same sequence described above should produce. 
 * Active scan tab: you can check the value of the cookies in the test.php attack requests
