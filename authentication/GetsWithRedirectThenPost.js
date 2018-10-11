@@ -2,9 +2,16 @@
 // - n GET requests giving HTTP 302 redirect while potentially collecting cookies
 // - then 1 POST request providing the login credentials to the server
 
-// Don't forget to activate the "forced user mode" or the script will not trigger 
-
-// More info: see README.md
+// -----------------------------
+//Troubleshooting
+// -----------------------------
+// - The authentication script never triggers
+//   Check that the "forced user mode" button is clicked (needs to be checked every time ZAP restart)
+//   Check the "logged out indicator"
+// - The GET cookies from redirects are not set in requests
+//    Check the URL built from the hostname and the URI in the script: if there is an additional / between the host and the URI (https://hostname//uri) it may prevent cookies from being set from the HttpState into the RequestMessage
+// - I have a redirect on POST and the cookie is not persisted into the HttpState
+//    This script doesn't cover this scenario. See a workaround in TwoStepAuthentication.js
 
 // Make sure any Java classes used explicitly are imported
 var HttpRequestHeader = Java.type('org.parosproxy.paros.network.HttpRequestHeader');
@@ -65,7 +72,9 @@ function doGet(url, helper) {
 
     // Send the GET request message
     doLog("Sending " + requestMethod + " request to " + requestUri);
-    // false= do not follow redirect
+    // sendAndReceive without following redirects
+    // this allows us to manually add the redirect request/responses in ZAP history, making it much easier to understand what is going on. 
+    // With followRedirect=true, all request/responses and their cookies are aggregated in a single line in ZAP history tab. 
     helper.sendAndReceive(msg, false);
     doLog("Received response status code: " + msg.getResponseHeader().getStatusCode());
     return msg;
@@ -104,15 +113,23 @@ function doPost(helper, paramsValues, credentials) {
 // This function is called during the script loading to obtain a list of the names of the required configuration parameters,
 // that will be shown in the Session Properties -  Authentication panel for configuration. They can be used
 // to input dynamic data into the script, from the user interface (e.g. a login URL, name of POST parameters etc.)
+
 function getRequiredParamsNames() {
-    return ["Submission Form URL", "Username field", "Password field", "Fist get URI with leading slash, without trailing slash"];
+    return [
+    	"Submission Form URL", // The url to POST to
+    	"Username field", 
+    	"Password field", 
+    	"Fist get URI with leading slash, without trailing slash" // Example: /test/get1.php
+    	];
 }
 
 // This function is called during the script loading to obtain a list of the names of the optional configuration parameters,
 // that will be shown in the Session Properties -  Authentication panel for configuration. They can be used
 // to input dynamic data into the script, from the user interface (e.g. a login URL, name of POST parameters etc.)
 function getOptionalParamsNames() {
-    return ["Hostname without trailing slash"];
+    return [
+    	"Hostname without trailing slash" // Example: https://myhostname.com. Useful when redirect target doesn't include the host but just an URI. 
+    	];
 }
 
 // This function is called during the script loading to obtain a list of the names of the parameters that are required,
