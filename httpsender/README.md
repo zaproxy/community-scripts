@@ -47,9 +47,9 @@ function responseReceived(msg, initiator, helper) {
 ## Variables
 | Name | Javadocs |
 | --- | --- |
-| msg | [HttpMessage](http://www.zaproxy.org/2.5/javadocs/org/parosproxy/paros/network/HttpMessage.html) |
+| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.7.0/org/parosproxy/paros/network/HttpMessage.html) |
 | initiator | int |
-| helper | [HttpSenderScriptHelper](http://www.zaproxy.org/2.5/javadocs/org/zaproxy/zap/extension/script/HttpSenderScriptHelper.html) |
+| helper | [HttpSenderScriptHelper](https://static.javadoc.io/org.zaproxy/zap/2.7.0/org/zaproxy/zap/extension/script/HttpSenderScriptHelper.html) |
 
 ## Code Links
 * [HttpSenderScript.java](https://github.com/zaproxy/zaproxy/blob/master/src/org/zaproxy/zap/extension/script/HttpSenderScript.java)

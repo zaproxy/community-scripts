@@ -66,5 +66,5 @@ function close() {
 ```
 
 ## Useful Links
-* [String](https://docs.oracle.com/javase/7/docs/api/java/lang/String.html)
+* [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html)
 

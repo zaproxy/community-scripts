@@ -29,4 +29,4 @@ function process(payload) {
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| payload | [String](https://docs.oracle.com/javase/7/docs/api/java/lang/String.html) |
+| payload | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html) |
