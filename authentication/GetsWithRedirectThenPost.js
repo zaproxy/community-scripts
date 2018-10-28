@@ -2,16 +2,7 @@
 // - n GET requests giving HTTP 302 redirect while potentially collecting cookies
 // - then 1 POST request providing the login credentials to the server
 
-// -----------------------------
-//Troubleshooting
-// -----------------------------
-// - The authentication script never triggers
-//   Check that the "forced user mode" button is clicked (needs to be checked every time ZAP restart)
-//   Check the "logged out indicator"
-// - The GET cookies from redirects are not set in requests
-//    Check the URL built from the hostname and the URI in the script: if there is an additional / between the host and the URI (https://hostname//uri) it may prevent cookies from being set from the HttpState into the RequestMessage
-// - I have a redirect on POST and the cookie is not persisted into the HttpState
-//    This script doesn't cover this scenario. See a workaround in TwoStepAuthentication.js
+// Detailed usage tutorial and a php back-end can be found at https://github.com/ptrovatelli/ZAP-authentication-script-tutorial-GetsWithRedirectsThenPost
 
 // Make sure any Java classes used explicitly are imported
 var HttpRequestHeader = Java.type('org.parosproxy.paros.network.HttpRequestHeader');
