@@ -1,5 +1,5 @@
 // This script handles an authentication scheme with
-// - n GET requests giving HTTP 302 redirect while potentially collecting cookies
+// - n GET requests giving one of HTTP 301, 302, 303, 307, 308 (redirect) while potentially collecting cookies
 // - then 1 POST request providing the login credentials to the server
 
 // Detailed usage tutorial and a php back-end can be found at https://github.com/ptrovatelli/ZAP-authentication-script-tutorial-GetsWithRedirectsThenPost
@@ -10,6 +10,8 @@ var HttpHeader = Java.type('org.parosproxy.paros.network.HttpHeader');
 var URI = Java.type('org.apache.commons.httpclient.URI');
 var AuthenticationHelper = Java.type('org.zaproxy.zap.authentication.AuthenticationHelper');
 
+// the maximum number of redirects we will follow (avoid infinite loops)
+var MAX_REDIRECTS=100
 
 // ------------------------------------
 // Parameters
@@ -23,12 +25,17 @@ var AuthenticationHelper = Java.type('org.zaproxy.zap.authentication.Authenticat
 function authenticate(helper, paramsValues, credentials) {
     doLog("Authenticating via JavaScript script...");
     var host = paramsValues.get("Hostname without trailing slash")
-    var firstGet = paramsValues.get("Fist get URI with leading slash, without trailing slash")
+    var firstGet = paramsValues.get("First get URI with leading slash, without trailing slash")
 
     // GET with redirects
     var msg = doGet(host + firstGet, helper);
     var statusCode = msg.getResponseHeader().getStatusCode();
-    while (statusCode == 302) {
+    var nbRedirectsFollowed = 0;
+    while (statusCode == 301 || statusCode == 302 || statusCode == 303 || statusCode == 307 || statusCode == 308) {
+        if(nbRedirectsFollowed >= MAX_REDIRECTS){
+           doLog("ERROR: Too many redirects. Stopped following redirects");
+           break;
+        }
         // Add the request/response to ZAP history tab
         AuthenticationHelper.addAuthMessageToHistory(msg);
         // put host before in case of redirect with URI
@@ -36,6 +43,7 @@ function authenticate(helper, paramsValues, credentials) {
         doLog("Redirecting to: " + redirectUrl);
         msg = doGet(redirectUrl, helper);
         statusCode = msg.getResponseHeader().getStatusCode();
+        nbRedirectsFollowed++;
     }
 
     // Add last get to ZAP history
@@ -45,7 +53,6 @@ function authenticate(helper, paramsValues, credentials) {
     msg = doPost(helper, paramsValues, credentials);
     return msg;
 }
-
 
 function doGet(url, helper) {
     //decode URI. Useful when there are encoded parameters in the URI
@@ -70,8 +77,6 @@ function doGet(url, helper) {
     doLog("Received response status code: " + msg.getResponseHeader().getStatusCode());
     return msg;
 }
-
-
 
 function doPost(helper, paramsValues, credentials) {
     // Prepare the login submission request details
@@ -99,19 +104,16 @@ function doPost(helper, paramsValues, credentials) {
     return msg;
 }
 
-
-
 // This function is called during the script loading to obtain a list of the names of the required configuration parameters,
 // that will be shown in the Session Properties -  Authentication panel for configuration. They can be used
 // to input dynamic data into the script, from the user interface (e.g. a login URL, name of POST parameters etc.)
-
 function getRequiredParamsNames() {
     return [
-    	"Submission Form URL", // The url to POST to
-    	"Username field", 
-    	"Password field", 
-    	"Fist get URI with leading slash, without trailing slash" // Example: /test/get1.php
-    	];
+        "Submission Form URL", // The url to POST to
+        "Username field", 
+        "Password field", 
+        "First get URI with leading slash, without trailing slash" // Example: /test/get1.php
+        ];
 }
 
 // This function is called during the script loading to obtain a list of the names of the optional configuration parameters,
@@ -119,8 +121,8 @@ function getRequiredParamsNames() {
 // to input dynamic data into the script, from the user interface (e.g. a login URL, name of POST parameters etc.)
 function getOptionalParamsNames() {
     return [
-    	"Hostname without trailing slash" // Example: https://myhostname.com. Useful when redirect target doesn't include the host but just an URI. 
-    	];
+        "Hostname without trailing slash" // Example: https://myhostname.com. Useful when redirect target doesn't include the host but just an URI. 
+        ];
 }
 
 // This function is called during the script loading to obtain a list of the names of the parameters that are required,
@@ -128,7 +130,6 @@ function getOptionalParamsNames() {
 function getCredentialsParamsNames() {
     return ["usernameField", "passwordField"];
 }
-
 
 // For debugging purposes
 function listRequestCookies(msg) {
@@ -148,7 +149,7 @@ function getNow() {
         curHour = objToday.getHours() < 10 ? "0" + objToday.getHours() : objToday.getHours(),
         curMinute = objToday.getMinutes() < 10 ? "0" + objToday.getMinutes() : objToday.getMinutes(),
         curSeconds = objToday.getSeconds() < 10 ? "0" + objToday.getSeconds() : objToday.getSeconds(),
-        today = curYear + curMonth + dayOfMonth + "_" + curHour + ":" + curMinute + ":" + curSeconds
+        today = curYear + '.' + curMonth + '.' + dayOfMonth + "_" + curHour + ":" + curMinute + ":" + curSeconds
     return today;
 }
 
