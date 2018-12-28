@@ -3,11 +3,16 @@ from org.zaproxy.zap.extension.script import ScriptVars
 
 ''' find possible vulnerable entry points using Hunt Methodology - https://github.com/bugcrowd/HUNT'''
 
+
 def appliesToHistoryType(histType):
-    if (histType<=2):
-        return True
-    else:
-        return False
+    """
+    Limit scanned history types, which otherwise default to
+    types in `PluginPassiveScanner.getDefaultHistoryTypes()`
+    """
+    from org.parosproxy.paros.model import HistoryReference as hr
+
+    return histType in [hr.TYPE_PROXIED, hr.TYPE_SPIDER]
+
 
 def scan(ps, msg, src):
     if ScriptVars.getGlobalVar("hunt") is None:
