@@ -1,7 +1,7 @@
 import re
 from org.zaproxy.zap.extension.script import ScriptVars
 
-''' find possible vulnerable entry points using Hunt Methodology - https://github.com/bugcrowd/HUNT'''
+'''find possible vulnerable entry points using Hunt Methodology - https://github.com/bugcrowd/HUNT'''
 
 
 def appliesToHistoryType(histType):
@@ -28,6 +28,7 @@ def hunt_alert(ps, msg, uri, result, title, desc):
         return
 
     result_repr = ','.join(result)
+    title += " (HUNT script)"
     desc = desc.strip().format(result=result_repr)
 
     info = msg.getRequestHeader().toString()
