@@ -29,7 +29,7 @@ def scan(ps, msg, src):
     params = msg.getParamNames()
     params = [element.lower() for element in params]
 
-    base_uri = re.search('https?:\/\/([^/]+)(\/[^?#=]*)',uri)
+    base_uri = re.search('^https?://[^/]+/[^?#=]*', uri)
 
     if base_uri:
         base_uri = str( base_uri.group() )
