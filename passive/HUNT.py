@@ -25,12 +25,13 @@ def scan(ps, msg, src):
     words_psql = ['id','select','report','role','update','query','user','name','sort','where','search','params','process','row','view','table','from','sel','results','sleep','fetch','order','keyword','column','field','delete','string','number','filter']
     words_pssrf = ['dest','redirect','uri','path','continue','url','window','next','data','reference','site','html','val','validate','domain','callback','return','page','feed','host','port','to','out','view','dir','show','navigation','open']
     words_pssti = ['template','preview','id','view','activity','name','content','redirect']
+
     uri = msg.getRequestHeader().getURI().toString()
-    params = msg.getParamNames()
-    params = [element.lower() for element in params]
+    params = [p.lower() for p in msg.getParamNames()]
 
     base_uri = re.search('^https?://[^/]+/[^?#=]*', uri)
-    if not base_uri:
+
+    if not params or not base_uri:
         return
 
     base_uri = str( base_uri.group() )
