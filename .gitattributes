@@ -1,4 +1,4 @@
-* text=auto
+* text=lf
 
 *.conf text
 *.gradle text
@@ -13,7 +13,7 @@
 *.zst text
 
 *.bat text eol=crlf
-*.sh text eol=lf
-gradlew text eol=lf
+*.sh text
+gradlew text
 
 *.jar binary
