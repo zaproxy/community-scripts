@@ -1,17 +1,47 @@
+import org.zaproxy.gradle.addon.AddOnStatus
+import org.zaproxy.gradle.addon.manifest.tasks.ConvertChangelogToChanges
+
 plugins {
     `java-library`
+    id("org.zaproxy.add-on") version "0.1.0"
     id("com.diffplug.gradle.spotless") version "3.15.0"
-}
-
-tasks {
-    getByName<Wrapper>("wrapper") {
-        gradleVersion = "4.10.2"
-        distributionType = Wrapper.DistributionType.ALL
-    }
 }
 
 repositories {
     mavenCentral()
+}
+
+version = "9"
+description = "Useful ZAP scripts written by the ZAP community."
+
+val scriptsDir = layout.buildDirectory.dir("scripts")
+
+val generateManifestChanges by tasks.registering(ConvertChangelogToChanges::class) {
+    changelog.set(file("CHANGELOG.md"))
+    manifestChanges.set(file("$buildDir/zapAddOn/manifest-changes.html"))
+}
+
+zapAddOn {
+    addOnId.set("communityScripts")
+    addOnName.set("Community Scripts")
+    zapVersion.set("2.7.0")
+    addOnStatus.set(AddOnStatus.ALPHA)
+
+    manifest {
+        author.set("ZAP Community")
+        url.set("https://github.com/zaproxy/community-scripts")
+        changesFile.set(generateManifestChanges.flatMap { it.manifestChanges })
+        files.from(scriptsDir)
+    }
+
+    wikiGen {
+        wikiFilesPrefix.set("HelpAddons${zapAddOn.addOnId.get().capitalize()}")
+        wikiDir.set(file("$rootDir/../zap-extensions-wiki/"))
+    }
+
+    zapVersions {
+        downloadUrl.set("https://github.com/zaproxy/community-scripts/releases/download/v$version")
+    }
 }
 
 val jupiterVersion = "5.2.0"
@@ -57,7 +87,6 @@ var scriptTypes = listOf(
         "variant",
         "websocketfuzzerprocessor")
 
-val scriptsDir = layout.buildDirectory.dir("scripts")
 val syncScriptsDirTask by tasks.creating(Sync::class) {
     into(scriptsDir.get().dir(project.name))
 
