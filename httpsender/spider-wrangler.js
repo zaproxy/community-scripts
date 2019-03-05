@@ -6,8 +6,6 @@
 // extra query params you don't care about & checks if that has
 // already been requested & drops if it has
 
-if (typeof println == 'undefined') this.println = print;
-
 // Logging with the script name is super helpful!
 function logger() {
   print('[' + this['zap.script.name'] + '] ' + arguments[0]);
@@ -78,7 +76,7 @@ function isUrlInTree(url, node, level) {
 }
 
 // Set message to be dropped
-function dropMessage(msg)  {
+function modifyToIgnore(msg)  {
   msg.setResponseBody("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">\n" +
   "<html><head></head><body><h1>403 Forbidden</h1>\n" +
   "Out of scope request blocked by ZAP script 'Drop requests not in scope.js'\n" +
@@ -103,16 +101,16 @@ function sendingRequest(msg, initiator, helper) {
   var urlHasQuery = (url.indexOf('&') !== -1);
 
   // If sending url has no query params move on
-  if (urlHasQuery) {return true;}
+  if (urlHasQuery) {return;}
   
   logger("Checking for url without params " + url)
 
   // If not in site tree ... move on
-  if (!isUrlInTree(url, rootNode, 0)) {return true;}
+  if (!isUrlInTree(url, rootNode, 0)) {return;}
 
   logger('Already have made this request ... dropping')
-  dropMessage(msg);
-  return false;
+  modifyToIgnore(msg);
+  return;
 }
 
 function responseReceived(msg, initiator, helper) {}
