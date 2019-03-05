@@ -7,7 +7,7 @@ function logger() {
   print('[' + this['zap.script.name'] + '] ' + arguments[0]);
 }
 
-function dropMessage(msg) {
+function modifyToIgnore(msg) {
   msg.setResponseBody("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 3.2//EN\">\n" +
       "<html><head></head><body><h1>403 Forbidden</h1>\n" +
       "Out of scope request blocked by ZAP script 'Drop requests not in scope.js'\n" +
@@ -57,21 +57,21 @@ function sendingRequest(msg, initiator, helper) {
   var cookies = headers.getCookieParams();
   
   if (initiator === HttpSender.SPIDER_INITIATOR) {}
-  if (isStaticUrl(url)) {return true;}
+  if (isStaticUrl(url)) {return;}
   
   var token   = ScriptVars.getGlobalVar("openvas.token")
   var gsad_id = ScriptVars.getGlobalVar("openvas.gsad_id")
   
   if (gsad_id === null || gsad_id === '0' || gsad_id == 0) {
     logger('No valid gsad_id')
-    return true;
+    return;
   }
 
-  if (token === null) {return true;}
+  if (token === null) {return;}
   
   // Already logged in, so move on
   if ((headers.getMethod() === 'POST' && reqbody.indexOf('cmd=login') !== -1) || url.indexOf('login') !== -1) {
-    return dropMessage(msg);
+    return modifyToIgnore(msg);
   }  
 
   var cookieParam = new HtmlParameter(COOKIE_TYPE, 'GSAD_SID', gsad_id);
@@ -79,7 +79,7 @@ function sendingRequest(msg, initiator, helper) {
   // https://hc.apache.org/httpclient-3.x/apidocs/org/apache/commons/httpclient/URI.html
   if (qry !== null && qry.toString().indexOf(token) !== -1) {
     logger('Already has token, no need to rewrite')
-    return true;
+    return;
   }
 
   // If already a cookie, remove to reset
@@ -99,7 +99,7 @@ function sendingRequest(msg, initiator, helper) {
 
   // @todo add token to post data
   headers.getURI().setQuery(newqry)
-  return true
+  return;
 }
 
 // Monitor responses to look for successful login to update session info
