@@ -16,7 +16,7 @@ var rootNode = tree.getRoot();
 
 function hasBadStatusCode(item) {
   if (item === null) {return true;}
-  return item.getStatusCode() === 404 || item.getStatusCode() === 502 || item.getStatusCode() === null || item.getStatusCode() === 0;
+  return item.getStatusCode() === 404 || item.getStatusCode() === 502;
 }
 
 function removeBadStatusCodeRef(item) {
