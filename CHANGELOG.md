@@ -5,7 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Unreleased
 
-- Maintenance changes.
+### Added
+- active/cve-2019-5418.js > An active scanner for Ruby on Rails Accept header content disclosure issue.
+
+### Changed
+- Misc maintenance changes.
 
 ## 8 - 2018-06-19
 
