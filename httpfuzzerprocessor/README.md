@@ -74,6 +74,6 @@ function processResult(utils, fuzzResult){
 ## Code Links
 | Name | Source |
 | --- | --- |
-| fuzzResult | [HttpFuzzResult](https://github.com/zaproxy/zap-extensions/blob/beta/src/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzResult.java) |
-| utils | [HttpFuzzerTaskProcessorUtils](https://github.com/zaproxy/zap-extensions/blob/beta/src/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzerTaskProcessorUtils.java) |
+| fuzzResult | [HttpFuzzResult](https://github.com/zaproxy/zap-extensions/blob/master/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzResult.java) |
+| utils | [HttpFuzzerTaskProcessorUtils](https://github.com/zaproxy/zap-extensions/blob/master/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzerTaskProcessorUtils.java) |
 
