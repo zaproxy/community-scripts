@@ -40,6 +40,6 @@ function processMessage(utils, message) {
 ## Parameters
 | Name | Source |
 | --- | --- |
-| message | [WebSocketMessageDTO](https://github.com/zaproxy/zap-extensions/blob/master/src/org/zaproxy/zap/extension/websocket/WebSocketMessageDTO.java) |
-| utils | [WebSocketFuzzerTaskProcessorUtils](https://github.com/zaproxy/zap-extensions/blob/master/src/org/zaproxy/zap/extension/websocket/fuzz/WebSocketFuzzerTaskProcessorUtils.java) |
+| message | [WebSocketMessageDTO](https://github.com/zaproxy/zap-extensions/blob/master/addOns/websocket/src/main/java/org/zaproxy/zap/extension/websocket/WebSocketMessageDTO.java) |
+| utils | [WebSocketFuzzerTaskProcessorUtils](https://github.com/zaproxy/zap-extensions/blob/master/addOns/websocket/src/main/java/org/zaproxy/zap/extension/websocket/fuzz/WebSocketFuzzerTaskProcessorUtils.java) |
 
