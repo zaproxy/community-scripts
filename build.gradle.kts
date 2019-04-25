@@ -38,10 +38,6 @@ zapAddOn {
         wikiFilesPrefix.set("HelpAddons${zapAddOn.addOnId.get().capitalize()}")
         wikiDir.set(file("$rootDir/../zap-extensions-wiki/"))
     }
-
-    zapVersions {
-        downloadUrl.set("https://github.com/zaproxy/community-scripts/releases/download/v$version")
-    }
 }
 
 val jupiterVersion = "5.2.0"
