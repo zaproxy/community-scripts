@@ -22,7 +22,7 @@ val scriptsDir = layout.buildDirectory.dir("scripts")
 zapAddOn {
     addOnId.set("communityScripts")
     addOnName.set("Community Scripts")
-    zapVersion.set("2.7.0")
+    zapVersion.set("2.8.0")
     addOnStatus.set(AddOnStatus.ALPHA)
 
     releaseLink.set("https://github.com/zaproxy/community-scripts/compare/v@PREVIOUS_VERSION@...v@CURRENT_VERSION@")
@@ -50,8 +50,6 @@ dependencies {
 
     testImplementation("org.assertj:assertj-core:3.11.0")
     testImplementation("org.apache.commons:commons-lang3:3.8")
-
-    testRuntimeOnly("org.zaproxy:zap:2.7.0")
 
     // The following versions should match the ones of the add-ons.
     testImplementation("org.codehaus.groovy:groovy-all:2.4.14")
