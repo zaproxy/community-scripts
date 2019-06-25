@@ -46,8 +46,8 @@ function is_jwt(content) {
 
 function build_payloads(jwt) {
 	// Build header specifying use of the none algorithm
-	header = b64encode('{"alg":"none","typ":"JWT"}')
-	seperated = jwt.split(".")
+	var header = b64encode('{"alg":"none","typ":"JWT"}')
+	var seperated = jwt.split(".")
 	
 	// Try a series of different JWT formats
 	return [
