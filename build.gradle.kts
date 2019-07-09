@@ -80,7 +80,8 @@ var scriptTypes = listOf(
         "standalone",
         "targeted",
         "variant",
-        "websocketfuzzerprocessor")
+        "websocketfuzzerprocessor",
+        "websocketpassive")
 
 val syncScriptsDirTask by tasks.creating(Sync::class) {
     into(scriptsDir.get().dir(project.name))
