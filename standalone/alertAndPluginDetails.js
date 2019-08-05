@@ -49,5 +49,5 @@ function printAlert(alert) {
         }
     }
     print(alert.getName() + '\t' + alert.getSource() + ':' + scanner + '\t' + alert.getWascId()  + '\t' + alert.getCweId());
-    // For more alert properties see https://static.javadoc.io/org.zaproxy/zap/2.7.0/org/parosproxy/paros/core/scanner/Alert.html
+    // For more alert properties see https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/parosproxy/paros/core/scanner/Alert.html
 }
