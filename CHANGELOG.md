@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - active/cve-2019-5418.js > An active scanner for Ruby on Rails Accept header content disclosure issue.
 - authentication/DjangoAuthentication.js > Django authentication script.
 - standalone/scan_rule_list.js that list details from both active and passive scan rules.
+- standalone/Split download extract.rb: Add script to concatenate split file downloads
 
 ### Changed
 - Misc maintenance changes.

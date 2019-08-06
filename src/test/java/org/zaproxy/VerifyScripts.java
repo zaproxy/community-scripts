@@ -109,6 +109,7 @@ class VerifyScripts {
     private static Stream<Arguments> scriptsRuby() {
         if (!SystemUtils.IS_JAVA_1_8) {
             // Ref: https://github.com/zaproxy/zaproxy/issues/3944
+            getFilesWithExtension(".rb");
             return Stream.empty();
         }
         return testData(".rb", (Compilable) new JRubyEngineFactory().getScriptEngine());
