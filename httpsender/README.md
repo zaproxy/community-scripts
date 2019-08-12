@@ -25,7 +25,7 @@ They are invoked for proxied requests and requests that originate from ZAP, for 
 // 		9	ACCESS_CONTROL_SCANNER_INITIATOR
 // 		10	AJAX_SPIDER_INITIATOR
 // For the latest list of values see the HttpSender class:
-// https://github.com/zaproxy/zaproxy/blob/master/src/org/parosproxy/paros/network/HttpSender.java
+// https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/parosproxy/paros/network/HttpSender.java
 // 'helper' just has one method at the moment: helper.getHttpSender() which returns the HttpSender 
 // instance used to send the request.
 //
@@ -47,10 +47,10 @@ function responseReceived(msg, initiator, helper) {
 ## Variables
 | Name | Javadocs |
 | --- | --- |
-| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.7.0/org/parosproxy/paros/network/HttpMessage.html) |
+| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/parosproxy/paros/network/HttpMessage.html) |
 | initiator | int |
-| helper | [HttpSenderScriptHelper](https://static.javadoc.io/org.zaproxy/zap/2.7.0/org/zaproxy/zap/extension/script/HttpSenderScriptHelper.html) |
+| helper | [HttpSenderScriptHelper](https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/zaproxy/zap/extension/script/HttpSenderScriptHelper.html) |
 
 ## Code Links
-* [HttpSenderScript.java](https://github.com/zaproxy/zaproxy/blob/master/src/org/zaproxy/zap/extension/script/HttpSenderScript.java)
-* [HttpSender.java](https://github.com/zaproxy/zaproxy/blob/master/src/org/parosproxy/paros/network/HttpSender.java)
+* [HttpSenderScript.java](https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/zaproxy/zap/extension/script/HttpSenderScript.java)
+* [HttpSender.java](https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/parosproxy/paros/network/HttpSender.java)

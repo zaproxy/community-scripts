@@ -15,6 +15,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Misc maintenance changes.
 - Maintenance changes to target ZAP 2.8.
 
+### Fixed
+- Fix links to source files in zaproxy repo.
+
 ## 8 - 2018-06-19
 
 - Update from community-scripts repo.
