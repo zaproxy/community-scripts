@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - authentication/DjangoAuthentication.js > Django authentication script.
 - standalone/scan_rule_list.js that list details from both active and passive scan rules.
 - standalone/Split download extract.rb: Add script to concatenate split file downloads
+ - extender/ZAP onEvent Handler.js: An example for how to listen for internal ZAP events
 
 ### Changed
 - Misc maintenance changes.
