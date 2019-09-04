@@ -69,11 +69,11 @@ function processResult(utils, fuzzResult){
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| message | [HttpMessage](http://www.zaproxy.org/2.5/javadocs/org/parosproxy/paros/network/HttpMessage.html) |
+| message | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/parosproxy/paros/network/HttpMessage.html) |
 
 ## Code Links
 | Name | Source |
 | --- | --- |
-| fuzzResult | [HttpFuzzResult](https://github.com/zaproxy/zap-extensions/blob/beta/src/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzResult.java) |
-| utils | [HttpFuzzerTaskProcessorUtils](https://github.com/zaproxy/zap-extensions/blob/beta/src/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzerTaskProcessorUtils.java) |
+| fuzzResult | [HttpFuzzResult](https://github.com/zaproxy/zap-extensions/blob/master/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzResult.java) |
+| utils | [HttpFuzzerTaskProcessorUtils](https://github.com/zaproxy/zap-extensions/blob/master/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzerTaskProcessorUtils.java) |
 

@@ -14,6 +14,7 @@ function proxyResponse(msg) {
 	var url = msg.getRequestHeader().getURI().toString();
 	print('proxyResponse called for url=' + url.substring(0, 80) +"...");
 	// msg.setResponseBody(msg.getResponseBody().toString().replace("Example Domain","Test works"));
+	// msg.getResponseHeader().setContentLength(msg.getResponseBody().length());
 	var relevant = forceEnableEverywhere;
 	for(var i = 0; i<watchedUrlStrings.length; i++) {
 		if(url.indexOf(watchedUrlStrings[i]) > -1) {
@@ -25,7 +26,7 @@ function proxyResponse(msg) {
 		// set CSP header
 		print("Setting CSP header...");
 		var val = "default-src 'self' "; // TODO: INSERT YOUR POLICY HERE 
-		httpHeader = msg.getResponseHeader();
+		var httpHeader = msg.getResponseHeader();
 		httpHeader.setHeader("Content-Security-Policy-Report-Only", val);
 		// test: httpHeader.setHeader("X-XSS-Protection", "1; mode=block")
 		msg.setResponseHeader(httpHeader);

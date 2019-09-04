@@ -25,7 +25,6 @@ import sys
 import time
 import requests
 from datetime import datetime
-from zapv2 import ZAPv2
 import core.config as config
 import core.shared as shared
 

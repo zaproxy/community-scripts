@@ -23,8 +23,8 @@ To access requests that originate from ZAP use httpsender scripts.
  * @param msg - the HTTP request being proxied. This is an HttpMessage object.
  */
 function proxyRequest(msg) {
-	// Debugging can be done using println like this
-	println('proxyRequest called for url=' + msg.getRequestHeader().getURI().toString())
+	// Debugging can be done using print like this
+	print('proxyRequest called for url=' + msg.getRequestHeader().getURI().toString())
 	
 	return true
 }
@@ -35,16 +35,16 @@ function proxyRequest(msg) {
  * @param msg - the HTTP response being proxied. This is an HttpMessage object.
  */
 function proxyResponse(msg) {
-	// Debugging can be done using println like this
-	println('proxyResponse called for url=' + msg.getRequestHeader().getURI().toString())
+	// Debugging can be done using print like this
+	print('proxyResponse called for url=' + msg.getRequestHeader().getURI().toString())
 	return true
 }
 ```
 ## Variables
 | Name | Javadocs |
 | --- | --- |
-| msg | [HttpMessage](http://www.zaproxy.org/2.5/javadocs/org/parosproxy/paros/network/HttpMessage.html) |
+| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/parosproxy/paros/network/HttpMessage.html) |
 
 ## Code Links
-* [ProxyScript.java](https://github.com/zaproxy/zaproxy/blob/master/src/org/zaproxy/zap/extension/script/ProxyScript.java)
+* [ProxyScript.java](https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/zaproxy/zap/extension/script/ProxyScript.java)
 

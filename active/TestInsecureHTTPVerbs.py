@@ -16,9 +16,11 @@ http://crackme.cenzic.com
 
 and other apps from https://www.owasp.org/index.php/OWASP_Vulnerable_Web_Applications_Directory_Project#tab=On-Line_apps
 
+For some reasons, the order of the array insecureverbs could throw a java.net.SocketTimeoutException, for example with some proxies when TRACE is called just after DELETE
+If you encounter such issues, try to change the order on the following line
 """
 
-insecureverbs=["HEAD", "OPTIONS", "PUT", "DELETE", "TRACE", "CONNECT", "DEBUG", "MOVE", "SEARCH", "PATCH", "MKCOL", "COPY", "LOCK", "UNLOCK", "ARBIT", "XXXX", "12AB"]
+insecureverbs=["HEAD", "TRACE", "OPTIONS", "PUT", "DELETE", "CONNECT", "DEBUG", "MOVE", "SEARCH", "PATCH", "MKCOL", "COPY", "LOCK", "UNLOCK", "ARBIT", "XXXX", "12AB"]
 acceptedhttpstatuscodesforinsecureverbs=[301, 302, 404, 405, 403, 400, 501] # if we get a response code that is not a part of this array, then flag as potentially vulnerable
 activevulnerabilitytitle='Potentially Insecure HTTP Verb allowed'
 activevulnerabilityfulldescription='Some of the HTTP methods can potentially pose a security risk for a web application, as they allow an attacker to modify the files stored on the web server and, in some scenarios, steal the credentials of legitimate users.' + 'Insecure configuration can possibly lead to web server compromise and website defacement. ' + 'If an application needs one or more of the potentially insecure HTTP methods, such as for REST Web Services (which may require PUT or DELETE), it is important to check that their usage is properly limited to trusted users and safe conditions. ' + 'http://security.stackexchange.com/questions/21413/how-to-exploit-http-methods.'
@@ -42,6 +44,7 @@ def PrepareHttpRequest(msg, insecureverb):
 	msg.mutateHttpMethod(insecureverb)
 	if insecureverb == "POST" or insecureverb == "PUT":
 		msg.setRequestBody("bodytext")
+		msg.getRequestHeader().setContentLength(msg.getRequestBody().length());
 	if printdebugmessages:
 		print('After mutating resulting HTTP VERB: -- \t' + msg.getRequestHeader().getMethod() + '\n')
 
