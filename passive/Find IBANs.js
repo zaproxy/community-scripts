@@ -7,35 +7,36 @@
 
 function scan(ps, msg, src) {
     // first lets set up some details incase we find an IBAN, these will populate the alert later
-    alertRisk = 1
-    alertReliability = 3
-    alertTitle = 'IBAN found - investigation required (script)'
-    alertDesc = 'IBAN numbers were found'
-    alertSolution = 'Investigate IBAN numbers found in the response, remove or mask as required'
-    cweId = 200
-    wascId = 0
+    var alertRisk = 1
+    var alertReliability = 3
+    var alertTitle = 'IBAN found - investigation required (script)'
+    var alertDesc = 'IBAN numbers were found'
+    var alertSolution = 'Investigate IBAN numbers found in the response, remove or mask as required'
+    var cweId = 200
+    var wascId = 0
 
 	// lets build a regular expression that can find IBAN addresses
 	// the regex must appear within /( and )/g
-    re = /([A-Za-z]{2}[0-9]{2}[A-Za-z]{4}[0-9]{10})/g
+    var re = /([A-Za-z]{2}[0-9]{2}[A-Za-z]{4}[0-9]{10})/g
 
 	// we need to set the url variable to the request or we cant track the alert later
-    url = msg.getRequestHeader().getURI().toString();
+    var url = msg.getRequestHeader().getURI().toString();
 
 	// lets check its not one of the files types that are never likely to contain stuff, like pngs and jpegs
-     contenttype = msg.getResponseHeader().getHeader("Content-Type")
-	unwantedfiletypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash','application/pdf']
+    var contenttype = msg.getResponseHeader().getHeader("Content-Type")
+	var unwantedfiletypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash','application/pdf']
 	
 	if (unwantedfiletypes.indexOf(""+contenttype) >= 0) {
 		// if we find one of the unwanted headers quit this scan, this saves time and reduces false positives
     		return
 	}else{
 	// now lets run our regex against the body response
-        body = msg.getResponseBody().toString()
+        var body = msg.getResponseBody().toString()
         if (re.test(body)) {
             re.lastIndex = 0 // After testing reset index
             // Look for IBAN addresses
             var foundIBAN = []
+            var comm
             while (comm = re.exec(body)) {
                 foundIBAN.push(comm[0]);
             }
