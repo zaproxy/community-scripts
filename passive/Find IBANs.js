@@ -38,9 +38,9 @@ function scan(ps, msg, src) {
         var foundIBAN = []
         var comm
         while (comm = re.exec(body)) {
-            foundIBAN.push(comm[0]);
+            foundIBAN.push(comm[0])
         }
     // woohoo we found an IBAN lets make an alert for it
-    ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundIBAN.toString(), alertSolution, foundIBAN.toString(), cweId, wascId, msg);
+    ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundIBAN.toString(), alertSolution, foundIBAN.toString(), cweId, wascId, msg)
     }
 }
