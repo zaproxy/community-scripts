@@ -8,9 +8,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - active/cve-2019-5418.js > An active scanner for Ruby on Rails Accept header content disclosure issue.
 - authentication/DjangoAuthentication.js > Django authentication script.
-- standalone/scan_rule_list.js that list details from both active and passive scan rules.
-- standalone/Split download extract.rb: Add script to concatenate split file downloads
- - extender/ZAP onEvent Handler.js: An example for how to listen for internal ZAP events
+- standalone/scan_rule_list.js > Lists details from both active and passive scan rules.
+- standalone/Split download extract.rb > Add script to concatenate split file downloads
+- extender/ZAP onEvent Handler.js > An example for how to listen for internal ZAP events
+- httpsender/add-extra-headers.js > Adds encountered 'extra' headers to all requests.
+- httpsender/fingerprinter.js > Logs MD5s of responses.
+- httpsender/greenbone-maintain-auth.js > An auth helper script for OpenVAS Greenbone web interface.
+- httpsender/inject-xss.js > Injects XSS payloads into JSON responses.
+- httpsender/juice-shop-maintain-auth.js > An auth helper script for OWASP JuiceShop.
+- httpsender/keep-cookies-going.js > An auth helper script.
+- httpsender/maintain-jwt.js > Tracks JWTs and updates Authorization bearer headers.
 
 ### Changed
 - Misc maintenance changes.
