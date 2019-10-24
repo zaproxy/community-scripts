@@ -1,5 +1,6 @@
 /*exported sendingRequest, responseReceived*/
 // Logs md5 hashes of responses
+
 // Logging with the script name is super helpful!
 function logger() {
   print('[' + this['zap.script.name'] + '] ' + arguments[0]);

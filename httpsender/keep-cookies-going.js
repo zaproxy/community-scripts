@@ -10,13 +10,9 @@ var ScriptVars    = Java.type('org.zaproxy.zap.extension.script.ScriptVars');
 var HtmlParameter = Java.type('org.parosproxy.paros.network.HtmlParameter')
 var COOKIE_TYPE   = org.parosproxy.paros.network.HtmlParameter.Type.cookie;
 
-function sendingRequest(msg, initiator, helper) {  
-  // var reqbody = msg.getRequestBody().toString();
+function sendingRequest(msg, initiator, helper) {
   var headers = msg.getRequestHeader();
   var cookies = headers.getCookieParams();
-
-  // var url     = headers.getURI().toString();
-  // var qry     = headers.getURI().getQuery();
 
   // @todo prevent re-auth
   var key         = ScriptVars.getGlobalVar("sesh.key");
@@ -27,10 +23,10 @@ function sendingRequest(msg, initiator, helper) {
     var existing = cookies.first();
     cookies.remove(existing);
   }
-  
+
   cookies.add(cookieParam);
   msg.getRequestHeader().setCookieParams(cookies);
-  
+
   return true
 }
 
@@ -38,21 +34,16 @@ function sendingRequest(msg, initiator, helper) {
 function responseReceived(msg, initiator, helper) {
   var resheaders = msg.getResponseHeader();
   var setCookie  = resheaders.getHeader('Set-Cookie');
-  // var headers    = msg.getRequestHeader();
-  // var url        = headers.getURI().toString();
-  // var reqbody    = msg.getRequestBody().toString();
-  // var resbody    = msg.getResponseBody().toString();
 
-  
   if (setCookie === null) {return;}
-  
+
   // @todo there can be multiple set cookies?
   var cookie        = setCookie.toString();
   var sessionInfo   = cookie.split(';')[0].split('=');
   var key           = sessionInfo[0];
   var secret        = sessionInfo[1];
   var isValidSecret = (secret && secret.length > 1);
-  
+
   if  (!isValidSecret) {return;}
 
   logger("Captured set cookie of " +  key + " " + secret);

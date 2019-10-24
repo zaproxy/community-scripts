@@ -1,4 +1,7 @@
 /*exported sendingRequest, responseReceived*/
+// This script looks for headers other than those on the ignore list
+// Adds them to a global variable then adds them to subsequent requests as they are sent.
+
 // Logging with the script name is super helpful!
 function logger() {
   print('[' + this['zap.script.name'] + '] ' + arguments[0]);
@@ -8,16 +11,16 @@ var HttpSender    = Java.type('org.parosproxy.paros.network.HttpSender');
 var ScriptVars    = Java.type('org.zaproxy.zap.extension.script.ScriptVars');
 
 var ignoreHeader = [
-  'Connection', 
+  'Connection',
   'Accept',
   'Origin',
   'Host',
   'Content-Type',
   'Content-Length',
-  'Referer', 
-  'Cookie', 
+  'Referer',
+  'Cookie',
   'User-Agent', // @todo user-agent may be special?
-  'Referer', 
+  'Referer',
   'Accept-Language',
   'Access-Control-Request-Headers',
   'Access-Control-Request-Method',
@@ -30,17 +33,11 @@ var ignoreHeader = [
   'X-NewRelic-ID',
 ]
 
-/*
-@todo
-var ignoreHeaderPatterns = [
-  /If-.+/,
-]
-*/
-function sendingRequest(msg, initiator, helper) {  
+function sendingRequest(msg, initiator, helper) {
   if (initiator === HttpSender.AUTHENTICATION_INITIATOR) {
     logger("Trying to auth")
     return msg;
-  }  
+  }
   var hostname = msg.getRequestHeader().getHostName()
   var varKey = "headers-" + hostname
   var extras = ScriptVars.getGlobalVar(varKey);
@@ -61,7 +58,7 @@ function sendingRequest(msg, initiator, helper) {
      extras = false
    }
   }
-  
+
   if (!extras) {
      extras = {}
      for (var z in headers) {
@@ -71,7 +68,6 @@ function sendingRequest(msg, initiator, helper) {
        if (~ignoreHeader.indexOf(name)) {
          continue
        }
-       
        logger("Found interesting header: " + name)
        extras[name] = val
      }
