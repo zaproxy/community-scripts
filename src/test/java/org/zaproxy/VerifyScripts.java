@@ -24,6 +24,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -42,6 +43,7 @@ import java.util.stream.Stream;
 import javax.script.Compilable;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.codehaus.groovy.jsr223.GroovyScriptEngineFactory;
@@ -51,6 +53,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mozilla.zest.core.v1.ZestJSON;
+import org.mozilla.zest.core.v1.ZestScript;
 import org.python.core.Options;
 import org.python.jsr223.PyScriptEngineFactory;
 
@@ -116,9 +120,16 @@ class VerifyScripts {
     }
 
     private static Stream<Arguments> scriptsZest() {
-        // Just collect the files for now (Issue 114).
-        getFilesWithExtension(".zst");
-        return Stream.empty();
+        return testData(
+                ".zst",
+                reader -> {
+                    try {
+                        assertThat(ZestJSON.fromString(IOUtils.toString(reader)))
+                                .isInstanceOf(ZestScript.class);
+                    } catch (IOException e) {
+                        throw new UncheckedIOException(e);
+                    }
+                });
     }
 
     private static Stream<Arguments> testData(String extension, Compilable engine) {
