@@ -7,21 +7,37 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - active/cve-2019-5418.js > An active scanner for Ruby on Rails Accept header content disclosure issue.
+- active/JWT None Exploit.js > Checks if the application's JWT implementation allows the usage of the 'none' algorithm.
 - authentication/DjangoAuthentication.js > Django authentication script.
-- standalone/scan_rule_list.js > Lists details from both active and passive scan rules.
-- standalone/Split download extract.rb > Add script to concatenate split file downloads
-- extender/ZAP onEvent Handler.js > An example for how to listen for internal ZAP events
+- authentication/GetsWithRedirectThenPost.js > An authentication script that follows GET redirects and then submits a POST with the authentication credentials.
+- extender/Simple Reverse Proxy.js > Adds a simple reverse proxy.
+- extender/ZAP onEvent Handler.js > An example for how to listen for internal ZAP events.
 - httpsender/add-extra-headers.js > Adds encountered 'extra' headers to all requests.
+- httpsender/aws-signing-for-owasp-zap.py > Signs requests to AWS.
 - httpsender/fingerprinter.js > Logs MD5s of responses.
 - httpsender/greenbone-maintain-auth.js > An auth helper script for OpenVAS Greenbone web interface.
 - httpsender/inject-xss.js > Injects XSS payloads into JSON responses.
 - httpsender/juice-shop-maintain-auth.js > An auth helper script for OWASP JuiceShop.
 - httpsender/keep-cookies-going.js > An auth helper script.
 - httpsender/maintain-jwt.js > Tracks JWTs and updates Authorization bearer headers.
+- passive/Find IBANs.js > Finds IBANs in HTTP response bodies.
+- passive/HUNT.py > Merge of existing HUNT scripts.
+- proxy/Drop requests by response code.js > Drops requests that have a given response code.
+- standalone/scan_rule_list.js > Lists details from both active and passive scan rules.
+- standalone/Split download extract.rb > Concatenates split file downloads.
 
 ### Changed
-- Misc maintenance changes.
 - Maintenance changes to target ZAP 2.8.
+
+### Removed
+- The following scripts were merged into a new script `HUNT.py`:
+  - passive/HUNT - Debug & Logic Parameters.py
+  - passive/HUNT - File Inclusion.py
+  - passive/HUNT - IDOR.py
+  - passive/HUNT - RCE.py
+  - passive/HUNT - SQLi.py
+  - passive/HUNT - SSRF.py
+  - passive/HUNT - SSTI.py
 
 ### Fixed
 - Fix links to source files in zaproxy repo.
