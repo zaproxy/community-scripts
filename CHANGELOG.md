@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## Unreleased
 
 ### Added
+- Add repo URL, shown in the marketplace and Manage Add-ons dialogue.
 - active/cve-2019-5418.js > An active scanner for Ruby on Rails Accept header content disclosure issue.
 - active/JWT None Exploit.js > Checks if the application's JWT implementation allows the usage of the 'none' algorithm.
 - authentication/DjangoAuthentication.js > Django authentication script.
@@ -28,6 +29,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Maintenance changes to target ZAP 2.8.
+- Change info URL to link to the online help page.
 
 ### Removed
 - The following scripts were merged into a new script `HUNT.py`:
