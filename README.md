@@ -10,7 +10,7 @@ If you might want to contribute to the repo then you can also clone it to a loca
 Please upload your scripts via pull requests!
 
 For more information on ZAP scripts see:
-* https://github.com/zaproxy/zap-core-help/wiki/HelpAddonsScriptsScripts
+* https://www.zaproxy.org/docs/desktop/addons/script-console/
 * https://github.com/zaproxy/zaproxy/wiki/InternalScripting
  
 To discuss any aspect of ZAP scripting please join the zaproxy-scripts group: http://groups.google.com/group/zaproxy-scripts

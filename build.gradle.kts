@@ -6,7 +6,7 @@ import org.zaproxy.gradle.addon.misc.ExtractLatestChangesFromChangelog
 
 plugins {
     `java-library`
-    id("org.zaproxy.add-on") version "0.2.0"
+    id("org.zaproxy.add-on") version "0.3.0"
     id("com.diffplug.gradle.spotless") version "3.15.0"
 }
 
@@ -30,14 +30,10 @@ zapAddOn {
 
     manifest {
         author.set("ZAP Community")
-        url.set("https://github.com/zaproxy/community-scripts")
+        url.set("https://www.zaproxy.org/docs/desktop/addons/community-scripts/")
+        repo.set("https://github.com/zaproxy/community-scripts/")
         changesFile.set(tasks.named<ConvertMarkdownToHtml>("generateManifestChanges").flatMap { it.html })
         files.from(scriptsDir)
-    }
-
-    wikiGen {
-        wikiFilesPrefix.set("HelpAddons${zapAddOn.addOnId.get().capitalize()}")
-        wikiDir.set(file("$rootDir/../zap-extensions-wiki/"))
     }
 }
 
