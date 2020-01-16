@@ -5,7 +5,7 @@ ZAP is an Open Source Web App Security Testing Tool and browser proxy, that is v
 
 ## Project Setup
 
-1.  Download and Install ZAP - [https://github.com/zaproxy/zaproxy/wiki/Downloads](https://github.com/zaproxy/zaproxy/wiki/Downloads)
+1.  Download and Install ZAP - [https://www.zaproxy.org/download/](https://www.zaproxy.org/download/)
 2.  Add ZAP root certificate to your browser - Open ZAP > Tools > Options > Dynamic SSL Certificates > Save
 3.  Start ZAP daemon (also see `demos/start-zap.sh` script): `zap.sh -daemon -port 8080 -config api.disablekey=true &`
 4.  Configure your machine or browser to use ZAP local proxy for all internet traffic
