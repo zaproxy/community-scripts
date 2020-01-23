@@ -22,7 +22,7 @@ val scriptsDir = layout.buildDirectory.dir("scripts")
 zapAddOn {
     addOnId.set("communityScripts")
     addOnName.set("Community Scripts")
-    zapVersion.set("2.8.0")
+    zapVersion.set("2.9.0")
     addOnStatus.set(AddOnStatus.ALPHA)
 
     releaseLink.set("https://github.com/zaproxy/community-scripts/compare/v@PREVIOUS_VERSION@...v@CURRENT_VERSION@")

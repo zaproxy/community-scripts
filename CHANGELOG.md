@@ -28,8 +28,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - standalone/Split download extract.rb > Concatenates split file downloads.
 
 ### Changed
-- Maintenance changes to target ZAP 2.8.
 - Change info URL to link to the online help page.
+- Updated to target ZAP 2.9
 
 ### Removed
 - The following scripts were merged into a new script `HUNT.py`:
