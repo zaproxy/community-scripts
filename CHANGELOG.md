@@ -3,7 +3,7 @@ All notable changes to this add-on will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## Unreleased
+## [9] - 2020-01-30
 
 ### Added
 - Add repo URL, shown in the marketplace and Manage Add-ons dialogue.
@@ -77,3 +77,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
+[9]: https://github.com/zaproxy/community-scripts/compare/7278617af4bd1bc3d8db41c00a0437bf78ba6e51...v9
