@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 
-version = "9"
+version = "10"
 description = "Useful ZAP scripts written by the ZAP community."
 
 val scriptsDir = layout.buildDirectory.dir("scripts")
