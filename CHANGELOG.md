@@ -10,6 +10,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - selenium and session scripts.
 - httpfuzzerprocessor/random_x_forwarded_for_ip.js > Set 'X-Forwarded-For' to a random IP value.
 - httpfuzzerprocessor/randomUserAgent.js > Set 'User-Agent' to a random user-agent.
+- Add the following Payload Processor scripts ported from SQLMap:
+  - apostrophemask
+  - apostrophenullencode
+  - chardoubleencode
+  - charencode
+  - charunicodeencode
+  - equaltolike
+  - lowercase
+  - percentage
+  - randomcase
+  - space2comments
 
 ### Changed
 - Update minimum ZAP version to 2.10.0.
