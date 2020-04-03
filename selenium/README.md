@@ -1,0 +1,3 @@
+Selenium scripts are called whenever a browser is launched from ZAP using selenium, for example for the Ajax Spider or for manual browsing. 
+	
+They have access to the launched browser and can interact with it, for example, run JavaScript scripts, access URLs, fill in forms, click buttons, add data to localStarage and sessionStorage ...
