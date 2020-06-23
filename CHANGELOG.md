@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Removed
 - standalone/loadListInGlobalVariable.js > superseded by core functionality, `ScriptVars.setGlobalCustomVar(...)` and `getGlobalCustomVar(...)`.
 
+### Fixed
+- extender/HTTP Message Logger.js > fix typo in Integer constant.
+
 ## [9] - 2020-01-30
 
 ### Added
