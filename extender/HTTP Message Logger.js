@@ -26,7 +26,7 @@ var listener = new HttpSenderListener {
 
     getListenerOrder: function() {
         // Last listener to be notified to include all changes done by other scripts.
-        return Integer.MAX_INT;
+        return Integer.MAX_VALUE;
     },
 
     onHttpRequestSend: function(msg, initiator, sender) {
