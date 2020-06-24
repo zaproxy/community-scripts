@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - selenium and session scripts.
 - httpfuzzerprocessor/random_x_forwarded_for_ip.js > Set 'X-Forwarded-For' to a random IP value.
 
+### Removed
+- standalone/loadListInGlobalVariable.js > superseded by core functionality, `ScriptVars.setGlobalCustomVar(...)` and `getGlobalCustomVar(...)`.
+
 ## [9] - 2020-01-30
 
 ### Added
