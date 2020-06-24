@@ -37,7 +37,7 @@ zapAddOn {
     }
 }
 
-val jupiterVersion = "5.2.0"
+val jupiterVersion = "5.7.0-M1"
 
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jupiterVersion")

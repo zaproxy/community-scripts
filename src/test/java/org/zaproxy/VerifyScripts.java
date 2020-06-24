@@ -35,6 +35,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -50,6 +51,7 @@ import org.codehaus.groovy.jsr223.GroovyScriptEngineFactory;
 import org.jruby.embed.jsr223.JRubyEngineFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -100,6 +102,12 @@ class VerifyScripts {
     }
 
     private static Stream<Arguments> scriptsJavaScript() {
+        if (!EnumSet.range(JRE.JAVA_8, JRE.JAVA_14).contains(JRE.currentVersion())) {
+            // Nashorn is not bundled in Java 15+
+            getFilesWithExtension(".js");
+            return Stream.empty();
+        }
+
         Compilable engine = (Compilable) new ScriptEngineManager().getEngineByName("ECMAScript");
         assertThat(engine).as("ECMAScript script engine exists.").isNotNull();
         return testData(".js", engine);
