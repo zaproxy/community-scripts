@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - payloadprocessor/to-hex.js > string to hex payload script.
 - selenium and session scripts.
 - httpfuzzerprocessor/random_x_forwarded_for_ip.js > Set 'X-Forwarded-For' to a random IP value.
+- httpfuzzerprocessor/randomUserAgent.js > Set 'User-Agent' to a random user-agent.
 
 ### Removed
 - standalone/loadListInGlobalVariable.js > superseded by core functionality, `ScriptVars.setGlobalCustomVar(...)` and `getGlobalCustomVar(...)`.
