@@ -22,9 +22,6 @@ ssti_payloads = {
     }
 
 def scan(sas, msg, param, value):
-  # Debugging can be done using print like this
-#  print('scan called for url=' + msg.getRequestHeader().getURI().toString() +
-#    ' param=' + param + ' value=' + value);
   for p,M in ssti_payloads.items():
   # Copy requests before reusing them
     msg = msg.cloneRequest();
