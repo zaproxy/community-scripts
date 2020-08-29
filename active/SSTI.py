@@ -15,9 +15,9 @@ def scanNode(sas, msg):
   # Test the responses and raise alerts as below
 
 ssti_payloads = {
-    'scan{{6*6}}t3r':'scan36t3r',
-    'scan${6*6}t3r':'scan36t3r',
-    'scan<% 6*6 %>t3r':'scan36t3r'
+    'abcd{{6*6}}123':'abcd36123',
+    'abcd${6*6}123':'abcd36123',
+    'abcd<% 6*6 %>123':'abcd36123'
     }
 
 def scan(sas, msg, param, value):
