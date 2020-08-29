@@ -30,7 +30,6 @@ def scan(sas, msg, param, value):
     sas.sendAndReceive(msg, False, False);
   # Test the response here, and make other requests as required
     if M in msg.getResponseBody().toString():
-  	# Change to a test which detects the vulnerability
     # raiseAlert(risk, int reliability, String name, String description, String uri,
     #		String param, String attack, String otherInfo, String solution, String evidence,
     #		int cweId, int wascId, HttpMessage msg)
