@@ -29,7 +29,6 @@ def scan(sas, msg, param, value):
   # sendAndReceive(msg, followRedirect, handleAntiCSRFtoken)
     sas.sendAndReceive(msg, False, False);
   # Test the response here, and make other requests as required
-#  print('scan called for url=' + msg.getRequestHeader().getURI().toString());
     if M in msg.getResponseBody().toString():
   	# Change to a test which detects the vulnerability
     # raiseAlert(risk, int reliability, String name, String description, String uri,
