@@ -29,4 +29,4 @@ def scan(sas, msg, param, value):
     #		int cweId, int wascId, HttpMessage msg)
     # risk: 0: info, 1: low, 2: medium, 3: high
     # reliability: 0: falsePassitive, 1: suspicious, 2: warning
-        sas.raiseAlert(3, 3, 'ScanT3r - Template Injection(SSTI)', 'Template injection allows an attacker to include template code into an existant (or not) template. A template engine makes designing HTML pages easier by using static template files which at runtime replaces variables/placeholders with actual values in the HTML pages',msg.getRequestHeader().getURI().toString(), param, p, '', '',M, 0, 0, msg);
+        sas.raiseAlert(3, 3, 'Server-side Template Injection (SSTI) (script)', 'Template injection allows an attacker to include template code into an existent (or not) template. A template engine makes designing HTML pages easier by using static template files which at runtime replaces variables/placeholders with actual values in the HTML pages',msg.getRequestHeader().getURI().toString(), param, p, '', '',M, 0, 0, msg);
