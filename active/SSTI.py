@@ -1,7 +1,6 @@
 """
 github : https://github.com/knassar702/scant3r
 --
-* Scant3r - web application vulnerability scanner
 * Coded by : Khaled Nassar @knassar702
 * Version : 0.5#Beta
 
