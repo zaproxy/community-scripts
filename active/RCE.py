@@ -14,6 +14,7 @@ def scanNode(sas, msg):
 
   # Test the responses and raise alerts as below
 
+# bypass filter
 rce_payloads = {
     '''
 cat${IFS}/etc/passwd''':'root:x:0:0',
