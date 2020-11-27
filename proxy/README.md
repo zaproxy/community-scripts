@@ -48,3 +48,7 @@ function proxyResponse(msg) {
 ## Code Links
 * [ProxyScript.java](https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/zaproxy/zap/extension/script/ProxyScript.java)
 
+## Official Videos
+
+[ZAP In Ten: Proxy and HttpSender Scripts](https://play.sonatype.com/watch/4no8EY1iB8RdnQLPFpYi2a) (10:14)
+
