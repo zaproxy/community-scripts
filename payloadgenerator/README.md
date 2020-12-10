@@ -68,3 +68,6 @@ function close() {
 ## Useful Links
 * [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html)
 
+## Templates in other languages
+
+* Groovy : [PayloadGeneratorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/payloadgenerator/PayloadGeneratorDefaultTemplate.groovy)

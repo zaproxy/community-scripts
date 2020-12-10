@@ -63,17 +63,20 @@ function processResult(utils, fuzzResult){
 
     return true;
 }
-
 ```
 
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| message | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/parosproxy/paros/network/HttpMessage.html) |
+| message | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/parosproxy/paros/network/HttpMessage.html) |
 
 ## Code Links
 | Name | Source |
 | --- | --- |
 | fuzzResult | [HttpFuzzResult](https://github.com/zaproxy/zap-extensions/blob/master/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzResult.java) |
 | utils | [HttpFuzzerTaskProcessorUtils](https://github.com/zaproxy/zap-extensions/blob/master/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzerTaskProcessorUtils.java) |
+
+## Templates in other languages
+
+* Groovy : [FuzzerHttpProcessorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/httpfuzzerprocessor/FuzzerHttpProcessorDefaultTemplate.groovy)
 

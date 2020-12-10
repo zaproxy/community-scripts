@@ -48,6 +48,14 @@ function proxyResponse(msg) {
 ## Code Links
 * [ProxyScript.java](https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/zaproxy/zap/extension/script/ProxyScript.java)
 
+## Templates in other languages
+
+* Groovy : [ProxyDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/proxy/ProxyDefaultTemplate.groovy)
+* Jruby : [Proxy default template.rb](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jruby/src/main/zapHomeFiles/scripts/templates/proxy/Proxy%20default%20template.rb)
+* Jython : [Proxy default template.py](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jython/src/main/zapHomeFiles/scripts/templates/proxy/Proxy%20default%20template.py)
+* Zest : [Proxy default template.zst](https://github.com/zaproxy/zap-extensions/blob/master/addOns/zest/src/main/zapHomeFiles/scripts/templates/proxy/Proxy%20default%20template.zst)
+
+
 ## Official Videos
 
 [ZAP In Ten: Proxy and HttpSender Scripts](https://play.sonatype.com/watch/4no8EY1iB8RdnQLPFpYi2a) (10:14)
