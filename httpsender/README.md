@@ -47,13 +47,20 @@ function responseReceived(msg, initiator, helper) {
 ## Variables
 | Name | Javadocs |
 | --- | --- |
-| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/parosproxy/paros/network/HttpMessage.html) |
+| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/parosproxy/paros/network/HttpMessage.html) |
 | initiator | int |
-| helper | [HttpSenderScriptHelper](https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/zaproxy/zap/extension/script/HttpSenderScriptHelper.html) |
+| helper | [HttpSenderScriptHelper](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/zaproxy/zap/extension/script/HttpSenderScriptHelper.html) |
 
 ## Code Links
 * [HttpSenderScript.java](https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/zaproxy/zap/extension/script/HttpSenderScript.java)
 * [HttpSender.java](https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/parosproxy/paros/network/HttpSender.java)
+
+## Template in other languages
+
+* Groovy : [HttpSenderDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/httpsender/HttpSenderDefaultTemplate.groovy)
+* Jruby : [HttpSender default template.rb](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jruby/src/main/zapHomeFiles/scripts/templates/httpsender/HttpSender%20default%20template.rb)
+* Jython : [HttpSender default template.py](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jython/src/main/zapHomeFiles/scripts/templates/httpsender/HttpSender%20default%20template.py)
+* Zest : [HttpSender default template.zst](https://github.com/zaproxy/zap-extensions/blob/master/addOns/zest/src/main/zapHomeFiles/scripts/templates/httpsender/HttpSender%20default%20template.zst)
 
 ## Official Videos
 
