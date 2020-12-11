@@ -33,7 +33,7 @@ in the main directory of the project, the add-on will be placed in the directory
 
 ## Official Videos
 
-[ZAP In Ten: Introduction to Scripting](https://play.sonatype.com/watch/7gR4qYzUZ686wEDMBfxGdf) (9:33)
-[ZAP Deep Dive: Scripting ZAP](https://www.youtube.com/watch?v=ujL6rH6nVXI) (28:34)
+* [ZAP In Ten: Introduction to Scripting](https://play.sonatype.com/watch/7gR4qYzUZ686wEDMBfxGdf) (9:33)
+* [ZAP Deep Dive: Scripting ZAP](https://www.youtube.com/watch?v=ujL6rH6nVXI) (28:34)
 
 Note that there are videos for some of the specific script types linked from the relevant READMEs.
