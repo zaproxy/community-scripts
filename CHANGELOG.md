@@ -11,6 +11,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - httpfuzzerprocessor/random_x_forwarded_for_ip.js > Set 'X-Forwarded-For' to a random IP value.
 - httpfuzzerprocessor/randomUserAgent.js > Set 'User-Agent' to a random user-agent.
 
+### Changed
+- Update minimum ZAP version to 2.10.0.
+- standalone/enableDebugLogging.js > use new Log4j 2 APIs.
+- standalone/window_creation_template.js > no longer extend `AbstractFrame`.
+
 ### Removed
 - standalone/loadListInGlobalVariable.js > superseded by core functionality, `ScriptVars.setGlobalCustomVar(...)` and `getGlobalCustomVar(...)`.
 

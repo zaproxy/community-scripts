@@ -1,4 +1,12 @@
+var Level = Java.type("org.apache.logging.log4j.Level")
+var LoggerContext = Java.type("org.apache.logging.log4j.core.LoggerContext")
+
+var context = LoggerContext.getContext()
+var config = context.getConfiguration()
+
 // The following will enable DEBUG logging for the API
-// org.apache.log4j.Logger.getLogger("org.zaproxy.zap.extension.api.API").setLevel(org.apache.log4j.Level.DEBUG);
+// config.getLoggerConfig("org.zaproxy.zap.extension.api.API").setLevel(Level.DEBUG)
 // The following will enable DEBUG logging for the SessionFixation scanner
-org.apache.log4j.Logger.getLogger("org.zaproxy.zap.extension.ascanrulesBeta.SessionFixation").setLevel(org.apache.log4j.Level.DEBUG)
+config.getLoggerConfig("org.zaproxy.zap.extension.ascanrulesBeta.SessionFixation").setLevel(Level.DEBUG)
+
+context.updateLoggers()
