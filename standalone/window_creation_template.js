@@ -5,7 +5,7 @@ var jlabel = Java.type("javax.swing.JLabel");
 var jmenubar = Java.type("javax.swing.JMenuBar");
 var jmenu = Java.type("javax.swing.JMenu");
 var jmenuitem = Java.type("javax.swing.JMenuItem");
-var window = new absframe(){};
+var window = new absframe();
 
 init();
 
