@@ -15,7 +15,7 @@ From ZAP 2.10.0 they can also control how URLs are represented in the Sites tree
 // Right click the script in the Scripts tree and select "enable"  
 
 // The helper parameter leveraged within this variant provides access to the methods in VariantCustom 
-// https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/parosproxy/paros/core/scanner/VariantCustom.java
+// https://github.com/zaproxy/zaproxy/blob/main/zap/src/main/java/org/parosproxy/paros/core/scanner/VariantCustom.java
 
 var B64STATE = 'b64';
 var paramStates = [];
