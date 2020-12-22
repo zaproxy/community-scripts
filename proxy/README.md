@@ -46,7 +46,7 @@ function proxyResponse(msg) {
 | msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/parosproxy/paros/network/HttpMessage.html) |
 
 ## Code Links
-* [ProxyScript.java](https://github.com/zaproxy/zaproxy/blob/master/zap/src/main/java/org/zaproxy/zap/extension/script/ProxyScript.java)
+* [ProxyScript.java](https://github.com/zaproxy/zaproxy/blob/main/zap/src/main/java/org/zaproxy/zap/extension/script/ProxyScript.java)
 
 ## Templates in other languages
 
