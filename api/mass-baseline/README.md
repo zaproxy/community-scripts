@@ -1,6 +1,6 @@
 # Mass Baseline scan
 
-This directory contains scripts that allow you to run the [ZAP Baseline](https://github.com/zaproxy/zaproxy/wiki/ZAP-Baseline-Scan) against a series of target URLs. It also (by default) publishes the results to the wiki that the scripts belong to.
+This directory contains scripts that allow you to run the [ZAP Baseline Scan](https://www.zaproxy.org/docs/docker/baseline-scan/) against a series of target URLs. It also (by default) publishes the results to the wiki that the scripts belong to.
 
 In order to use these scripts you will need to:
 
