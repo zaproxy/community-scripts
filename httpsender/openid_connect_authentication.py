@@ -1,4 +1,5 @@
 #
+# This script will allow you to authenticate using OpenID Connect with KeyCloak
 # To get more background information on how to use this script, go to 
 # https://augment1security.com/authentication/how-to-authenticate-with-openid-connect-angular2-spa-zap-part-1/
 #
