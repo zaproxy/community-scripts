@@ -26,6 +26,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Update minimum ZAP version to 2.10.0.
 - standalone/enableDebugLogging.js > use new Log4j 2 APIs.
 - standalone/window_creation_template.js > no longer extend `AbstractFrame`.
+- httpsender/Alert on HTTP Response Code Errors.js and Alert on Unexpected Content Types.js:
+  - Check if messages being analyzed are globally excluded or not;
+  - Ignore check for update messages;
+  - Include more expected content types.
 
 ### Removed
 - standalone/loadListInGlobalVariable.js > superseded by core functionality, `ScriptVars.setGlobalCustomVar(...)` and `getGlobalCustomVar(...)`.
