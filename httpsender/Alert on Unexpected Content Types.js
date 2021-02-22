@@ -2,9 +2,8 @@
 // By default it will raise 'Low' level alerts for content types that are not expected to be returned by APIs.
 // But it can be easily changed.
 
-// The following handles differences in printing between Java 7's Rhino JS engine
-// and Java 8's Nashorn JS engine
-if (typeof println == 'undefined') this.println = print;
+var Pattern = Java.type("java.util.regex.Pattern")
+var model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
 
 var pluginid = 100001	// https://github.com/zaproxy/zaproxy/blob/main/docs/scanners.md
 
@@ -12,11 +11,13 @@ var extensionAlert = org.parosproxy.paros.control.Control.getSingleton().getExte
 		org.zaproxy.zap.extension.alert.ExtensionAlert.NAME)
 
 var expectedTypes = [
+		"application/health+json",
 		"application/json",
 		"application/octet-stream",
 		"application/problem+json",
 		"application/problem+xml",
 		"application/soap+xml",
+		"application/vnd.api+json",
 		"application/xml",
 		"application/x-yaml",
 		"text/x-json",
@@ -28,6 +29,10 @@ function sendingRequest(msg, initiator, helper) {
 }
 
 function responseReceived(msg, initiator, helper) {
+	if (isGloballyExcluded(msg) || initiator == 7) { // CHECK_FOR_UPDATES_INITIATOR
+		// Not of interest.
+		return
+	}
 	if (extensionAlert != null) {
 		var ctype = msg.getResponseHeader().getHeader("Content-Type")
 		if (ctype != null) {
@@ -69,9 +74,6 @@ function responseReceived(msg, initiator, helper) {
 						case 6:	// MANUAL_REQUEST_INITIATOR
 							type = 15 // User 
 							break
-						case 7:	// CHECK_FOR_UPDATES_INITIATOR
-							type = 1 // Proxied 
-							break
 						case 8:	// BEAN_SHELL_INITIATOR
 							type = 15 // User 
 							break
@@ -95,4 +97,15 @@ function responseReceived(msg, initiator, helper) {
 			}
 		}
 	}
+}
+
+function isGloballyExcluded(msg) {
+	var url = msg.getRequestHeader().getURI().toString()
+	var regexes = model.getSession().getGlobalExcludeURLRegexs()
+	for (var i in regexes) {
+		if (Pattern.compile(regexes[i], Pattern.CASE_INSENSITIVE).matcher(url).matches()) {
+			return true
+		}
+	}
+	return false
 }
