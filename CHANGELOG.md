@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - active/Cross Site WebSocket Hijacking.js > an active scan for Cross-Site WebSocket Hijacking vulnerability
 - targeted/cve-2021-22214.js > A targeted script to check for Unauthorised SSRF on GitLab - CVE 2021-22214
+- httpsender/full-session-n-csrf-nashorn.js > full session and csrf token management.
 
 ### Changed
 - Update links in READMEs.
