@@ -4,11 +4,11 @@ function scan(ps, msg, src) {
     // populate some parameters which will be needed if s3 bucket url is present
     var alertRisk = 1
     var alertReliability = 4
-    var alertTitle = 's3 bucket url'
-    var alertDesc = 's3 bucket url found in response'
-    var alertSolution = 'Remove s3 buckets name from response or make sure the permissions in bucket are configured properly'
-    var cweId = 0
-    var wascId = 0
+    var alertTitle = 's3 Bucket URL'
+    var alertDesc = 's3 Bucket URL found in response'
+    var alertSolution = 'Remove s3 Buckets name from response or make sure the permissions in bucket are configured properly.'
+    var cweId = 200
+    var wascId = 13
 
     // the regex for s3 bucket url and it must appear within /( and )/g
     var re = /((s3:\\[a-zA-Z0-9-\.\\_]+)|((s3-|s3\.)?(.*)\.amazonaws\.com))/g
@@ -28,9 +28,9 @@ function scan(ps, msg, src) {
         if (re.test(body)) {
             re.lastIndex = 0 
             var founds3bucket = []
-            var comm
-            while (comm = re.exec(body)) {
-                founds3bucket.push(comm[0]);
+            var buckets
+            while (buckets = re.exec(body)) {
+                founds3bucket.push(buckets[0]);
             }
             //raise the alert
             ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', founds3bucket.toString(), alertSolution, '', cweId, wascId, msg);
