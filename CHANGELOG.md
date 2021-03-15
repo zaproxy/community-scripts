@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- Passive scan script for finding potential s3 Bucket URLs.
 - payloadprocessor/to-hex.js > string to hex payload script.
 - selenium and session scripts.
 - httpfuzzerprocessor/random_x_forwarded_for_ip.js > Set 'X-Forwarded-For' to a random IP value.
