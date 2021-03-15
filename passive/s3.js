@@ -5,7 +5,7 @@ function scan(ps, msg, src) {
     var alertRisk = 1
     var alertReliability = 4
     var alertTitle = 's3 Bucket URL'
-    var alertDesc = 's3 Bucket URL found in response'
+    var alertDesc = 's3 Bucket URL found in response.'
     var alertSolution = 'Remove s3 Buckets name from response or make sure the permissions in bucket are configured properly.'
     var cweId = 200
     var wascId = 13
