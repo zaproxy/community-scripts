@@ -21,8 +21,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - percentage
   - randomcase
   - space2comments
-- active/RCE.py
-- active/SSTI.py
 
 ### Changed
 - Update minimum ZAP version to 2.10.0.
