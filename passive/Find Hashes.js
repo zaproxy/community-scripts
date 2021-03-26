@@ -5,7 +5,7 @@ function scan(ps, msg, src)
     var url = msg.getRequestHeader().getURI().toString();
     var body = msg.getResponseBody().toString()
     var alertRisk = [0,1,2,3] //1=informational, 2=low, 3=medium, 4=high
-    var alertReliability = [0,1,2,3,4] //0=fp,1=low,2=medium,3=high,4=confirmed
+    var alertConfidence = [0,1,2,3,4] //0=fp,1=low,2=medium,3=high,4=confirmed
     var alertTitle = ["Wordpress hash Disclosed (script)",
 		  "Sha512 hash Disclosed (script)",
 		  "phpBB3 hash Disclosed (script)",
@@ -54,7 +54,7 @@ function scan(ps, msg, src)
 	      {
                foundwordpress.push(comm[0]);
 	      }
-	    ps.raiseAlert(alertRisk[1], alertReliability[2], alertTitle[0], alertDesc[0], url, '', '', foundwordpress.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	    ps.raiseAlert(alertRisk[1], alertConfidence[2], alertTitle[0], alertDesc[0], url, '', '', foundwordpress.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	   
 	if (sha512.test(body)) 
@@ -65,7 +65,7 @@ function scan(ps, msg, src)
 	      {
                foundsha512.push(comm[0]);
 	      }
-	    ps.raiseAlert(alertRisk[1], alertReliability[2], alertTitle[1], alertDesc[1], url, '', '', foundsha512.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	    ps.raiseAlert(alertRisk[1], alertConfidence[2], alertTitle[1], alertDesc[1], url, '', '', foundsha512.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (phpbb3.test(body)) 
 	  {
@@ -75,7 +75,7 @@ function scan(ps, msg, src)
 	      {
                foundphpbb3.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[1], alertReliability[2], alertTitle[2], alertDesc[2], url, '', '', foundphpbb3.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[1], alertConfidence[2], alertTitle[2], alertDesc[2], url, '', '', foundphpbb3.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 
 
@@ -88,7 +88,7 @@ function scan(ps, msg, src)
 	      {
                foundmysqlold.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[1], alertReliability[2], alertTitle[3], alertDesc[3], url, '', '', foundmysqlold.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[1], alertConfidence[2], alertTitle[3], alertDesc[3], url, '', '', foundmysqlold.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 
 	if (joomla.test(body)) 
@@ -99,7 +99,7 @@ function scan(ps, msg, src)
 	      {
                foundjoomla.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[1], alertReliability[2], alertTitle[4], alertDesc[4], url, '', '', foundjoomla.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[1], alertConfidence[2], alertTitle[4], alertDesc[4], url, '', '', foundjoomla.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (drupal.test(body)) 
 	  {
@@ -109,7 +109,7 @@ function scan(ps, msg, src)
 	      {
                founddrupal.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[1], alertReliability[2], alertTitle[5], alertDesc[5], url, '', '', founddrupal.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[1], alertConfidence[2], alertTitle[5], alertDesc[5], url, '', '', founddrupal.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	   
 	if (blowfish.test(body)) 
@@ -120,7 +120,7 @@ function scan(ps, msg, src)
 	      {
                foundblowfish.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[1], alertReliability[2], alertTitle[6], alertDesc[6], url, '', '', foundblowfish.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[1], alertConfidence[2], alertTitle[6], alertDesc[6], url, '', '', foundblowfish.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 
 	if (vbull.test(body)) 
@@ -131,7 +131,7 @@ function scan(ps, msg, src)
 	      {
                foundvbull.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[1], alertReliability[2], alertTitle[7], alertDesc[7], url, '', '', foundvbull.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[1], alertConfidence[2], alertTitle[7], alertDesc[7], url, '', '', foundvbull.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 
   
@@ -143,7 +143,7 @@ function scan(ps, msg, src)
 	      {
                foundmd45.push(comm[0]);
 	      }
-	    ps.raiseAlert(alertRisk[1], alertReliability[1], alertTitle[8], alertDesc[8], url, '', '', foundmd45.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	    ps.raiseAlert(alertRisk[1], alertConfidence[1], alertTitle[8], alertDesc[8], url, '', '', foundmd45.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 
 }

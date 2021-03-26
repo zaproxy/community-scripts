@@ -10,7 +10,7 @@
 function scan(ps, msg, src) {
     // first lets set up some details incase we find an email, these will populate the alert later
     var alertRisk = 0
-    var alertReliability = 3
+    var alertConfidence = 3
     var alertTitle = 'Email addresses (script)'
     var alertDesc = 'Email addresses were found'
     var alertSolution = 'Remove emails that are not public'
@@ -43,7 +43,7 @@ function scan(ps, msg, src) {
                 foundEmail.push(comm[0]);
             }
 		  // woohoo we found an email lets make an alert for it
-            ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundEmail.toString(), alertSolution, '', cweId, wascId, msg);
+            ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', foundEmail.toString(), alertSolution, '', cweId, wascId, msg);
         }
     }
 }

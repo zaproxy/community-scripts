@@ -5,7 +5,7 @@ function scan(ps, msg, src) {
     var url = msg.getRequestHeader().getURI().toString()
     var responseHeader = msg.getResponseHeader().toString()
     var alertRisk = [0, 1, 2, 3] //0=informational, 1=low, 2=medium, 3=high
-    var alertReliability = [0, 1, 2, 3, 4] //0=fp,1=low,2=medium,3=high,4=confirmed
+    var alertConfidence = [0, 1, 2, 3, 4] //0=fp,1=low,2=medium,3=high,4=confirmed
     var alertTitle = ["Strict Transport Security(STS) Header Not Set (script)",
         "Content-Security-Policy (script)",
         "Web Browser XSS Protection Not Enabled (script)",
@@ -33,32 +33,32 @@ function scan(ps, msg, src) {
     // test sts
     if (msg.getRequestHeader().isSecure()) {
         if (msg.getResponseHeader().getHeaders("Strict-Transport-Security") == null)
-            ps.raiseAlert(alertRisk[1], alertReliability[3], alertTitle[0], alertDesc[0], url, '', '', '', alertSolution[0], '', cweId[0], wascId[0], msg)
+            ps.raiseAlert(alertRisk[1], alertConfidence[3], alertTitle[0], alertDesc[0], url, '', '', '', alertSolution[0], '', cweId[0], wascId[0], msg)
     }
     // test csp
     if (!hasAnyHeader(msg.getResponseHeader(), ["Content-Security-Policy", "X-Content-Security-Policy", "X-WebKit-CSP"]))
-        ps.raiseAlert(alertRisk[1], alertReliability[3], alertTitle[1], alertDesc[1], url, '', '', '', alertSolution[1], '', cweId[0], wascId[0], msg)
+        ps.raiseAlert(alertRisk[1], alertConfidence[3], alertTitle[1], alertDesc[1], url, '', '', '', alertSolution[1], '', cweId[0], wascId[0], msg)
 
 
     // test xxs protection
     var re_xss = /(X\-XSS\-Protection\:.+1)/g
     if (!(re_xss.test(responseHeader))) //if its false
     {
-        ps.raiseAlert(alertRisk[1], alertReliability[3], alertTitle[2], alertDesc[2], url, '', '', '', alertSolution[2], '', cweId[0], wascId[0], msg)
+        ps.raiseAlert(alertRisk[1], alertConfidence[3], alertTitle[2], alertDesc[2], url, '', '', '', alertSolution[2], '', cweId[0], wascId[0], msg)
     }
 
     // test xcontent no sniff protection
     var re_nosniff = /(X\-Content\-Type\-Options\:.*nosniff.*)/g
     if (!(re_nosniff.test(responseHeader))) //if its false
     {
-        ps.raiseAlert(alertRisk[2], alertReliability[2], alertTitle[3], alertDesc[3], url, '', '', '', alertSolution[3], '', cweId[0], wascId[0], msg)
+        ps.raiseAlert(alertRisk[2], alertConfidence[2], alertTitle[3], alertDesc[3], url, '', '', '', alertSolution[3], '', cweId[0], wascId[0], msg)
     }
 
     // test xcontent no sniff protection
     var re_clickjack = /(X\-Frame\-Options\:.+[Dd][Ee][Nn][Yy])/g
     if (!(re_clickjack.test(responseHeader))) //if its false
     {
-        ps.raiseAlert(alertRisk[1], alertReliability[3], alertTitle[4], alertDesc[4], url, '', '', '', alertSolution[4], '', cweId[0], wascId[0], msg)
+        ps.raiseAlert(alertRisk[1], alertConfidence[3], alertTitle[4], alertDesc[4], url, '', '', '', alertSolution[4], '', cweId[0], wascId[0], msg)
     }
 
 

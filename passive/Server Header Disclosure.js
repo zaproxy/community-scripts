@@ -4,7 +4,7 @@ function scan(ps, msg, src)
 {
 
     var alertRisk = 1
-    var alertReliability = 2
+    var alertConfidence = 2
     var alertTitle = "Server Leaks Version Information via 'Server' HTTP Response Header Field(script)"
     var alertDesc = "The web/application server is leaking version information via the 'Server' HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to."
     var alertSolution = "Ensure that your web server, application server, load balancer, etc. is configured to suppress the 'Server' header or provide generic details."
@@ -17,7 +17,7 @@ function scan(ps, msg, src)
     
     if (headers != null)
     {
-        ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', '', alertSolution,headers, cweId, wascId, msg);
+        ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', '', alertSolution,headers, cweId, wascId, msg);
     }
     
 }

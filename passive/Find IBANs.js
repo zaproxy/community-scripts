@@ -8,7 +8,7 @@
 function scan(ps, msg, src) {
     // first lets set up some details incase we find an IBAN, these will populate the alert later
     var alertRisk = 1
-    var alertReliability = 3
+    var alertConfidence = 3
     var alertTitle = 'IBAN found - investigation required (script)'
     var alertDesc = 'IBAN numbers were found'
     var alertSolution = 'Investigate IBAN numbers found in the response, remove or mask as required'
@@ -41,6 +41,6 @@ function scan(ps, msg, src) {
             foundIBAN.push(comm[0])
         }
     // woohoo we found an IBAN lets make an alert for it
-    ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundIBAN.toString(), alertSolution, foundIBAN.toString(), cweId, wascId, msg)
+    ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', foundIBAN.toString(), alertSolution, foundIBAN.toString(), cweId, wascId, msg)
     }
 }

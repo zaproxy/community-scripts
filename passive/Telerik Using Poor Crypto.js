@@ -159,17 +159,17 @@ function scan(ps, msg, src) {
 		return;
 	}
 	
-	var alertReliability = null;
+	var alertConfidence = null;
 	
 	if (url.contains("DialogHandler.aspx")) {
-		alertReliability = org.parosproxy.paros.core.scanner.Alert.CONFIDENCE_HIGH;
+		alertConfidence = org.parosproxy.paros.core.scanner.Alert.CONFIDENCE_HIGH;
 		alertDesc += "The URI strongly suggests this is a Telerik.Web.UI.DialogHandler instance; confidence is HIGH.";
 	} else {
-		alertReliability = org.parosproxy.paros.core.scanner.Alert.CONFIDENCE_MEDIUM;
+		alertConfidence = org.parosproxy.paros.core.scanner.Alert.CONFIDENCE_MEDIUM;
 		alertDesc += "The URI is not typical for a Telerik.Web.UI.DialogHandler instance, so it may have been changed (e.g., in web.config), or this may be a false positive; confidence is MEDIUM.";
 	}
 
 	alertDesc = alertDesc.split("  ").join(java.lang.System.getProperty("line.separator"));
 	
-	ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, param, '', '', alertSolution, '', cweId, wascId, msg);
+	ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, param, '', '', alertSolution, '', cweId, wascId, msg);
 }

@@ -6,7 +6,7 @@ function scan(ps, msg, src)
     var url = msg.getRequestHeader().getURI().toString();
     var body = msg.getResponseBody().toString()
     var alertRisk = [0,1,2,3] //1=informational, 2=low, 3=medium, 4=high
-    var alertReliability = [0,1,2,3,4] //0=fp,1=low,2=medium,3=high,4=confirmed
+    var alertConfidence = [0,1,2,3,4] //0=fp,1=low,2=medium,3=high,4=confirmed
     var alertTitle = ["Credit Card Number(s) Disclosed (script)",
 		  ""]
     var alertDesc = ["Credit Card number(s) was discovered.",
@@ -57,7 +57,7 @@ function scan(ps, msg, src)
 						foundCard.push(comm[0]);}
 				}
 			if (foundCard.length !=0){
-			ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[0], alertDesc[0], url, '', '', foundCard.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);}
+			ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[0], alertDesc[0], url, '', '', foundCard.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);}
 			}
 
       	}
