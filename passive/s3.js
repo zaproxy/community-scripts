@@ -3,7 +3,7 @@
 function scan(ps, msg, src) {
     // populate some parameters which will be needed if s3 bucket url is present
     var alertRisk = 1
-    var alertReliability = 4
+    var alertReliability = 3
     var alertTitle = 's3 Bucket URL'
     var alertDesc = 's3 Bucket URL found in response.'
     var alertSolution = 'Remove s3 Buckets name from response or make sure the permissions in bucket are configured properly.'
