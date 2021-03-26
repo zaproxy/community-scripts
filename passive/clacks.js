@@ -4,7 +4,7 @@ function scan(ps, msg, src)
 {
 
     var alertRisk = 0
-    var alertReliability = 3
+    var alertConfidence = 3
     var alertTitle = "Server is running on CLACKS - GNU Terry Pratchett"
     var alertDesc = "The web/application server is running over the CLACKS network, some say its turtles/IP, some says its turtles all the way down the layer stack."
     var alertSolution = "Give the sys admin a high five and rejoice in the disc world."
@@ -17,7 +17,7 @@ function scan(ps, msg, src)
     
     if (headers != null)
     {
-        ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', '', alertSolution,headers, cweId, wascId, msg);
+        ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', '', alertSolution,headers, cweId, wascId, msg);
     }
     
 }

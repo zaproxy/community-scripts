@@ -4,7 +4,7 @@ function scan(ps, msg, src)
 {
 
     var alertRisk = 1
-    var alertReliability = 2
+    var alertConfidence = 2
     var alertTitle = "Server Leaks Information via 'X-Powered-By' HTTP Response Header Field(s)(script)"
     var alertDesc = "The web/application server is leaking information via one or more 'X-Powered-By' HTTP response headers. Access to such information may facilitate attackers identifying other frameworks/components your web application is reliant upon and the vulnerabilities such components may be subject to."
     var alertSolution = "Ensure that your web server, application server, load balancer, etc. is configured to suppress 'X-Powered-By' headers."
@@ -17,7 +17,7 @@ function scan(ps, msg, src)
     
     if (headers != null)
     {
-        ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', '', alertSolution,headers, cweId, wascId, msg);
+        ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', '', alertSolution,headers, cweId, wascId, msg);
     }
     
 }

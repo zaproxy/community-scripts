@@ -8,7 +8,7 @@ function scan(ps, msg, src) {
 	
 
     var alertRisk = 0
-    var alertReliability = 1
+    var alertConfidence = 1
     var alertTitle = 'Base64-encoded string found (script)'
     var alertDesc = "A Base64-encoded string has been found in the HTTP response body. Base64-encoded data may contain sensitive information such as usernames, passwords or cookies which should be further inspected."
     var alertSolution = 'Base64-encoding should not be used to store or send sensitive information.'
@@ -33,13 +33,13 @@ function scan(ps, msg, src) {
             while (comm = re.exec(body)) {
                 if (RESULT_PER_FINDING == true) {
                     counter = counter+1;
-                    ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, 'fakeparam'+counter, '', comm[0], alertSolution,'' , cweId, wascId, msg);
+                    ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, 'fakeparam'+counter, '', comm[0], alertSolution,'' , cweId, wascId, msg);
                 }
                 foundstrings.push(comm[0]);
             }
             if (RESULT_PER_URL == true) 
             {
-                ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundstrings.toString(), alertSolution,'' , cweId, wascId, msg);
+                ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', foundstrings.toString(), alertSolution,'' , cweId, wascId, msg);
             }
         }
     }

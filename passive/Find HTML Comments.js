@@ -25,7 +25,7 @@ function scan(ps, msg, src) {
 	
     // lets set up some details we will need for alerts later if we find some comments
     var alertRisk = 0
-    var alertReliability = 2
+    var alertConfidence = 2
     var alertTitle = 'Information Exposure Through HTML Comments (script)'
     var alertDesc = 'While adding general comments is very useful, \
 some programmers tend to leave important data, such as: filenames related to the web application, old links \
@@ -59,13 +59,13 @@ application.'
                 if (RESULT_PER_FINDING == true) {
                     counter = counter+1;
                     //fakeparam+counter gives us parameter differientiation per comment alert (RESULT_PER_FINDING)
-                    ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, 'fakeparam'+counter, '', comm[0], alertSolution,'' , cweId, wascId, msg);
+                    ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, 'fakeparam'+counter, '', comm[0], alertSolution,'' , cweId, wascId, msg);
                 }
                 foundComments.push(comm[0]);
             }
             if (RESULT_PER_URL == true) 
             {
-                ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundComments.toString(), alertSolution,'' , cweId, wascId, msg);
+                ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', foundComments.toString(), alertSolution,'' , cweId, wascId, msg);
             }
         }
     }
