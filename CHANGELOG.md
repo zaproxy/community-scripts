@@ -4,6 +4,9 @@ All notable changes to this add-on will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- active/Cross Site WebSocket Hijacking.js > an active scan for Cross-Site WebSocket Hijacking vulnerability
+
 ### Changed
 - Update links in READMEs.
 - Update JavaDoc links to latest version.
