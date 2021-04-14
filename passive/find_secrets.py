@@ -74,7 +74,7 @@ def scan(ps, msg, src):
           for i in mm:
               res += i.decode()
     # Change to a test which detects the vulnerability
-    # raiseAlert(risk, int reliability, String name, String description, String uri, 
+    # raiseAlert(risk, int confidence, String name, String description, String uri, 
     # String param, String attack, String otherInfo, String solution, String evidence, 
     # int cweId, int wascId, HttpMessage msg)
     # risk: 0: info, 1: low, 2: medium, 3: high
