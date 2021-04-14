@@ -65,6 +65,7 @@ def scan(ps, msg, src):
 
   """
   rr = r"[:|=|\'|\"|\s*|`|´| |,|?=|\]|\|//|/\*}]({{REGEX}})[:|=|\'|\"|\s*|`|´| |,|?=|\]|\}|&|//|\*/]"
+
   for name,match in regexs.items():
       v = rr.replace('{{REGEX}}',match)
       c = re.compile(v)
@@ -73,10 +74,11 @@ def scan(ps, msg, src):
           res = ''
           for i in mm:
               res += i.decode()
-    # Change to a test which detects the vulnerability
+
     # raiseAlert(risk, int confidence, String name, String description, String uri, 
     # String param, String attack, String otherInfo, String solution, String evidence, 
     # int cweId, int wascId, HttpMessage msg)
     # risk: 0: info, 1: low, 2: medium, 3: high
     # confidence: 0: falsePositive, 1: low, 2: medium, 3: high, 4: confirmed
+
           ps.raiseAlert(3, 3, '[Find Secrets] {}'.format(name), '', msg.getRequestHeader().getURI().toString(), name,'', 'Regex: {v}'.format(v=v), '', res, 0, 0, msg);
