@@ -78,6 +78,5 @@ def scan(ps, msg, src):
     # String param, String attack, String otherInfo, String solution, String evidence, 
     # int cweId, int wascId, HttpMessage msg)
     # risk: 0: info, 1: low, 2: medium, 3: high
-    # reliability: 0: falsePositive, 1: suspicious, 2: warning
+    # confidence: 0: falsePositive, 1: low, 2: medium, 3: high, 4: confirmed
           ps.raiseAlert(3, 3, '[Find Secrets] {}'.format(name), '', msg.getRequestHeader().getURI().toString(), name,'', 'Regex: {v}'.format(v=v), '', res, 0, 0, msg);
-
