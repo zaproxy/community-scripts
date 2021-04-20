@@ -145,8 +145,7 @@ class VerifyScripts {
     }
 
     private static Stream<Arguments> testData(String extension, Consumer<Reader> parser) {
-        return getFilesWithExtension(extension)
-                .stream()
+        return getFilesWithExtension(extension).stream()
                 .map(
                         e ->
                                 Arguments.of(
