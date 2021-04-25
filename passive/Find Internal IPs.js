@@ -3,7 +3,7 @@
 function scan(ps, msg, src) {
     var url = msg.getRequestHeader().getURI().toString();
     var alertRisk = 2
-    var alertReliability = 2
+    var alertConfidence = 2
     var alertTitle = "Private IP address in Body(script)"
     var alertDesc = "A private IP such as 10.x.x.x, 172.x.x.x, 192.168.x.x or IPV6 fe00:: has been found in the HTTP response body.  This information might be helpful for further attacks targeting internal systems. "
     var alertSolution = "Remove the private IP address from the HTTP response body.  For comments, use JSP/ASP comment instead of HTML/JavaScript comment which can be seen by client browsers."
@@ -35,7 +35,7 @@ function scan(ps, msg, src) {
             while (comm = re.exec(body)) {
                 foundIP.push(comm[0]);
             }
-            ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundIP.toString(), alertSolution, '', cweId, wascId, msg);
+            ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', foundIP.toString(), alertSolution, '', cweId, wascId, msg);
         }
 
     }

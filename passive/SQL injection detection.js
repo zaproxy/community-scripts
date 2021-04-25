@@ -5,7 +5,7 @@ function scan(ps, msg, src)
     var url = msg.getRequestHeader().getURI().toString();
     var body = msg.getResponseBody().toString()
     var alertRisk = [0,1,2,3,4] //1=informational, 2=low, 3=medium, 4=high
-    var alertReliability = [0,1,2,3,4] //0=fp,1=low,2=medium,3=high,4=confirmed
+    var alertConfidence = [0,1,2,3,4] //0=fp,1=low,2=medium,3=high,4=confirmed
     var alertTitle = ["MySQL error Disclosed (script)",
 		  "Postgresql error Disclosed (script)",
 		  "MSSQL error Disclosed (script)",
@@ -65,7 +65,7 @@ function scan(ps, msg, src)
 	      {
                foundmysql.push(comm[0]);
 	      }
-	    ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[0], alertDesc[0], url, '', '', foundmysql.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	    ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[0], alertDesc[0], url, '', '', foundmysql.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 
 	if (postgresql.test(body))
@@ -76,7 +76,7 @@ function scan(ps, msg, src)
 	      {
                foundpostgresql.push(comm[0]);
 	      }
-	    ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[1], alertDesc[1], url, '', '', foundpostgresql.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	    ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[1], alertDesc[1], url, '', '', foundpostgresql.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (mssql.test(body))
 	  {
@@ -86,7 +86,7 @@ function scan(ps, msg, src)
 	      {
                foundmssql.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[2], alertDesc[2], url, '', '', foundmssql.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[2], alertDesc[2], url, '', '', foundmssql.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (msaccess.test(body))
 	  {
@@ -96,7 +96,7 @@ function scan(ps, msg, src)
 	      {
                foundmsaccess.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[3], alertDesc[3], url, '', '', foundmsaccess.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[3], alertDesc[3], url, '', '', foundmsaccess.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 
 	if (oracle.test(body))
@@ -107,7 +107,7 @@ function scan(ps, msg, src)
 	      {
                foundoracle.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[4], alertDesc[4], url, '', '', foundoracle.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[4], alertDesc[4], url, '', '', foundoracle.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (ibmdb2.test(body))
 	  {
@@ -117,7 +117,7 @@ function scan(ps, msg, src)
 	      {
                foundibmdb2.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[5], alertDesc[5], url, '', '', foundibmdb2.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[5], alertDesc[5], url, '', '', foundibmdb2.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (informix.test(body))
 	  {
@@ -127,7 +127,7 @@ function scan(ps, msg, src)
 	      {
                foundinformix.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[6], alertDesc[6], url, '', '', foundinformix.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[6], alertDesc[6], url, '', '', foundinformix.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (firebird.test(body))
 	  {
@@ -137,7 +137,7 @@ function scan(ps, msg, src)
 	      {
                foundfirebird.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[7], alertDesc[7], url, '', '', foundfirebird.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[7], alertDesc[7], url, '', '', foundfirebird.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (sqlite.test(body))
 	  {
@@ -147,7 +147,7 @@ function scan(ps, msg, src)
 	      {
                foundsqlite.push(comm[0]);
 	      }
-	    ps.raiseAlert(alertRisk[3], alertReliability[1], alertTitle[8], alertDesc[8], url, '', '', foundsqlite.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	    ps.raiseAlert(alertRisk[3], alertConfidence[1], alertTitle[8], alertDesc[8], url, '', '', foundsqlite.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (sapdb.test(body))
 	  {
@@ -157,7 +157,7 @@ function scan(ps, msg, src)
 	      {
                foundsapdb.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[9], alertDesc[9], url, '', '', foundsapdb.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[9], alertDesc[9], url, '', '', foundsapdb.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (sybase.test(body))
 	  {
@@ -167,7 +167,7 @@ function scan(ps, msg, src)
 	      {
                foundsybase.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[10], alertDesc[10], url, '', '', foundsybase.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[10], alertDesc[10], url, '', '', foundsybase.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (ingress.test(body))
 	  {
@@ -177,7 +177,7 @@ function scan(ps, msg, src)
 	      {
                foundingress.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[11], alertDesc[11], url, '', '', foundingress.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[11], alertDesc[11], url, '', '', foundingress.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (frontbase.test(body))
 	  {
@@ -187,7 +187,7 @@ function scan(ps, msg, src)
 	      {
                foundfrontbase.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[12], alertDesc[12], url, '', '', foundfrontbase.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[12], alertDesc[12], url, '', '', foundfrontbase.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 	if (hsqldb.test(body))
 	  {
@@ -197,6 +197,6 @@ function scan(ps, msg, src)
 	      {
                foundhsqldb.push(comm[0]);
 	      }
-            ps.raiseAlert(alertRisk[3], alertReliability[2], alertTitle[13], alertDesc[13], url, '', '', foundhsqldb.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[13], alertDesc[13], url, '', '', foundhsqldb.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 }

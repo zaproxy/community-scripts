@@ -2,6 +2,8 @@
 // By default it will raise 'Info' level alerts for Client Errors (4xx) (apart from 404s) and 'Low' Level alerts for Server Errors (5xx)
 // But it can be easily changed.
 
+var Pattern = Java.type("java.util.regex.Pattern")
+var model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
 pluginid = 100000	// https://github.com/zaproxy/zaproxy/blob/main/docs/scanners.md
 
 function sendingRequest(msg, initiator, helper) {
@@ -9,6 +11,10 @@ function sendingRequest(msg, initiator, helper) {
 }
 
 function responseReceived(msg, initiator, helper) {
+	if (isGloballyExcluded(msg) || initiator == 7) { // CHECK_FOR_UPDATES_INITIATOR
+		// Not of interest.
+		return
+	}
 	var extensionAlert = org.parosproxy.paros.control.Control.getSingleton().getExtensionLoader().getExtension(
 		org.zaproxy.zap.extension.alert.ExtensionAlert.NAME)
 	if (extensionAlert != null) {
@@ -53,9 +59,6 @@ function responseReceived(msg, initiator, helper) {
 					case 6:	// MANUAL_REQUEST_INITIATOR
 						type = 15 // User 
 						break
-					case 7:	// CHECK_FOR_UPDATES_INITIATOR
-						type = 1 // Proxied 
-						break
 					case 8:	// BEAN_SHELL_INITIATOR
 						type = 15 // User 
 						break
@@ -82,4 +85,15 @@ function responseReceived(msg, initiator, helper) {
 			extensionAlert.alertFound(alert , ref)
 		}
 	}
+}
+
+function isGloballyExcluded(msg) {
+	var url = msg.getRequestHeader().getURI().toString()
+	var regexes = model.getSession().getGlobalExcludeURLRegexs()
+	for (var i in regexes) {
+		if (Pattern.compile(regexes[i], Pattern.CASE_INSENSITIVE).matcher(url).matches()) {
+			return true
+		}
+	}
+	return false
 }

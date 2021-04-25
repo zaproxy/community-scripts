@@ -7,7 +7,7 @@
 # For AWS Signing Process (aws4): https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html
 # Based On: https://docs.aws.amazon.com/general/latest/gr/sigv4-signed-request-examples.html
 
-import time, hashlib, hmac, urlparse, urllib
+import time, hashlib, hmac, os, urlparse, urllib
 
 def sign(key, msg):
     return hmac.new(key, msg.encode('utf-8'), hashlib.sha256).digest()
@@ -20,14 +20,14 @@ def getSignatureKey(key, dateStamp, regionName, serviceName):
     return kSigning
 
 # access and secret key for AWS
-access_key = 'myaccesskey'
-secret_key = 'mysecretkey'
-service = 'execute-api'
-region = 'us-east-1'
-   
+access_key = os.environ.get('AWS_ACCESS_KEY_ID', 'myaccesskey')
+secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY', 'mysecretkey')
 # token for x-amz-security-token - leave blank if it is not necessary
 # when used with temporary access/secret keys it must be sent
-token = ''
+token = os.environ.get('AWS_SESSION_TOKEN', '')
+
+region = os.environ.get('AWS_DEFAULT_REGION', 'us-east-1')
+service = 'execute-api'
 
 amzdate = time.strftime('%Y%m%dT%H%M%SZ',time.gmtime())
 datestamp = time.strftime('%Y%m%d',time.gmtime())

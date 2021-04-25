@@ -6,7 +6,7 @@
 function scan(ps, msg, src) {
     var url = msg.getRequestHeader().getURI().toString();
     var alertRisk = 2
-    var alertReliability = 2
+    var alertConfidence = 2
     var alertTitle = "Potential Relative Path Overwrite - RPO(beta script)"
     var alertDesc = "Potential RPO (Relative Path Overwrite) found "
     var alertSolution = "Make sure all style sheets are refered by full paths rather than relative paths."
@@ -34,7 +34,7 @@ function scan(ps, msg, src) {
             while (comm = re.exec(body)) {
                 foundRPO.push(comm[0]);
             }
-            ps.raiseAlert(alertRisk, alertReliability, alertTitle, alertDesc, url, '', '', foundRPO.toString(), alertSolution, '', cweId, wascId, msg);
+            ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', foundRPO.toString(), alertSolution, '', cweId, wascId, msg);
         }
 
     }
