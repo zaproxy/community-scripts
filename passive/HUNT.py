@@ -130,8 +130,8 @@ following resources to aid in manual testing:
 
 - The Web Application Hackers Handbook: \
 Chapter 8
-- Testing for Insecure Direct Object References (OTG-AUTHZ-004): \
-https://www.owasp.org/index.php/Testing_for_Insecure_Direct_Object_References_(OTG-AUTHZ-004)
+- Testing for Insecure Direct Object References (WSTG-ATHZ-04): \
+https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/05-Authorization_Testing/04-Testing_for_Insecure_Direct_Object_References.html
 - Using Burp to Test for Insecure Direct Object References: \
 https://support.portswigger.net/customer/portal/articles/1965691-using-burp-to-test-for-insecure-direct-object-references
 - IDOR Examples from ngalongc/bug-bounty-reference: \
@@ -150,8 +150,8 @@ HUNT recommends further manual analysis of the parameter in question.
 For OS Command Injection HUNT recommends the following resources to aid \
 in manual testing:
 
-- (OWASP) Testing for OS Command Injection: \
-https://www.owasp.org/index.php/Testing_for_Command_Injection_(OTG-INPVAL-013)
+- (OWASP) Testing for OS Command Injection (WSTG-INPV-12): \
+https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/07-Input_Validation_Testing/12-Testing_for_Command_Injection.html
 - Joberts How To Command Injection: \
 https://www.hackerone.com/blog/how-to-command-injections
 - Commix Command Injection Tool: \

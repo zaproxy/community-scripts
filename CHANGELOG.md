@@ -35,7 +35,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Ignore check for update messages;
   - Include more expected content types.
 - httpsender/aws-signing-for-owasp-zap.py > read AWS environment variables for default values.
-- active/TestInsecureHTTPVerbs.py > correct link to OWASP site.
+- active/TestInsecureHTTPVerbs.py and passive/HUNT.py > correct links to OWASP site.
 
 ### Removed
 - standalone/loadListInGlobalVariable.js > superseded by core functionality, `ScriptVars.setGlobalCustomVar(...)` and `getGlobalCustomVar(...)`.
