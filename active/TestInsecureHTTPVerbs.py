@@ -14,7 +14,7 @@ http://testaspnet.vulnweb.com
 http://testfire.net/
 http://crackme.cenzic.com
 
-and other apps from https://www.owasp.org/index.php/OWASP_Vulnerable_Web_Applications_Directory_Project#tab=On-Line_apps
+and other apps from https://owasp.org/www-project-vulnerable-web-applications-directory/#div-online
 
 For some reasons, the order of the array insecureverbs could throw a java.net.SocketTimeoutException, for example with some proxies when TRACE is called just after DELETE
 If you encounter such issues, try to change the order on the following line
