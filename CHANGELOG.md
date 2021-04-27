@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ### Added
+- standalone/load_context_from_burp -> import context from burp config file
 - Passive scan script for finding potential s3 Bucket URLs
 - payloadprocessor/to-hex.js > string to hex payload script.
 - selenium and session scripts.
