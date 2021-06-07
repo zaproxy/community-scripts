@@ -106,6 +106,10 @@ spotless {
 
         googleJavaFormat("1.7").aosp()
     }
+
+    kotlinGradle {
+        ktlint()
+    }
 }
 
 System.getenv("GITHUB_REF")?.let { ref ->
