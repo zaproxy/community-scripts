@@ -9,7 +9,7 @@ ZAP is an Open Source Web App Security Testing Tool and browser proxy, that is v
 2.  Add ZAP root certificate to your browser - Open ZAP > Tools > Options > Dynamic SSL Certificates > Save
 3.  Start ZAP daemon (also see `demos/start-zap.sh` script): `zap.sh -daemon -port 8080 -config api.disablekey=true &`
 4.  Configure your machine or browser to use ZAP local proxy for all internet traffic
-5.  Download the project (https://github.com/zaproxy/community-scripts/archive/master.zip), unzip it and navigate into this directory (`/api/sdlc-integration`) - let's call it the root from now on.
+5.  Download the project (https://github.com/zaproxy/community-scripts/archive/main.zip), unzip it and navigate into this directory (`/api/sdlc-integration`) - let's call it the root from now on.
 6.  Install requirements: `pip install -r requirements.txt`
 7.  Modify `core/config.py` - here you can configure:
     1. ZAP's URL
