@@ -3,6 +3,9 @@ All notable changes to this add-on will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+
 ## [10] - 2021-06-11
 
 ### Added
@@ -117,5 +120,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
+[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v10...HEAD
 [10]: https://github.com/zaproxy/community-scripts/compare/v9...v10
 [9]: https://github.com/zaproxy/community-scripts/compare/7278617af4bd1bc3d8db41c00a0437bf78ba6e51...v9
