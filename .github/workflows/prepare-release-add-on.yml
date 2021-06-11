@@ -1,15 +1,11 @@
-name: Release Add-On
+name: Prepare Release Add-on
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'gradle.properties'
+  workflow_dispatch:
 
 jobs:
-  release:
-    name: Build and Release Add-On
+  prepare-release:
+    name: Prepare Release
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -20,9 +16,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 8
-    - name: Generate Release State
-      run: ./gradlew generateReleaseStateLastCommit
-    - name: Build and Release Add-On
+    - name: Prepare Release and Create Pull Request
       env:
         ZAPBOT_TOKEN: ${{ secrets.ZAPBOT_TOKEN }}
-      run: ./gradlew releaseAddOn
+      run: ./gradlew createPullRequestRelease

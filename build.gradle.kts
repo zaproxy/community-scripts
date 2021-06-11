@@ -1,12 +1,12 @@
-import org.zaproxy.gradle.addon.AddOnPlugin
 import org.zaproxy.gradle.addon.AddOnStatus
+import org.zaproxy.gradle.addon.internal.model.ProjectInfo
+import org.zaproxy.gradle.addon.internal.model.ReleaseState
+import org.zaproxy.gradle.addon.internal.tasks.GenerateReleaseStateLastCommit
 import org.zaproxy.gradle.addon.misc.ConvertMarkdownToHtml
-import org.zaproxy.gradle.addon.misc.CreateGitHubRelease
-import org.zaproxy.gradle.addon.misc.ExtractLatestChangesFromChangelog
 
 plugins {
     `java-library`
-    id("org.zaproxy.add-on") version "0.5.0"
+    id("org.zaproxy.add-on") version "0.6.0"
     id("com.diffplug.spotless") version "5.12.1"
 }
 
@@ -14,7 +14,6 @@ repositories {
     mavenCentral()
 }
 
-version = "10"
 description = "Useful ZAP scripts written by the ZAP community."
 
 val scriptsDir = layout.buildDirectory.dir("scripts")
@@ -112,33 +111,15 @@ spotless {
     }
 }
 
-System.getenv("GITHUB_REF")?.let { ref ->
-    if ("refs/tags/" !in ref) {
-        return@let
-    }
+val projectInfo = ProjectInfo.from(project)
+val generateReleaseStateLastCommit by tasks.registering(GenerateReleaseStateLastCommit::class) {
+    projects.set(listOf(projectInfo))
+}
 
-    tasks.register<CreateGitHubRelease>("createReleaseFromGitHubRef") {
-        val targetTag = ref.removePrefix("refs/tags/")
-        val targetAddOnVersion = targetTag.removePrefix("v")
-
-        authToken.set(System.getenv("GITHUB_TOKEN"))
-        repo.set(System.getenv("GITHUB_REPOSITORY"))
-        tag.set(targetTag)
-
-        title.set(provider { "Version ${zapAddOn.addOnVersion.get()}" })
-        bodyFile.set(tasks.named<ExtractLatestChangesFromChangelog>("extractLatestChanges").flatMap { it.latestChanges })
-
-        assets {
-            register("add-on") {
-                file.set(tasks.named<Jar>(AddOnPlugin.JAR_ZAP_ADD_ON_TASK_NAME).flatMap { it.archiveFile })
-            }
-        }
-
-        doFirst {
-            val addOnVersion = zapAddOn.addOnVersion.get()
-            require(addOnVersion == targetAddOnVersion) {
-                "Version of the tag $targetAddOnVersion does not match the version of the add-on $addOnVersion"
-            }
-        }
+val releaseAddOn by tasks.registering {
+    if (ReleaseState.read(projectInfo).isNewRelease()) {
+        dependsOn("createRelease")
+        dependsOn("handleRelease")
+        dependsOn("createPullRequestNextDevIter")
     }
 }
