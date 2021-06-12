@@ -90,8 +90,8 @@ function getCredentialsParamsNames(){
 
 ## Templates in other languages
 
-* Groovy : [AuthenticationDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/authentication/AuthenticationDefaultTemplate.groovy)
-* Jruby : [Authentication default template.rb](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jruby/src/main/zapHomeFiles/scripts/templates/authentication/Authentication%20default%20template.rb)
-* Jython : [Authentication default template.py](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jython/src/main/zapHomeFiles/scripts/templates/authentication/Authentication%20default%20template.py)
-* Kotlin : [Authentication default template.kts](https://github.com/zaproxy/zap-extensions/blob/master/addOns/kotlin/src/main/zapHomeFiles/scripts/templates/authentication/Authentication%20default%20template.kts)
-* Zest : [Authentication default template.zst](https://github.com/zaproxy/zap-extensions/blob/master/addOns/zest/src/main/zapHomeFiles/scripts/templates/authentication/Authentication%20default%20template.zst)
+* Groovy : [AuthenticationDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/main/addOns/groovy/src/main/zapHomeFiles/scripts/templates/authentication/AuthenticationDefaultTemplate.groovy)
+* Jruby : [Authentication default template.rb](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jruby/src/main/zapHomeFiles/scripts/templates/authentication/Authentication%20default%20template.rb)
+* Jython : [Authentication default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/authentication/Authentication%20default%20template.py)
+* Kotlin : [Authentication default template.kts](https://github.com/zaproxy/zap-extensions/blob/main/addOns/kotlin/src/main/zapHomeFiles/scripts/templates/authentication/Authentication%20default%20template.kts)
+* Zest : [Authentication default template.zst](https://github.com/zaproxy/zap-extensions/blob/main/addOns/zest/src/main/zapHomeFiles/scripts/templates/authentication/Authentication%20default%20template.zst)

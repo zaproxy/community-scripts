@@ -79,10 +79,10 @@ function appliesToHistoryType(historyType) {
 
 ## Templates in other languages
 
-* Groovy : [PassiveDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/passive/PassiveDefaultTemplate.groovy)
-* Jruby : [Passive default template.rb](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jruby/src/main/zapHomeFiles/scripts/templates/passive/Passive%20default%20template.rb)
-* Jython : [Passive default template.py](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jython/src/main/zapHomeFiles/scripts/templates/passive/Passive%20default%20template.py)
-* Zest : [Passive default template.zst](https://github.com/zaproxy/zap-extensions/blob/master/addOns/zest/src/main/zapHomeFiles/scripts/templates/passive/Passive%20default%20template.zst)
+* Groovy : [PassiveDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/main/addOns/groovy/src/main/zapHomeFiles/scripts/templates/passive/PassiveDefaultTemplate.groovy)
+* Jruby : [Passive default template.rb](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jruby/src/main/zapHomeFiles/scripts/templates/passive/Passive%20default%20template.rb)
+* Jython : [Passive default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/passive/Passive%20default%20template.py)
+* Zest : [Passive default template.zst](https://github.com/zaproxy/zap-extensions/blob/main/addOns/zest/src/main/zapHomeFiles/scripts/templates/passive/Passive%20default%20template.zst)
 
 ## Official Videos
 

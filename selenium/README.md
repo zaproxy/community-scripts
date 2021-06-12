@@ -44,5 +44,5 @@ function logger() {
 | utils | SeleniumScriptUtils.java - no JavaDocs, see code link |
 
 ## Code Links
-* [SeleniumScript.java](https://github.com/zaproxy/zap-extensions/blob/master/addOns/selenium/src/main/java/org/zaproxy/zap/extension/selenium/SeleniumScript.java)
-* [SeleniumScriptUtils.java](https://github.com/zaproxy/zap-extensions/blob/master/addOns/selenium/src/main/java/org/zaproxy/zap/extension/selenium/SeleniumScriptUtils.java)
+* [SeleniumScript.java](https://github.com/zaproxy/zap-extensions/blob/main/addOns/selenium/src/main/java/org/zaproxy/zap/extension/selenium/SeleniumScript.java)
+* [SeleniumScriptUtils.java](https://github.com/zaproxy/zap-extensions/blob/main/addOns/selenium/src/main/java/org/zaproxy/zap/extension/selenium/SeleniumScriptUtils.java)

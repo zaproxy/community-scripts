@@ -73,10 +73,10 @@ function processResult(utils, fuzzResult){
 ## Code Links
 | Name | Source |
 | --- | --- |
-| fuzzResult | [HttpFuzzResult](https://github.com/zaproxy/zap-extensions/blob/master/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzResult.java) |
-| utils | [HttpFuzzerTaskProcessorUtils](https://github.com/zaproxy/zap-extensions/blob/master/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzerTaskProcessorUtils.java) |
+| fuzzResult | [HttpFuzzResult](https://github.com/zaproxy/zap-extensions/blob/main/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzResult.java) |
+| utils | [HttpFuzzerTaskProcessorUtils](https://github.com/zaproxy/zap-extensions/blob/main/addOns/fuzz/src/main/java/org/zaproxy/zap/extension/fuzz/httpfuzzer/HttpFuzzerTaskProcessorUtils.java) |
 
 ## Templates in other languages
 
-* Groovy : [FuzzerHttpProcessorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/httpfuzzerprocessor/FuzzerHttpProcessorDefaultTemplate.groovy)
+* Groovy : [FuzzerHttpProcessorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/main/addOns/groovy/src/main/zapHomeFiles/scripts/templates/httpfuzzerprocessor/FuzzerHttpProcessorDefaultTemplate.groovy)
 

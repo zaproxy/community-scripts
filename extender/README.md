@@ -41,10 +41,10 @@ function uninstall(helper) {
 | helper | ExtenderScriptHelper (no JavaDocs, see below for code link) |
 
 ## Code Links
-* [ExtenderScript](https://github.com/zaproxy/zap-extensions/blob/master/addOns/scripts/src/main/java/org/zaproxy/zap/extension/scripts/ExtenderScript.java)
-* [ExtenderScriptHelper](https://github.com/zaproxy/zap-extensions/blob/master/addOns/scripts/src/main/java/org/zaproxy/zap/extension/scripts/ExtenderScriptHelper.java)
+* [ExtenderScript](https://github.com/zaproxy/zap-extensions/blob/main/addOns/scripts/src/main/java/org/zaproxy/zap/extension/scripts/ExtenderScript.java)
+* [ExtenderScriptHelper](https://github.com/zaproxy/zap-extensions/blob/main/addOns/scripts/src/main/java/org/zaproxy/zap/extension/scripts/ExtenderScriptHelper.java)
 
 ## Templates in other languages
 
-* Groovy : [ExtenderDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/extender/ExtenderDefaultTemplate.groovy)
-* Jython : [Extender default template.py](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jython/src/main/zapHomeFiles/scripts/templates/extender/Extender%20default%20template.py)
+* Groovy : [ExtenderDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/main/addOns/groovy/src/main/zapHomeFiles/scripts/templates/extender/ExtenderDefaultTemplate.groovy)
+* Jython : [Extender default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/extender/Extender%20default%20template.py)
