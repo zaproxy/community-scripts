@@ -176,5 +176,5 @@ def scan(helper,msg):
 
 | Name   | Source                                                                                                                                                                               |
 |--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| helper | [WebSocketScanHelper](https://github.com/zaproxy/zap-extensions/blob/master/addOns/websocket/src/main/java/org/zaproxy/zap/extension/websocket/pscan/WebSocketScanHelper.java) |
-| msg    | [WebSocketMessageDTO](https://github.com/zaproxy/zap-extensions/blob/master/addOns/websocket/src/main/java/org/zaproxy/zap/extension/websocket/WebSocketMessageDTO.java)             |
+| helper | [WebSocketScanHelper](https://github.com/zaproxy/zap-extensions/blob/main/addOns/websocket/src/main/java/org/zaproxy/zap/extension/websocket/pscan/WebSocketScanHelper.java) |
+| msg    | [WebSocketMessageDTO](https://github.com/zaproxy/zap-extensions/blob/main/addOns/websocket/src/main/java/org/zaproxy/zap/extension/websocket/WebSocketMessageDTO.java)             |

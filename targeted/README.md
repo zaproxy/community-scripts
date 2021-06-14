@@ -26,10 +26,10 @@ function invokeWith(msg) {
 
 ## Templates in other languages
 
-* Groovy : [TargetedDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/targeted/TargetedDefaultTemplate.groovy)
-* Jruby : [Targeted default template.rb](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jruby/src/main/zapHomeFiles/scripts/templates/targeted/Targeted%20default%20template.rb)
-* Jython : [Targeted default template.py](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jython/src/main/zapHomeFiles/scripts/templates/targeted/Targeted%20default%20template.py)
-* Zest : [Targeted default template.zst](https://github.com/zaproxy/zap-extensions/blob/master/addOns/zest/src/main/zapHomeFiles/scripts/templates/targeted/Targeted%20default%20template.zst)
+* Groovy : [TargetedDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/main/addOns/groovy/src/main/zapHomeFiles/scripts/templates/targeted/TargetedDefaultTemplate.groovy)
+* Jruby : [Targeted default template.rb](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jruby/src/main/zapHomeFiles/scripts/templates/targeted/Targeted%20default%20template.rb)
+* Jython : [Targeted default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/targeted/Targeted%20default%20template.py)
+* Zest : [Targeted default template.zst](https://github.com/zaproxy/zap-extensions/blob/main/addOns/zest/src/main/zapHomeFiles/scripts/templates/targeted/Targeted%20default%20template.zst)
 
 ## Official Videos
 

@@ -133,5 +133,5 @@ function getTreePath(helper, msg) {
 
 ## Templates in other languages
 
-* Groovy : [InputVectorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/variant/InputVectorDefaultTemplate.groovy)
-* Jython : [Input Vector default template.py](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jython/src/main/zapHomeFiles/scripts/templates/variant/Input%20Vector%20default%20template.py)
+* Groovy : [InputVectorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/main/addOns/groovy/src/main/zapHomeFiles/scripts/templates/variant/InputVectorDefaultTemplate.groovy)
+* Jython : [Input Vector default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/variant/Input%20Vector%20default%20template.py)

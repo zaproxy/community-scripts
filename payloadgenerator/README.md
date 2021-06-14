@@ -70,4 +70,4 @@ function close() {
 
 ## Templates in other languages
 
-* Groovy : [PayloadGeneratorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/payloadgenerator/PayloadGeneratorDefaultTemplate.groovy)
+* Groovy : [PayloadGeneratorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/main/addOns/groovy/src/main/zapHomeFiles/scripts/templates/payloadgenerator/PayloadGeneratorDefaultTemplate.groovy)

@@ -50,10 +50,10 @@ function proxyResponse(msg) {
 
 ## Templates in other languages
 
-* Groovy : [ProxyDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/proxy/ProxyDefaultTemplate.groovy)
-* Jruby : [Proxy default template.rb](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jruby/src/main/zapHomeFiles/scripts/templates/proxy/Proxy%20default%20template.rb)
-* Jython : [Proxy default template.py](https://github.com/zaproxy/zap-extensions/blob/master/addOns/jython/src/main/zapHomeFiles/scripts/templates/proxy/Proxy%20default%20template.py)
-* Zest : [Proxy default template.zst](https://github.com/zaproxy/zap-extensions/blob/master/addOns/zest/src/main/zapHomeFiles/scripts/templates/proxy/Proxy%20default%20template.zst)
+* Groovy : [ProxyDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/main/addOns/groovy/src/main/zapHomeFiles/scripts/templates/proxy/ProxyDefaultTemplate.groovy)
+* Jruby : [Proxy default template.rb](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jruby/src/main/zapHomeFiles/scripts/templates/proxy/Proxy%20default%20template.rb)
+* Jython : [Proxy default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/proxy/Proxy%20default%20template.py)
+* Zest : [Proxy default template.zst](https://github.com/zaproxy/zap-extensions/blob/main/addOns/zest/src/main/zapHomeFiles/scripts/templates/proxy/Proxy%20default%20template.zst)
 
 
 ## Official Videos

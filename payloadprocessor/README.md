@@ -33,4 +33,4 @@ function process(payload) {
 
 ## Templates in other languages
 
-* Groovy : [PayloadProcessorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/master/addOns/groovy/src/main/zapHomeFiles/scripts/templates/payloadprocessor/PayloadProcessorDefaultTemplate.groovy)
+* Groovy : [PayloadProcessorDefaultTemplate.groovy](https://github.com/zaproxy/zap-extensions/blob/main/addOns/groovy/src/main/zapHomeFiles/scripts/templates/payloadprocessor/PayloadProcessorDefaultTemplate.groovy)
