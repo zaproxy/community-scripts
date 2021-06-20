@@ -22,7 +22,7 @@ function invokeWith(msg) {
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/parosproxy/paros/network/HttpMessage.html) |
+| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/latest/org/parosproxy/paros/network/HttpMessage.html) |
 
 ## Templates in other languages
 

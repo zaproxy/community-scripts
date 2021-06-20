@@ -127,8 +127,8 @@ function getTreePath(helper, msg) {
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| helper | [VariantCustom](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/parosproxy/paros/core/scanner/VariantCustom.html) |
-| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/parosproxy/paros/network/HttpMessage.html) |
+| helper | [VariantCustom](https://static.javadoc.io/org.zaproxy/zap/latest/org/parosproxy/paros/core/scanner/VariantCustom.html) |
+| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/latest/org/parosproxy/paros/network/HttpMessage.html) |
 | nodeName | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html) |
 
 ## Templates in other languages

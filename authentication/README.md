@@ -84,9 +84,9 @@ function getCredentialsParamsNames(){
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| helper | [AuthenticationHelper](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/zaproxy/zap/authentication/AuthenticationHelper.html) |
+| helper | [AuthenticationHelper](https://static.javadoc.io/org.zaproxy/zap/latest/org/zaproxy/zap/authentication/AuthenticationHelper.html) |
 | paramValues | [Map<String, String>](https://docs.oracle.com/javase/8/docs/api/java/util/Map.html) |
-| credentials | [GenericAuthenticationCredentials](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/zaproxy/zap/authentication/GenericAuthenticationCredentials.html) |
+| credentials | [GenericAuthenticationCredentials](https://static.javadoc.io/org.zaproxy/zap/latest/org/zaproxy/zap/authentication/GenericAuthenticationCredentials.html) |
 
 ## Templates in other languages
 
