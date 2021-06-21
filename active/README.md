@@ -100,8 +100,8 @@ function scan(as, msg, param, value) {
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| as | [ScriptsActiveScanner](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/zaproxy/zap/extension/ascan/ScriptsActiveScanner.html) |
-| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/parosproxy/paros/network/HttpMessage.html) |
+| as | [ScriptsActiveScanner](https://static.javadoc.io/org.zaproxy/zap/latest/org/zaproxy/zap/extension/ascan/ScriptsActiveScanner.html) |
+| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/latest/org/parosproxy/paros/network/HttpMessage.html) |
 | param | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html) |
 | value | [String](https://docs.oracle.com/javase/8/docs/api/java/lang/String.html) |
 

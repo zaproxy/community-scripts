@@ -43,7 +43,7 @@ function proxyResponse(msg) {
 ## Variables
 | Name | Javadocs |
 | --- | --- |
-| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.8.0/org/parosproxy/paros/network/HttpMessage.html) |
+| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/latest/org/parosproxy/paros/network/HttpMessage.html) |
 
 ## Code Links
 * [ProxyScript.java](https://github.com/zaproxy/zaproxy/blob/main/zap/src/main/java/org/zaproxy/zap/extension/script/ProxyScript.java)

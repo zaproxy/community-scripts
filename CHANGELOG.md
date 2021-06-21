@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Changed
 - Update links in READMEs.
+- Update JavaDoc links to latest version.
 
 ## [10] - 2021-06-11
 

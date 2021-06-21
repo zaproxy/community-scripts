@@ -72,8 +72,8 @@ function appliesToHistoryType(historyType) {
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| ps | [ScriptsPassiveScanner](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/zaproxy/zap/extension/pscan/scanner/ScriptsPassiveScanner.html) |
-| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/parosproxy/paros/network/HttpMessage.html) |
+| ps | [ScriptsPassiveScanner](https://static.javadoc.io/org.zaproxy/zap/latest/org/zaproxy/zap/extension/pscan/scanner/ScriptsPassiveScanner.html) |
+| msg | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/latest/org/parosproxy/paros/network/HttpMessage.html) |
 | source | [Source](http://jericho.htmlparser.net/docs/javadoc/net/htmlparser/jericho/Source.html) |
 | historyType | int |
 

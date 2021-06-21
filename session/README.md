@@ -55,4 +55,4 @@ function getOptionalParamsNames() {
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| sessionWrapper | [ScriptBasedSessionManagementMethodType.SessionWrapper](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/zaproxy/zap/session/ScriptBasedSessionManagementMethodType.SessionWrapper.html) |
+| sessionWrapper | [ScriptBasedSessionManagementMethodType.SessionWrapper](https://static.javadoc.io/org.zaproxy/zap/latest/org/zaproxy/zap/session/ScriptBasedSessionManagementMethodType.SessionWrapper.html) |

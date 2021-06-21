@@ -68,7 +68,7 @@ function processResult(utils, fuzzResult){
 ## Parameters
 | Name | JavaDoc |
 | --- | --- |
-| message | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/2.9.0/org/parosproxy/paros/network/HttpMessage.html) |
+| message | [HttpMessage](https://static.javadoc.io/org.zaproxy/zap/latest/org/parosproxy/paros/network/HttpMessage.html) |
 
 ## Code Links
 | Name | Source |
