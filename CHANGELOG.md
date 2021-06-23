@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - standalone/load_context_from_burp -> import context from burp config file
 - Passive scan script for finding potential s3 Bucket URLs
+- httpsender/full-session-n-csrf-nashorn.js > full session and csrf token management.
 - payloadprocessor/to-hex.js > string to hex payload script.
 - selenium and session scripts.
 - httpfuzzerprocessor/random_x_forwarded_for_ip.js > Set 'X-Forwarded-For' to a random IP value.
