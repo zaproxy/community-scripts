@@ -42,3 +42,5 @@ RemoteSystemsTempFiles/
 # --------
 .nb-gradle
 .nb-gradle-properties
+
+.DS_Store
