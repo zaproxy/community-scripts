@@ -64,7 +64,7 @@ def scan(ps, msg, src):
     src (Source): The HTML source of the message (if any). 
 
   """
-  rr = r"[:|=|\'|\"|\s*|`|´| |,|?=|\]|\|//|/\*}]({{REGEX}})[:|=|\'|\"|\s*|`|´| |,|?=|\]|\}|&|//|\*/]"
+  rr = r"[:|=|\'|\"|\s*|`|´| |,|?=|\]|\|\\|\\*}]({{REGEX}})[:|=|\'|\"|\s*|`|´| |,|?=|\]|\}|&|\\|\*\]]"
 
   for name,match in regexs.items():
       v = rr.replace('{{REGEX}}',match)
