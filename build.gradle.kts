@@ -6,7 +6,8 @@ import org.zaproxy.gradle.addon.misc.ConvertMarkdownToHtml
 
 plugins {
     `java-library`
-    id("org.zaproxy.add-on") version "0.6.0"
+    id("org.zaproxy.add-on") version "0.7.0"
+    id("org.zaproxy.crowdin") version "0.1.0"
     id("com.diffplug.spotless") version "5.12.1"
 }
 
@@ -33,6 +34,17 @@ zapAddOn {
         repo.set("https://github.com/zaproxy/community-scripts/")
         changesFile.set(tasks.named<ConvertMarkdownToHtml>("generateManifestChanges").flatMap { it.html })
         files.from(scriptsDir)
+    }
+}
+
+crowdin {
+    credentials {
+        token.set(System.getenv("CROWDIN_AUTH_TOKEN"))
+    }
+
+    configuration {
+        file.set(file("gradle/crowdin.yml"))
+        tokens.set(mutableMapOf("%addOnId%" to zapAddOn.addOnId.get()))
     }
 }
 
@@ -121,5 +133,6 @@ val releaseAddOn by tasks.registering {
         dependsOn("createRelease")
         dependsOn("handleRelease")
         dependsOn("createPullRequestNextDevIter")
+        dependsOn("crowdinUploadSourceFiles")
     }
 }
