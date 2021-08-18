@@ -65,6 +65,7 @@ function processResult(utils, fuzzResult) {
     var actual = fuzzed.getResponseHeader().getStatusCode().toString();
     var found = actual.search(pattern) != -1;
     var expected = found == sense;
+    var why = "";
 
     // If unexpected, raise an alert
     if (!expected) {
