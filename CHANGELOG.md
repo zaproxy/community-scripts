@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - httpsender/full-session-n-csrf-nashorn.js > full session and csrf token management.
 - httpfuzzerprocessor/unexpected_responses.js > compare response codes to a (pass/fail) regex and generate alerts
 - targeted/dns-email-spoofing > Check if DMARC / SPF policies are configured on a domain.
+- httpsender/add-more-headers.js > Add caller-specified headers to all requests.
 
 ### Changed
 - Update links in READMEs.
