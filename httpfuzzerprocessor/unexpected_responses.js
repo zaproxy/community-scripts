@@ -7,9 +7,9 @@
  * Unexpected responses will cause an alert to be raised.
  */
 
-// See https://github.com/zaproxy/community-scripts/tree/master/httpfuzzerprocessor
+// See https://github.com/zaproxy/community-scripts/tree/main/httpfuzzerprocessor
 
-// See https://github.com/zaproxy/community-scripts/blob/master/httpfuzzerprocessor/showDifferences.js
+// See https://github.com/zaproxy/community-scripts/blob/main/httpfuzzerprocessor/showDifferences.js
 // for inspiration for differencing logic used to document detected defects.
 
 // This script needs Diff add-on
