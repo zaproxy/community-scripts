@@ -1,16 +1,14 @@
 /*
-* This script is intended to be used along with HTTP Sender/AddBearerTokenHeader.js to
+* This script is intended to be used along with  httpsender/AddBearerTokenHeader.js  to
 * handle an OAUTH2 offline token refresh workflow.
 *
-* Authentication/OfflineTokenRefresher.js will automatically fetch the new access token for every unauthorized
+* authentication/OfflineTokenRefresher.js will automatically fetch the new access token for every unauthorized
 * request determined by the "Logged Out" or "Logged In" indicator previously set in Context -> Authentication.
 *
-* HTTP Sender/AddBearerTokenHeader.js will add the new access token to all requests in scope
+*  httpsender/AddBearerTokenHeader.js  will add the new access token to all requests in scope
 * made by ZAP (except the authentication ones) as an "Authorization: Bearer [access_token]" HTTP Header.
 *
-*
 * @author Laura Pardo <lpardo at redhat.com>
-*
 */
 
 var HttpRequestHeader = Java.type("org.parosproxy.paros.network.HttpRequestHeader");
