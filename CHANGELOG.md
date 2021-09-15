@@ -4,7 +4,8 @@ All notable changes to this add-on will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
-
+- authentication/OfflineTokenRefresh.js - refresh oauth2 offline tokens
+- httpsender/AddBearerTokenHeader.js - refresh oauth2 offline tokens
 
 ## [11] - 2021-09-07
 ### Added
@@ -14,8 +15,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - httpfuzzerprocessor/unexpected_responses.js > compare response codes to a (pass/fail) regex and generate alerts
 - targeted/dns-email-spoofing > Check if DMARC / SPF policies are configured on a domain.
 - httpsender/add-more-headers.js > Add caller-specified headers to all requests.
-- authentication/OfflineTokenRefresh.js - refresh oauth2 offline tokens
-- httpsender/AddBearerTokenHeader.js - refresh oauth2 offline tokens
 
 ### Changed
 - Update links in READMEs.
