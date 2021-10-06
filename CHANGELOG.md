@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - authentication/OfflineTokenRefresh.js - refresh oauth2 offline tokens
 - httpsender/AddBearerTokenHeader.js - refresh oauth2 offline tokens
 
+### Changed
+- Update minimum ZAP version to 2.11.0.
+
 ## [11] - 2021-09-07
 ### Added
 - active/Cross Site WebSocket Hijacking.js > an active scan for Cross-Site WebSocket Hijacking vulnerability
