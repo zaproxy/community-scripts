@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - authentication/OfflineTokenRefresh.js - refresh oauth2 offline tokens
 - httpsender/AddBearerTokenHeader.js - refresh oauth2 offline tokens
 - targeted/WordPress Username Enumeration.js - A targeted script to check for WordPress Username Enumeration via author archives
+- targeted/cve-2021-41773-apache-path-trav.js - an active scan script to test for Apache 2.4.49 CVE-2021-41773 path traversal.
 
 ### Changed
 - Update minimum ZAP version to 2.11.0.
