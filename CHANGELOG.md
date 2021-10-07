@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - authentication/OfflineTokenRefresh.js - refresh oauth2 offline tokens
 - httpsender/AddBearerTokenHeader.js - refresh oauth2 offline tokens
+- targeted/WordPress Username Enumeration.js - A targeted script to check for WordPress Username Enumeration via author archives
 
 ### Changed
 - Update minimum ZAP version to 2.11.0.
