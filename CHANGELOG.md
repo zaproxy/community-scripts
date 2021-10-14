@@ -3,6 +3,9 @@ All notable changes to this add-on will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+## [Unreleased]
+
+
 ## [13] - 2021-10-14
 ### Fixed
 - targeted/cve-2021-41773-apache-path-trav.js - Set path as escaped so that it's handled properly, set pluginid properly.
@@ -144,6 +147,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
+[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v13...HEAD
 [13]: https://github.com/zaproxy/community-scripts/compare/v12...v13
 [12]: https://github.com/zaproxy/community-scripts/compare/v11...v12
 [11]: https://github.com/zaproxy/community-scripts/compare/v10...v11
