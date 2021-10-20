@@ -13,9 +13,6 @@ plugins {
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-    }
 }
 
 description = "Useful ZAP scripts written by the ZAP community."
@@ -54,7 +51,6 @@ crowdin {
 val jupiterVersion = "5.7.0-M1"
 
 dependencies {
-    zap("org.zaproxy:zap:2.11.0-20210929.165234-4")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$jupiterVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jupiterVersion")
