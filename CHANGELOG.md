@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - variant/CompoundCookies.js - An input vector script that handles splitting of compound cookies (Issue 6582).
+- active/corsair.py > An active scan script to check for CORS related issues.)
 
 ## [13] - 2021-10-14
 ### Fixed
