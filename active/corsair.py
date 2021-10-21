@@ -5,7 +5,7 @@ will assess if CORS is properly configured.
 """
 import urlparse
 alertTitle = 'Corsair - CORS Misconfigured'
-alertDescription = "Cross Origin Resource Sharing (CORS) is misconfigured. \n"
+alertDescription = "Cross Origin Resource Sharing (CORS) is misconfigured.\n"
 alertRisk = 2
 alertConfidence = 3
 alertSolution = "Configure CORS in a more restrictive way, to give access only the sites allowed to access your domain."
