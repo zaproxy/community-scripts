@@ -3,7 +3,7 @@ All notable changes to this add-on will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [14] - 2021-11-01
 ### Added
 - variant/CompoundCookies.js - An input vector script that handles splitting of compound cookies (Issue 6582).
 - active/corsair.py > An active scan script to check for CORS related issues.)
@@ -151,7 +151,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
-[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v13...HEAD
+[14]: https://github.com/zaproxy/community-scripts/compare/v13...v14
 [13]: https://github.com/zaproxy/community-scripts/compare/v12...v13
 [12]: https://github.com/zaproxy/community-scripts/compare/v11...v12
 [11]: https://github.com/zaproxy/community-scripts/compare/v10...v11
