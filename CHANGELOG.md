@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - variant/CompoundCookies.js - An input vector script that handles splitting of compound cookies (Issue 6582).
 - active/corsair.py > An active scan script to check for CORS related issues.)
 - payloadgenerator/securerandom.js > A fuzzer payload generator script that uses Java's SecureRandom as it's source (related to issue 6892).
+- active/bxss.py > an active scan script for inject blind xss payloads to the parameters
 
 ## [13] - 2021-10-14
 ### Fixed
