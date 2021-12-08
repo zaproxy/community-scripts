@@ -4,7 +4,9 @@ All notable changes to this add-on will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
-
+### Added
+- active/RCE.py
+- active/SSTI.py
 
 ## [14] - 2021-11-01
 ### Added
