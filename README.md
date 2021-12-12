@@ -15,6 +15,8 @@ For more information on ZAP scripts see:
  
 To discuss any aspect of ZAP scripting please join the zaproxy-scripts group: http://groups.google.com/group/zaproxy-scripts
 
+**Note**: For .py scripts to be visible, you must have the [Python Scripting](https://www.zaproxy.org/docs/desktop/addons/python-scripting/) add-on installed. Same with Ruby, Kotlin, etc.
+
 Please ensure that scripts submitted have the correct extension for the language they are written in.
 
 All scripts in the repo are released under the Apache v2.0 licence.
