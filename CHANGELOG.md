@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - active/RCE.py
 - active/SSTI.py
 
+### Changed
+- standalone/enableDebugLogging.js > Updated for more recent logging funtionality.
+
 ## [14] - 2021-11-01
 ### Added
 - variant/CompoundCookies.js - An input vector script that handles splitting of compound cookies (Issue 6582).
