@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - active/RCE.py
 - active/SSTI.py
+- active/SSTI.js - An active script to check for SSTI in 14 different template engines.
 
 ### Changed
 - standalone/enableDebugLogging.js > Updated for more recent logging funtionality.
