@@ -151,7 +151,7 @@ function raiseAlert(as, msg, payload, evidence, confidence, param, engine) {
     var badErrors = ["Infinity", "INF"];
 
     //Alert variables
-    var pluginId = 1204650;
+    var pluginId = 100033;
     var alertName = "Server Side Template Injection";
     if (!badErrors.includes(engine)) {
         alertName += " - " + toTitleCase(engine);
