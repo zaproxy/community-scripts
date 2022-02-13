@@ -6,16 +6,12 @@ function processMessage(utils, message) {
 
 function setCacheBusting(message,cbValue) {
     var URI = Java.type("org.apache.commons.httpclient.URI");
-    var params = message.getUrlParams();
-    var iterator = params.iterator();
-
-    if(iterator.hasNext()) {
-      var uri = message.getRequestHeader().getURI().toString() + "&x_cache_busting_"+cbValue+"="+cbValue
-	 message.getRequestHeader().setURI(new URI(uri, false))
-    } else {
-      var uri = message.getRequestHeader().getURI().toString() + "?x_cache_busting_"+cbValue+"="+cbValue
-	 message.getRequestHeader().setURI(new URI(uri, false))
-    }
+    var HtmlParameter = Java.type('org.parosproxy.paros.network.HtmlParameter')
+    var URL_TYPE   = org.parosproxy.paros.network.HtmlParameter.Type.url;
+    var params = message.getUrlParams()
+    var newParam = new HtmlParameter(URL_TYPE, "x_cache_busting_"+cbValue, cbValue);
+    params.add(newParam)
+    message.getRequestHeader().setGetParams(params)
 }
 
 function processResult(utils, fuzzResult){
