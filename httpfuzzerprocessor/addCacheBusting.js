@@ -17,7 +17,7 @@ function setCacheBusting(message,cbValue) {
 	 message.getRequestHeader().setURI(new URI(uri, false))
     }
 
-    whil(iterator.hasNext()) {
+    while(iterator.hasNext()) {
         var param = iterator.next();
         if (param.getName().equals("cachebusting")) {
 		param.setValue(cbValue)
