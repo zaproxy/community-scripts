@@ -5,7 +5,6 @@ function processMessage(utils, message) {
 }
 
 function setCacheBusting(message,cbValue) {
-    var URI = Java.type("org.apache.commons.httpclient.URI");
     var HtmlParameter = Java.type('org.parosproxy.paros.network.HtmlParameter')
     var URL_TYPE   = org.parosproxy.paros.network.HtmlParameter.Type.url;
     var params = message.getUrlParams()
