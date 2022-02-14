@@ -83,17 +83,17 @@ function sstiFuzzEngineErrorDetect(as, msg, param) {
         for (var j = 0; j < templateEngines.length; j++) {
 
             var engine = templateEngines[j];
-            if (respBody.includes(engine)) {
+            if (respBody.indexOf(engine) != -1) {
 
                 logger("Server Side Template Injection Found! Raising Alert...");
                 raiseAlert(as, fuzzMsg, err, engine, 2, param, engine);
-                logger("SSTI Error Based Engine Detection Completed...");
+                logger("SSTI Error Based Engine Detection Completed.");
                 return;
             }
         }
     }
 
-    logger("SSTI Error Based Engine Detection Completed...");
+    logger("SSTI Error Based Engine Detection Completed.");
 }
 
 function sstiFuzzEngineMathDetect(as, msg, param) {
@@ -134,16 +134,16 @@ function sstiFuzzEngineMathDetect(as, msg, param) {
         as.sendAndReceive(fuzzMsg, false, false);
         var respBody = fuzzMsg.getResponseBody().toString();
 
-        if (respBody.includes(evidence)) {
+        if (respBody.indexOf(evidence) != -1) {
 
             logger("Server Side Template Injection Found! Raising Alert...");
             raiseAlert(as, fuzzMsg, payload, evidence, 3, param, i);
-            logger("SSTI Expression Evaluation Based Engine Detection Completed...");
+            logger("SSTI Expression Evaluation Based Engine Detection Completed.");
             return;
         }
     }
 
-    logger("SSTI Expression Evaluation Based Engine Detection Completed...");
+    logger("SSTI Expression Evaluation Based Engine Detection Completed.");
 }
 
 function raiseAlert(as, msg, payload, evidence, confidence, param, engine) {
@@ -153,7 +153,7 @@ function raiseAlert(as, msg, payload, evidence, confidence, param, engine) {
     //Alert variables
     var pluginId = 100033;
     var alertName = "Server Side Template Injection";
-    if (!badErrors.includes(engine)) {
+    if (badErrors.indexOf(engine) == -1) {
         alertName += " - " + toTitleCase(engine);
     }
     var alertDesc = "Server Side Template Injection (SSTI) occurs when user input is directly embedded into the template without any proper sanitization, a hacker can use this vulnerability to inject malicious code and try to achieve remote code execution.";
