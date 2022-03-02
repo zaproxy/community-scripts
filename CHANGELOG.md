@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - active/SSTI.py
 - active/SSTI.js - An active scan script to check for SSTI in 14 different template engines.
 - httpfuzzerprocessor/addCacheBusting.js - Fuzzing with cache busting.
+- encode-decode
+    - README.md - Summary of the script type.
+    - double-spacer.js - A script that inserts a space after every character in a string.
 
 ### Changed
 - standalone/enableDebugLogging.js > Updated for more recent logging funtionality.

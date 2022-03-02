@@ -78,6 +78,7 @@ tasks.withType<Test>().configureEach {
 var scriptTypes = listOf(
         "active",
         "authentication",
+        "encode-decode",
         "extender",
         "httpfuzzerprocessor",
         "httpsender",
