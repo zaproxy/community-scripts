@@ -77,14 +77,35 @@ var expectedResults = [
 	"/misc/known-files/robots.txt.found",
 	"/misc/known-files/sitemap.xml.found"
 ]
+
+function findNode(scheme, path) {
+	var uri = new URI(scheme + '://' + target + '/test' + path, true);
+	var n = siteTree.findNode(uri);
+	if (n == null) {
+		// Find parent then loop through child nodes checking for the URL path
+		var parent = siteTree.findClosestParent(uri);
+		if (parent) {
+			for (var j = 0; j < parent.getChildCount(); j++) {
+				var child = parent.getChildAt(j);
+				if (child.getHierarchicNodeName().indexOf(path) > 0) {
+					n = child;
+					break;
+				}
+			}
+		}
+	}
+	return n;
+}
+
 var HistoryReference = Java.type('org.parosproxy.paros.model.HistoryReference');
 var URI = Java.type('org.apache.commons.httpclient.URI');
 
 var found = 0;
+var foundStandard = 0;
+var foundAjax = 0;
 var total = expectedResults.length;
 
-var httpResults = 'http://security-crawl-maze.app/test';
-var httpsResults = 'https://security-crawl-maze.app/test';
+var target = 'security-crawl-maze.app';
 var siteTree = org.parosproxy.paros.model.Model.getSingleton().getSession().getSiteTree();
 
 print('Security crawl Maze Results\t\t\tScheme\tStandard\tAjax');
@@ -92,11 +113,11 @@ print('----\t\t\t\t---\t---');
 
 for (var i in expectedResults) {
 	var res = expectedResults[i];
-	var scheme = 'https';
-	var node = siteTree.findNode(new URI(httpsResults + res, true));
+	var scheme = 'http';
+	var node = findNode(scheme, res);
 	if (!node) {
-		node = siteTree.findNode(new URI(httpResults + res, true));
-		scheme = 'http';
+		scheme = 'https';
+		node = findNode(scheme, res);
 	}
 
 	print(res);
@@ -106,9 +127,11 @@ for (var i in expectedResults) {
 		found++;
 		if (node.hasHistoryType(HistoryReference.TYPE_SPIDER)) {
 			spiderResult = "Pass";
+			foundStandard++;
 		}
 		if (node.hasHistoryType(HistoryReference.TYPE_SPIDER_AJAX)) {
 			ajaxResult = "Pass";
+			foundAjax++;
 		}
 	} else {
 		scheme = '';
@@ -117,6 +140,8 @@ for (var i in expectedResults) {
 }
 
 print('Tests:\t' + total);
-print('Passes:\t' + found);
+print('Total Passes:\t' + found);
+print('Standard Passes: ' + foundStandard);
+print('Ajax Passes: ' + foundAjax);
 print('Fails:\t' + (total - found));
 print('Score:\t' + Math.round(found * 100 / total) + '%');
