@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - encode-decode
     - README.md - Summary of the script type.
     - double-spacer.js - A script that inserts a space after every character in a string.
+- standalone/SecurityCrawlMazeScore.js
 
 ### Changed
 - standalone/enableDebugLogging.js > Updated for more recent logging funtionality.
