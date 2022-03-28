@@ -40,7 +40,7 @@ function scan(ps, msg, src)
     var stripe = /((?:r|s)k_[live|test]_[0-9a-zA-Z]{24})/g
     var reconng = /(\.?recon-ng\/keys\.db)/g
     var generic = /([a|A][p|P][i|I][_]?[k|K][e|E][y|Y].*['|\"][0-9a-zA-Z]{32,45}['|\"])/g
-    var googlecloud = /(AIza[0-9A-Za-z\\\-\_]{35})/g
+    var googlecloud = /(AIza[0-9A-Za-z\-_]{35})/g
     var picatic = /(sk_(live|test)_[0-9a-z]{32})/g
     var twilio = /(SK[0-9a-fA-F]{32})/g
     var sendgrid = /(SG\.[0-9A-Za-z\-_]{22}\.[0-9A-Za-z\-_]{43})/g
