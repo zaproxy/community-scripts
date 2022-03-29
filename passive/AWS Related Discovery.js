@@ -13,6 +13,7 @@ function scan(ps, msg, src)
 		  "AWS Session Token Disclosed (script)",
 		  "AWS credential file Disclosed (script)",
 		  "Amazon MWS Auth Token Disclosed (script)",
+		  "S3cmd configuration file Disclosed (script)",
 		  ""]
     var alertDesc = ["An AWS CLI credentials file was discovered.",
 		 "An AWS Access Key ID Value was discovered.",
@@ -21,6 +22,7 @@ function scan(ps, msg, src)
 		 "An AWS Session Token was discovered.",
 		 "An AWS credential file was discovered.",
 		 "An Amazon MWS Auth Token was discovered.",
+		 "An S3cmd configuration file was discovered.",
 		""]
     var alertSolution = ["Ensure API keys, Tokens and configuration files that are publically accessible are not sensitive in nature.",
 		    ""]
@@ -34,6 +36,7 @@ function scan(ps, msg, src)
     var awssessiontoken = /((?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{16,}(?<![A-Za-z0-9/+=]))/g
     var awscredfile = /((?i)(aws_access_key_id|aws_secret_access_key)(.{0,20})?=.[0-9a-zA-Z\/+]{20,40})/g
     var amazonmws = /(amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/g
+	var s3cmdconfig = /(\.?s3cfg)/g
 
 	if (awsclicreds.test(body))
 	  {
@@ -107,5 +110,15 @@ function scan(ps, msg, src)
                foundamazonmws.push(comm[0]);
 	      }
             ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[6], alertDesc[6], url, '', '', foundamazonmws.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	  }
+	if (s3cmdconfig.test(body))
+	  {
+	    s3cmdconfig.lastIndex = 0
+	    var founds3cmdconfig = []
+            while (comm = s3cmdconfig.exec(body))
+	      {
+               founds3cmdconfig.push(comm[0]);
+	      }
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[7], alertDesc[7], url, '', '', founds3cmdconfig.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 }
