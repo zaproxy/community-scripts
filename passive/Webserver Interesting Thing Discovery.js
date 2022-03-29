@@ -1,4 +1,4 @@
-// Lazily crafted by Anthony Cozamanis - kurobeats@yahoo.co.jp, regex shamelessly ripped from https://github.com/CYS4srl/CYS4-SensitiveDiscoverer
+// Lazily crafted by Anthony Cozamanis - kurobeats@yahoo.co.jp
 
 function scan(ps, msg, src)
 {

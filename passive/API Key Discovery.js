@@ -1,4 +1,4 @@
-// Lazily crafted by Anthony Cozamanis - kurobeats@yahoo.co.jp, regex shamelessly ripped from https://github.com/CYS4srl/CYS4-SensitiveDiscoverer
+// Lazily crafted by Anthony Cozamanis - kurobeats@yahoo.co.jp
 
 function scan(ps, msg, src)
 {
@@ -37,7 +37,7 @@ function scan(ps, msg, src)
     var cweId = [0,1]
     var wascId = [0,1]
 
-    var stripe = /((?:r|s)k_[live|test]_[0-9a-zA-Z]{24})/g
+    var stripe = /((?:r|p|s)k_(live|test)_[0-9a-zA-Z]{24})/g
     var reconng = /(\.?recon-ng\/keys\.db)/g
     var generic = /([a|A][p|P][i|I][_]?[k|K][e|E][y|Y].*['|\"][0-9a-zA-Z]{32,45}['|\"])/g
     var googlecloud = /(AIza[0-9A-Za-z\-_]{35})/g
