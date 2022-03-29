@@ -22,6 +22,9 @@ function scan(ps, msg, src)
 		  "Github Key Disclosed (script)",
 		  "Heroku Key Disclosed (script)",
 		  "Splunk Authorization Disclosed (script)",
+		  "Square Access Token Disclosed (script)",
+		  "Square OAuth Secret Disclosed (script)",
+		  "PayPal/Braintree Access Token Disclosed (script)",
 		  ""]
     var alertDesc = ["A DigitalOcean doctl command-line client configuration file was discovered.",
 		 "A Tugboat DigitalOcean management tool configuration was discovered.",
@@ -39,6 +42,9 @@ function scan(ps, msg, src)
 		 "A Github Key was discovered",
 		 "A Heroku Key was discovered",
 		 "Splunk Authorization was discovered",
+		 "A Square Access Token was discovered",
+		 "A Square OAuth Secret was discovered",
+		 "A PayPal/Braintree Access Token was discovered",
 		""]
     var alertSolution = ["Ensure API keys, Tokens and configuration files that are publically accessible are not sensitive in nature.",
 		    ""]
@@ -61,6 +67,9 @@ function scan(ps, msg, src)
 	var githubkey = /((?i)github(.{0,20})?(?-i)[''\"][0-9a-zA-Z]{35,40}[''\"])/g
 	var herokukey = /((?i)heroku(.{0,20})?[''\"][0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}[''\"])/g
 	var splunkauth = /(Splunk\s(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1})/g
+	var squareaccesstoken = /(sq0atp-[0-9A-Za-z\-_]{22})/g
+	var squareoauthsecret = /(sq0csp-[0-9A-Za-z\-_]{43})/g
+	var paypalaccesstoken = /(access_token\$production\$[0-9a-z]{16}\$[0-9a-f]{32})/g
 
 	if (doctlcliconfig.test(body))
 	  {
@@ -224,5 +233,35 @@ function scan(ps, msg, src)
                foundsplunkauth.push(comm[0]);
 	      }
             ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[15], alertDesc[15], url, '', '', foundsplunkauth.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	  }
+	if (squareaccesstoken.test(body))
+	  {
+	    squareaccesstoken.lastIndex = 0
+	    var foundsquareaccesstoken = []
+            while (comm = squareaccesstoken.exec(body))
+	      {
+               foundsquareaccesstoken.push(comm[0]);
+	      }
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[16], alertDesc[16], url, '', '', foundsquareaccesstoken.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	  }
+	if (squareoauthsecret.test(body))
+	  {
+	    squareoauthsecret.lastIndex = 0
+	    var foundsquareoauthsecret = []
+            while (comm = squareoauthsecret.exec(body))
+	      {
+               foundsquareoauthsecret.push(comm[0]);
+	      }
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[17], alertDesc[17], url, '', '', foundsquareoauthsecret.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	  }
+	if (paypalaccesstoken.test(body))
+	  {
+	    paypalaccesstoken.lastIndex = 0
+	    var foundpaypalaccesstoken = []
+            while (comm = paypalaccesstoken.exec(body))
+	      {
+               foundpaypalaccesstoken.push(comm[0]);
+	      }
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[18], alertDesc[18], url, '', '', foundpaypalaccesstoken.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 }
