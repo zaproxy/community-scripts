@@ -21,6 +21,7 @@ function scan(ps, msg, src)
 		  "WP-Config file Disclosed (script)",
 		  "VSCode vscode-sftp file Disclosed (script)",
 		  "Docker registry authentication file Disclosed (script)",
+		  "SFTP connection configuration file Disclosed (script)",
 		  ""]
     var alertDesc = ["An Authorization Bearer Token was discovered.",
 		 "Authorization Basic was discovered.",
@@ -37,6 +38,7 @@ function scan(ps, msg, src)
 		 "A WP-Config file was discovered.",
 		 "A VSCode vscode-sftp file was discovered.",
 		 "A Docker registry authentication file was discovered.",
+		 "An SFTP connection configuration file was discovered.",
 		""]
     var alertSolution = ["There might not be an issue here but it's worth checking out. This script finds a few things.",
 		    ""]
@@ -58,6 +60,7 @@ function scan(ps, msg, src)
 	var wpconfigfile = /(define(.{0,20})?(DB_CHARSET|NONCE_SALT|LOGGED_IN_SALT|AUTH_SALT|NONCE_KEY|DB_HOST|DB_PASSWORD|AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|DB_NAME|DB_USER)(.{0,20})?[''|\"].{10,120}[''|\"]")/g
 	var vscodesftpfile = /(\.?vscode[\\\/]sftp\.json)/g
 	var dockerregistryauth = /(\.?docker[\\\/]config\.json)/g
+	var sftpconfig = /(sftp-config(\.json)?)/g
 
 	if (authbtoken.test(body))
 	  {
@@ -211,5 +214,15 @@ function scan(ps, msg, src)
                founddockerregistryauth.push(comm[0]);
 	      }
             ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[14], alertDesc[14], url, '', '', founddockerregistryauth.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	  }
+	if (sftpconfig.test(body))
+	  {
+	    sftpconfig.lastIndex = 0
+	    var foundsftpconfig = []
+            while (comm = sftpconfig.exec(body))
+	      {
+               foundsftpconfig.push(comm[0]);
+	      }
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[15], alertDesc[15], url, '', '', foundsftpconfig.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 }
