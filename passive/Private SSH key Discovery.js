@@ -15,7 +15,7 @@ function scan(ps, msg, src)
     var cweId = [0,1]
     var wascId = [0,1]
 
-    var privatesshkey = /(^.*_rsa|^.*_dsa|^.*_ed25519|^.*_ecdsa|-----BEGIN (EC|RSA|DSA|OPENSSH) PRIVATE KEY)/g
+    var privatesshkey = /(^.*_rsa|^.*_dsa|^.*_ed25519|^.*_ecdsa|-----BEGIN (EC|RSA|DSA|OPENSSH) PRIVATE KEY|PGP)/g
 
 	if (privatesshkey.test(body))
 	  {

@@ -34,7 +34,7 @@ function scan(ps, msg, src)
     var awsarn = /(arn:aws:organizations::\d{12}:account\/o-[a-z0-9]{10,32}\/\d{12})/g
     var awssecretskey = /((?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=]))/g
     var awssessiontoken = /((?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{16,}(?<![A-Za-z0-9/+=]))/g
-    var awscredfile = /((?i)(aws_access_key_id|aws_secret_access_key)(.{0,20})?=.[0-9a-zA-Z\/+]{20,40})/g
+    var awscredfile = /((\i)(aws_access_key_id|aws_secret_access_key)(.{0,20})?=.[0-9a-zA-Z\/+]{20,40})/g
     var amazonmws = /(amzn\.mws\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/g
 	var s3cmdconfig = /(\.?s3cfg)/g
 

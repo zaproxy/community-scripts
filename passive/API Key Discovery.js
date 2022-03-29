@@ -47,7 +47,7 @@ function scan(ps, msg, src)
     var mailgun = /(key-[0-9a-zA-Z]{32})/g
     var mailchimp = /([0-9a-f]{32}-us[0-9]{12})/g
 	var nuget = /(oy2[a-z0-9]{43})/g
-	var sonarqube = /((?i)sonar.{0,50}(\"|'|`)?[0-9a-f]{40}(\"|'|`)?)/g
+	var sonarqube = /((\i)sonar.{0,50}(\"|'|`)?[0-9a-f]{40}(\"|'|`)?)/g
 	var stackhawk = /(hawk\.[0-9A-Za-z\-_]{20}\.[0-9A-Za-z\-_]{20})/g
 
 	if (stripe.test(body))

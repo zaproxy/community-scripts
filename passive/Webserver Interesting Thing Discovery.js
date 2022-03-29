@@ -47,9 +47,9 @@ function scan(ps, msg, src)
 
     var authbtoken = /(Bearer\s[\d|a-f]{8}-([\d|a-f]{4}-){3}[\d|a-f]{12}|Bearer\s[A-Za-z0-9\-_=]+\.[A-Za-z0-9\-_=]+(\.[A-Za-z0-9\-_.+/=]+)?)/g
     var authbasictoken = /(Basic\s[a-zA-Z0-9+\/]+\=*)/g
-    var railsmkey = /(ruby[\\\/]config[\\\/]master\.key)/g
-    var rubysfile = /(web[\\\/]ruby[\\\/]secrets\.yml)/g
-    var jbrainsxml = /(\.?idea[\\\/]WebServers\.xml)/g
+    var railsmkey = /(ruby\/config\/master\.key)/g
+    var rubysfile = /(web\/ruby\/secrets\.yml)/g
+    var jbrainsxml = /(\.?idea\/WebServers\.xml)/g
     var phpconfigfile = /(config(\.inc)?\.php)/g
     var htpasswdfile = /(\.?htpasswd)/g
     var dockerconfigfile = /(\.?dockercfg)/g
@@ -57,9 +57,9 @@ function scan(ps, msg, src)
 	var esmtpconfig = /(\.esmtprc)/g
 	var atomsftpdeployment = /((deployment-config(\.json)?|\.ftpconfig))/g
 	var atomsremotesync = /(\.remote-sync.json)/g
-	var wpconfigfile = /(define(.{0,20})?(DB_CHARSET|NONCE_SALT|LOGGED_IN_SALT|AUTH_SALT|NONCE_KEY|DB_HOST|DB_PASSWORD|AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|DB_NAME|DB_USER)(.{0,20})?[''|\"].{10,120}[''|\"]")/g
-	var vscodesftpfile = /(\.?vscode[\\\/]sftp\.json)/g
-	var dockerregistryauth = /(\.?docker[\\\/]config\.json)/g
+	var wpconfigfile = /(define(.{0,20})?(DB_CHARSET|NONCE_SALT|LOGGED_IN_SALT|AUTH_SALT|NONCE_KEY|DB_HOST|DB_PASSWORD|AUTH_KEY|SECURE_AUTH_KEY|LOGGED_IN_KEY|DB_NAME|DB_USER)(.{0,20})?['|\"].{10,120}['|\"]")/g
+	var vscodesftpfile = /(\.?vscode\/sftp\.json)/g
+	var dockerregistryauth = /(\.?docker\/config\.json)/g
 	var sftpconfig = /(sftp-config(\.json)?)/g
 
 	if (authbtoken.test(body))
