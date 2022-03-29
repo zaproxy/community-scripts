@@ -59,13 +59,13 @@ function scan(ps, msg, src)
     var genericsecret = /([s|S][e|E][c|C][r|R][e|E][t|T].*['|\"][0-9a-zA-Z]{32,45}['|\"])/g
     var ipaddress = /([^\.0-9](([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])[^\.0-9])/g
 	var slacktoken = /((xox[pboa]-[0-9]{12}-[0-9]{12}-[0-9]{12}-[a-z0-9]{32}))/g
-	var slackwebhook = /(https:\/\/hooks.slack.com\/services\/T[a-zA-Z0-9_]{8}\/B[a-zA-Z0-9_]{8}\/[a-zA-Z0-9_]{24})/g
+	var slackwebhook = /(https:\/\/hooks\.slack\.com\/services\/T[a-zA-Z0-9_]{8}\/B[a-zA-Z0-9_]{8}\/[a-zA-Z0-9_]{24})/g
     var outlookwebhook = /(https:\/\/outlook\\\.office\\\.com\/webhook\/[0-9a-f-]{36}@)/g
-	var artifactorystuff = /((?i)artifactory.{0,50}(\"|'|`)?[a-zA-Z0-9=]{112}(\"|'|`)?)/g
-	var codeclimatestuff = /((?i)codeclima.{0,50}(\"|'|`)?[0-9a-f]{64}(\"|'|`)?)/g
-	var saucetoken = /((?i)sauce.{0,50}(\"|'|`)?[0-9a-f-]{36}(\"|'|`)?)/g
-	var githubkey = /((?i)github(.{0,20})?(?-i)[''\"][0-9a-zA-Z]{35,40}[''\"])/g
-	var herokukey = /((?i)heroku(.{0,20})?[''\"][0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}[''\"])/g
+	var artifactorystuff = /((\i)artifactory.{0,50}(\"|'|`)?[a-zA-Z0-9=]{112}(\"|'|`)?)/g
+	var codeclimatestuff = /((\i)codeclima.{0,50}(\"|'|`)?[0-9a-f]{64}(\"|'|`)?)/g
+	var saucetoken = /((\i)sauce.{0,50}(\"|'|`)?[0-9a-f-]{36}(\"|'|`)?)/g
+	var githubkey = /((\i)github(.{0,20})?(\-i)[''\"][0-9a-zA-Z]{35,40}[''\"])/g
+	var herokukey = /((\i)heroku(.{0,20})?[''\"][0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}[''\"])/g
 	var splunkauth = /(Splunk\s(\{){0,1}[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}(\}){0,1})/g
 	var squareaccesstoken = /(sq0atp-[0-9A-Za-z\-_]{22})/g
 	var squareoauthsecret = /(sq0csp-[0-9A-Za-z\-_]{43})/g

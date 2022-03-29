@@ -33,14 +33,14 @@ function scan(ps, msg, src)
     var cweId = [0,1]
     var wascId = [0,1]
 
-    var fbsecretkey = /((?i)(facebook|fb)(.{0,20})?(?-i)[''\"][0-9a-f]{32}[''\"])/g
-    var fbclientid = /((?i)(facebook|fb)(.{0,20})?[''\"][0-9]{13,17}[''\"])/g
-    var twsecretkey = /((?i)twitter(.{0,20})?[''\"][0-9a-z]{35,44}[''\"])/g
-    var twclientid = /((?i)twitter(.{0,20})?[''\"][0-9a-z]{18,25}[''\"])/g
+    var fbsecretkey = /((\i)(facebook|fb)(.{0,20})?(\-i)['\"][0-9a-f]{32}['\"])/g
+    var fbclientid = /((\i)(facebook|fb)(.{0,20})?['\"][0-9]{13,17}['\"])/g
+    var twsecretkey = /((\i)twitter(.{0,20})?['\"][0-9a-z]{35,44}['\"])/g
+    var twclientid = /((\i)twitter(.{0,20})?['\"][0-9a-z]{18,25}['\"])/g
     var twaccesstoken = /([t|T][w|W][i|I][t|T][t|T][e|E][r|R].*[1-9][0-9]+-[0-9a-zA-Z]{40})/g
     var twoauth = /([t|T][w|W][i|I][t|T][t|T][e|E][r|R].*['|\"][0-9a-zA-Z]{35,44}['|\"])/g
-    var lkdinclientid = /((?i)linkedin(.{0,20})?(?-i)[''\"][0-9a-z]{12}[''\"])/g
-    var lkdinsecretkey = /((?i)linkedin(.{0,20})?[''\"][0-9a-z]{16}[''\"])/g
+    var lkdinclientid = /((\i)linkedin(.{0,20})?(\-i)['\"][0-9a-z]{12}['\"])/g
+    var lkdinsecretkey = /((\i)linkedin(.{0,20})?['\"][0-9a-z]{16}['\"])/g
 	var fboauth = /([f|F][a|A][c|C][e|E][b|B][o|O][o|O][k|K].*['|\"][0-9a-f]{32}['|\"])/g
 	var fbaccesstoken = /(EAACEdEose0cBA[0-9A-Za-z]+)/g
 

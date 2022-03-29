@@ -55,8 +55,8 @@ function scan(ps, msg, src)
     var linuxshadow = /(etc\/shadow)/g
 	var linuxpasswd = /(etc\/passwd)/g
 	var envconfigfile = /(\.env)/g
-	var sshpasswd = /(sshpass -p .*['|\\\\"])/g
-	var firefoxpasswd = /(\.?mozilla[\\\/]firefox[\\\/]logins\.json)/g
+	var sshpasswd = /(sshpass -p .*)/g
+	var firefoxpasswd = /(\.?mozilla\/firefox\/logins\.json)/g
 	var keepassdb = /(\.kdbx?)/g
 
 	if (sshconfig.test(body))
