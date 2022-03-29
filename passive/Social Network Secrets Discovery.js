@@ -14,6 +14,8 @@ function scan(ps, msg, src)
 		  "Twitter OAuth Disclosed (script)",
 		  "Linkedin Client ID Disclosed (script)",
 		  "LinkedIn Secret Key Disclosed (script)",
+		  "Facebook OAuth Disclosed (script)",
+		  "Facebook access token Disclosed (script)",
 		  ""]
     var alertDesc = ["A Facebook Secret Key was discovered.",
 		 "A Facebook Client ID was discovered.",
@@ -23,6 +25,8 @@ function scan(ps, msg, src)
 		 "A Twitter OAuth was discovered.",
 		 "A Linkedin Client ID was discovered.",
 		 "A LinkedIn Secret Key was discovered.",
+		 "A Facebook OAuth was discovered.",
+		 "A Facebook access token was discovered.",
 		""]
     var alertSolution = ["Ensure tokens and keys that are publically accessible are not sensitive in nature.",
 		    ""]
@@ -37,6 +41,8 @@ function scan(ps, msg, src)
     var twoauth = /([t|T][w|W][i|I][t|T][t|T][e|E][r|R].*['|\"][0-9a-zA-Z]{35,44}['|\"])/g
     var lkdinclientid = /((?i)linkedin(.{0,20})?(?-i)[''\"][0-9a-z]{12}[''\"])/g
     var lkdinsecretkey = /((?i)linkedin(.{0,20})?[''\"][0-9a-z]{16}[''\"])/g
+	var fboauth = /([f|F][a|A][c|C][e|E][b|B][o|O][o|O][k|K].*['|\"][0-9a-f]{32}['|\"])/g
+	var fbaccesstoken = /(EAACEdEose0cBA[0-9A-Za-z]+)/g
 
 	if (fbsecretkey.test(body))
 	  {
@@ -120,5 +126,25 @@ function scan(ps, msg, src)
                foundlkdinsecretkey.push(comm[0]);
 	      }
             ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[7], alertDesc[7], url, '', '', foundlkdinsecretkey.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	  }
+	if (fboauth.test(body))
+	  {
+	    fboauth.lastIndex = 0
+	    var foundfboauth = []
+            while (comm = fboauth.exec(body))
+	      {
+               foundfboauth.push(comm[0]);
+	      }
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[8], alertDesc[8], url, '', '', foundfboauth.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
+	  }
+	if (fbaccesstoken.test(body))
+	  {
+	    fbaccesstoken.lastIndex = 0
+	    var foundfbaccesstoken = []
+            while (comm = fbaccesstoken.exec(body))
+	      {
+               foundfbaccesstoken.push(comm[0]);
+	      }
+            ps.raiseAlert(alertRisk[3], alertConfidence[2], alertTitle[9], alertDesc[9], url, '', '', foundfbaccesstoken.toString(), alertSolution[0], '', cweId[0], wascId[0], msg);
 	  }
 }
