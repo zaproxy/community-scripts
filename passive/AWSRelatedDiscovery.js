@@ -30,7 +30,7 @@ function scan(ps, msg, src)
     var wascId = [0,1]
 
     var awsclicreds = /(\.?aws\/credentials)/g
-    var awsaccesskeyid = /((A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}|?<![A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9])/g
+    var awsaccesskeyid = /(((A3T[A-Z0-9]|AKIA|AGPA|AROA|AIPA|ANPA|ANVA|ASIA)[A-Z0-9]{16}|[A-Z0-9])[A-Z0-9]{20}(?![A-Z0-9]))/g
     var awsarn = /(arn:aws:organizations::\d{12}:account\/o-[a-z0-9]{10,32}\/\d{12})/g
     var awssecretskey = /((?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{40}(?![A-Za-z0-9/+=]))/g
     var awssessiontoken = /((?<![A-Za-z0-9/+=])[A-Za-z0-9/+=]{16,}(?<![A-Za-z0-9/+=]))/g
