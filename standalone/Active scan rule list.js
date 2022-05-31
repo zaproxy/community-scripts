@@ -1,8 +1,10 @@
 // This script gives details about all of the active scan rules installed
 
-extAscan = org.parosproxy.paros.control.Control.getSingleton().
-    getExtensionLoader().getExtension(
-        org.zaproxy.zap.extension.ascan.ExtensionActiveScan.NAME);
+var control;
+if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton();
+
+extAscan = control.getExtensionLoader().getExtension(
+    org.zaproxy.zap.extension.ascan.ExtensionActiveScan.NAME);
 
 plugins = extAscan.getPolicyManager().getDefaultScanPolicy().getPluginFactory().getAllPlugin().toArray();
 

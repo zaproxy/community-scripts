@@ -2,6 +2,9 @@
 //
 // You will need to have run one or both of the ZAP spiders against https://security-crawl-maze.app/
 
+var model
+if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
+
 // Expected results sourced from:
 // https://raw.githubusercontent.com/google/security-crawl-maze/master/blueprints/utils/resources/expected-results.json
 
@@ -106,7 +109,7 @@ var foundAjax = 0;
 var total = expectedResults.length;
 
 var target = 'security-crawl-maze.app';
-var siteTree = org.parosproxy.paros.model.Model.getSingleton().getSession().getSiteTree();
+var siteTree = model.getSession().getSiteTree();
 
 print('Security crawl Maze Results\t\t\tScheme\tStandard\tAjax');
 print('----\t\t\t\t---\t---');

@@ -6,8 +6,11 @@
 // Author: kingthorin+owaspzap@gmail.com
 // 20160207: Initial release
 
-extHist = org.parosproxy.paros.control.Control.getSingleton().
-      getExtensionLoader().getExtension(org.parosproxy.paros.extension.history.ExtensionHistory.NAME);
+var control, model
+if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
+
+extHist = control.getExtensionLoader().
+    getExtension(org.parosproxy.paros.extension.history.ExtensionHistory.NAME);
 
 TAG_PREFIX='SRC_';
 

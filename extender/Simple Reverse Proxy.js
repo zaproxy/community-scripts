@@ -1,6 +1,10 @@
 // An extender script that adds a simple reverse proxy.
 // Requires a ZAP version greater than 2.7.0.
 
+var control, model
+if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
+if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
+
 // To where the requests are sent.
 var remoteAddress = "example.com"
 var remotePort = 80
@@ -10,12 +14,11 @@ var proxyAddress = "127.0.0.1"
 var proxyPort = 8081
 
 var ProxyServer = Java.type("org.parosproxy.paros.core.proxy.ProxyServer")
-var Model = Java.type("org.parosproxy.paros.model.Model")
 var ProxyListener = Java.type("org.parosproxy.paros.core.proxy.ProxyListener")
 var ZapXmlConfiguration = Java.type("org.zaproxy.zap.utils.ZapXmlConfiguration")
 var URI = Java.type("org.apache.commons.httpclient.URI")
 
-var extLoader = Java.type("org.parosproxy.paros.control.Control").getSingleton().getExtensionLoader()
+var extLoader = control.getExtensionLoader()
 var proxy
 
 function install(helper) {
@@ -26,7 +29,7 @@ function install(helper) {
     proxyParam.setBehindNat(false);
     proxyParam.setRemoveUnsupportedEncodings(true);
 
-    proxy.setConnectionParam(Model.getSingleton().getOptionsParam().getConnectionParam());
+    proxy.setConnectionParam(model.getOptionsParam().getConnectionParam());
     proxy.setEnableApi(false);
 
     extLoader.addProxyServer(proxy)

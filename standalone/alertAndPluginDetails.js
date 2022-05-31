@@ -5,13 +5,14 @@
  * It's tab separated so you can simply copy/paste it into Excel (or whatever).
  */
 
-extAlert = org.parosproxy.paros.control.Control.getSingleton().
-    getExtensionLoader().getExtension(
-        org.zaproxy.zap.extension.alert.ExtensionAlert.NAME) 
+var control
+if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
 
-extPscan = org.parosproxy.paros.control.Control.getSingleton().
-    getExtensionLoader().getExtension(
-        org.zaproxy.zap.extension.pscan.ExtensionPassiveScan.NAME);
+extAlert = control.getExtensionLoader().getExtension(
+    org.zaproxy.zap.extension.alert.ExtensionAlert.NAME) 
+
+extPscan = control.getExtensionLoader().getExtension(
+    org.zaproxy.zap.extension.pscan.ExtensionPassiveScan.NAME);
 
 var pf = Java.type("org.parosproxy.paros.core.scanner.PluginFactory");
 
