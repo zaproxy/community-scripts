@@ -4,15 +4,17 @@
 // a user with a name of test@test.com and a password of test123
 // You can change any of the variables to match your environment if needed.
 
+var control;
+if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton();
+
 var By = Java.type('org.openqa.selenium.By');
 var Thread = Java.type('java.lang.Thread');
 var juiceshop = 'http://localhost:3000/';
 var username = 'test@test.com';
 var password = 'test123';
 
-var extSel = org.parosproxy.paros.control.Control.getSingleton().
-				getExtensionLoader().getExtension(
-					org.zaproxy.zap.extension.selenium.ExtensionSelenium.class) 
+var extSel = control.getExtensionLoader().getExtension(
+				org.zaproxy.zap.extension.selenium.ExtensionSelenium.class) 
 
 var wd = extSel.getWebDriverProxyingViaZAP(1, "firefox");
 wd.get(juiceshop);
