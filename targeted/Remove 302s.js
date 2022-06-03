@@ -3,6 +3,9 @@
 // The default criteria is leaf nodes with a response code of 302 but you can change that to anything you need
 // Targeted scripts can only be invoked by you, the user, eg via a right-click option on the Sites or History tabs
 
+var model
+if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
+
 function recurseDown(sitestree, node) {
 	//print('recurseDown node: ' + node.getHierarchicNodeName() + " " + node.getChildCount())
 	// Loop down through the children first
@@ -39,7 +42,7 @@ function invokeWith(msg) {
 	// Debugging can be done using print like this
 	//print('invokeWith called for url=' + msg.getRequestHeader().getURI().toString())
 
-	var sitestree = org.parosproxy.paros.model.Model.getSingleton().getSession().getSiteTree()
+	var sitestree = model.getSession().getSiteTree()
 	var node = sitestree.findNode(msg, true)
 
 	if (node != null) {

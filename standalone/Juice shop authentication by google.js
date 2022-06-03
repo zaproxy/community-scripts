@@ -3,15 +3,17 @@
 // Juice Shop will need to be accessible via http://localhost:3000/ and you will need to change the 
 // username and password to match a valid Google account.
 
+var control
+if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
+
 var By = Java.type('org.openqa.selenium.By');
 var Thread = Java.type('java.lang.Thread');
 var juiceshop = 'http://localhost:3000/';
 var username = 'zap.addo.sb@gmail.com'; // Change this to an account you own
 var password = 'nottherealpassword';	// Change this to the right password for your account
 
-var extSel = org.parosproxy.paros.control.Control.getSingleton().
-				getExtensionLoader().getExtension(
-					org.zaproxy.zap.extension.selenium.ExtensionSelenium.class) 
+var extSel = control.getExtensionLoader().getExtension(
+				org.zaproxy.zap.extension.selenium.ExtensionSelenium.class) 
 
 var wd = extSel.getWebDriverProxyingViaZAP(1, "firefox");
 wd.get(juiceshop);

@@ -3,6 +3,9 @@
 // Standalone scripts have no template.
 // They are only evaluated when you run them. 
 
+var model
+if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
+
 function listChildren(node, level) {
     var j;
     for (j=0;j<node.getChildCount();j++) {
@@ -11,8 +14,7 @@ function listChildren(node, level) {
     }
 }
 
-root = org.parosproxy.paros.model.Model.getSingleton().
-        getSession().getSiteTree().getRoot();
+root = model.getSession().getSiteTree().getRoot();
 
 listChildren(root, 0);
 

@@ -2,7 +2,10 @@
 // with messages sent by the fuzzer (by default the fuzz result/messages
 // are not shown in the Fuzzer tab).
 
-var session = org.parosproxy.paros.model.Model.getSingleton().getSession();
+var model;
+if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton();
+
+var session = model.getSession();
 
 function processMessage(utils, message) {}
 

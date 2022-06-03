@@ -1,7 +1,9 @@
 // Script for generating a ZAP report in xml of html format
 
 // set up some useful vars
-model = org.parosproxy.paros.model.Model.getSingleton();
+
+var model
+if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
 rls = new org.parosproxy.paros.extension.report.ReportLastScan();
 
 // code for generating an xml report and storing it in a var

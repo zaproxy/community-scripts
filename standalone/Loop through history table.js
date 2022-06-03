@@ -3,9 +3,11 @@
 // Standalone scripts have no template.
 // They are only evaluated when you run them. 
 
-extHist = org.parosproxy.paros.control.Control.getSingleton().
-    getExtensionLoader().getExtension(
-        org.parosproxy.paros.extension.history.ExtensionHistory.NAME) 
+var control
+if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
+
+extHist = control.getExtensionLoader().getExtension(
+    org.parosproxy.paros.extension.history.ExtensionHistory.NAME) 
 if (extHist != null) {
     i=1
     lastRef=extHist.getLastHistoryId();// Get current max history reference 
