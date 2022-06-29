@@ -1,7 +1,9 @@
 // Server Header Check by freakyclown@gmail.com
+// Server Version leaks found via header field by prateek.rana@getastra.com
 
-function scan(ps, msg, src) 
-{
+var VERSION_PATTERN = new RegExp("(?:\\d+\\.)+\\d+");
+
+function scan(ps, msg, src)  {
 
     var alertRisk = 1
     var alertConfidence = 2
@@ -15,9 +17,24 @@ function scan(ps, msg, src)
     var url = msg.getRequestHeader().getURI().toString();
     var headers = msg.getResponseHeader().getHeaders("Server")
     
-    if (headers != null)
+    if (headers != null && containsPotentialSemver(headers))
     {
-        ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', '', alertSolution,headers, cweId, wascId, msg);
+        var headersString = headers.toString();
+        ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', '', alertSolution, headersString, cweId, wascId, msg);
     }
     
+}
+
+function containsPotentialSemver(content) {
+    try {
+        var res = VERSION_PATTERN.exec(content);
+        if (res == null || res.join('') === ""){
+            return false;
+        }
+        return true;
+    }
+
+    catch (err) {
+        return false;
+    }
 }
