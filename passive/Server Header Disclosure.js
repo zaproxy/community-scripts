@@ -1,5 +1,5 @@
 // Server Header Check by freakyclown@gmail.com
-// Server Version leaks found via header field by prateek.rana@getastra.com
+// Server Version leak via header field by prateek.rana@getastra.com
 
 function scan(ps, msg, src) 
 {
