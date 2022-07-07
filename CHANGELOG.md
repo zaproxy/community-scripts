@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - standalone/enableDebugLogging.js > Updated for more recent logging funtionality.
 - Update JS scripts to use passed singleton variables (control, model, view) if available (>= ZAP 2.12.0).
+- passive/Server Header Disclosure.js > Updated to check that the Server Header contains something that looks like a semantic version component.
 
 ## [14] - 2021-11-01
 ### Added
