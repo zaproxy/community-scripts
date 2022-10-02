@@ -3,7 +3,7 @@ All notable changes to this add-on will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [15] - 2022-10-02
 ### Added
 - active/RCE.py
 - active/SSTI.py
@@ -168,7 +168,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
-[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v14...HEAD
+[15]: https://github.com/zaproxy/community-scripts/compare/v14...v15
 [14]: https://github.com/zaproxy/community-scripts/compare/v13...v14
 [13]: https://github.com/zaproxy/community-scripts/compare/v12...v13
 [12]: https://github.com/zaproxy/community-scripts/compare/v11...v12
