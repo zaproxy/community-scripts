@@ -8,7 +8,7 @@ plugins {
     `java-library`
     id("org.zaproxy.add-on") version "0.8.0"
     id("org.zaproxy.crowdin") version "0.1.0"
-    id("com.diffplug.spotless") version "5.12.1"
+    id("com.diffplug.spotless") version "6.11.0"
 }
 
 repositories {
@@ -76,24 +76,25 @@ tasks.withType<Test>().configureEach {
 }
 
 var scriptTypes = listOf(
-        "active",
-        "authentication",
-        "encode-decode",
-        "extender",
-        "httpfuzzerprocessor",
-        "httpsender",
-        "passive",
-        "payloadgenerator",
-        "payloadprocessor",
-        "proxy",
-        "selenium",
-        "sequence",
-        "session",
-        "standalone",
-        "targeted",
-        "variant",
-        "websocketfuzzerprocessor",
-        "websocketpassive")
+    "active",
+    "authentication",
+    "encode-decode",
+    "extender",
+    "httpfuzzerprocessor",
+    "httpsender",
+    "passive",
+    "payloadgenerator",
+    "payloadprocessor",
+    "proxy",
+    "selenium",
+    "sequence",
+    "session",
+    "standalone",
+    "targeted",
+    "variant",
+    "websocketfuzzerprocessor",
+    "websocketpassive"
+)
 
 val syncScriptsDirTask by tasks.creating(Sync::class) {
     into(scriptsDir.get().dir(project.name))
@@ -106,8 +107,9 @@ val syncScriptsDirTask by tasks.creating(Sync::class) {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    val javaVersion = JavaVersion.VERSION_11
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
 }
 
 sourceSets["main"].output.dir(mapOf("builtBy" to syncScriptsDirTask), scriptsDir)
