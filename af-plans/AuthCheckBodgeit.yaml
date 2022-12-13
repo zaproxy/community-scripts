@@ -1,0 +1,70 @@
+---
+# This plan checks that authentication is correctly configured for the BodgeIt Store.
+# For you own apps you will need to replace all of the 'env' and the URL of the request.
+# In this case the user credentials are in the plan but you may well want to a pass them as
+# environmental variables.
+env:
+  contexts:
+  - name: "bodgeit"
+    urls:
+    - "http://localhost:8080/bodgeit"
+    includePaths:
+    - "http://localhost:8080/bodgeit.*"
+    excludePaths: []
+    authentication:
+      method: "form"
+      parameters:
+        loginPageUrl: "http://localhost:8080/bodgeit/login.jsp"
+        loginRequestUrl: "http://localhost:8080/bodgeit/login.jsp"
+        loginRequestBody: "username={%username%}&password={%password%}"
+      verification:
+        method: "response"
+        loggedInRegex: "\\QUser: <a href=\"password.jsp\">\\E"
+        loggedOutRegex: "\\QGuest user\\E"
+        pollFrequency: 60
+        pollUnits: "requests"
+        pollUrl: ""
+        pollPostData: ""
+    sessionManagement:
+      method: "cookie"
+      parameters: {}
+    technology:
+      exclude: []
+    users:
+    - name: "test"
+      credentials:
+        password: "test123"
+        username: "test@test.com"
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+- parameters:
+    user: "test"
+  requests:
+  - url: "http://localhost:8080/bodgeit"
+    name: ""
+    method: "GET"
+    httpVersion: "HTTP/1.1"
+    headers: []
+    data: ""
+  name: "requestor"
+  type: "requestor"
+  tests:
+  - onFail: "ERROR"
+    statistic: "stats.auth.state.loggedin"
+    site: "http://localhost:8080"
+    operator: ">"
+    value: 0
+    type: "stats"
+    name: "Check if Logged In at least once"
+  - onFail: "ERROR"
+    statistic: "stats.auth.success"
+    site: "http://localhost:8080"
+    operator: ">"
+    value: 0
+    type: "stats"
+    name: "Check at least one Authentication Success"
+
