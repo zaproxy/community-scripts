@@ -7,6 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - httpsender/UpgradeHttp1To2.js - changes all HTTP/1.1 requests to use HTTP/2
 
+### Changed
+- encode-decode/double-spacer.js - adapted to the functionality of Encoder 1.0.0.
+
 ## [15] - 2022-10-02
 ### Added
 - active/RCE.py
