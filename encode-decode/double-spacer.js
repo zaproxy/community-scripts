@@ -1,6 +1,4 @@
-var EncodeDecodeResult = Java.type("org.zaproxy.addon.encoder.processors.EncodeDecodeResult");
-
-function process(value){
+function process(helper, value){
     // Replace any character (except last) with the character and a space
-    return new EncodeDecodeResult(value.replaceAll(".(?=.)", "$0 ").trim());
+    return helper.newResult(value.replaceAll(".(?=.)", "$0 ").trim());
 }
