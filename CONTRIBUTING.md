@@ -1,5 +1,9 @@
 # Contributing to Community Scripts
 
+## Naming Scripts
+
+The script names should be camel case (e.g.` CamelCase.ext`).
+
 ## Changelog
 
 The relevant changes done to the Community Scripts add-on are tracked in the [CHANGELOG.md] file,
