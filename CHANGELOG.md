@@ -13,6 +13,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Removed
 - standalone/Run report.js - no longer working, the old/deprecated class that it used was removed.
 
+### Fixed
+- active/User defined attacks.js - correctly escape dot character in some evidence strings.
+
 ## [15] - 2022-10-02
 ### Added
 - active/RCE.py
