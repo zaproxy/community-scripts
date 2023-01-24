@@ -1,0 +1,150 @@
+---
+env:
+  contexts:
+  - name: "JuiceShop-selenium-auth"
+    urls:
+    - "http://localhost:3000"
+    includePaths:
+    - "http://localhost:3000.*"
+    excludePaths: []
+    authentication:
+      method: "script"
+      parameters:
+        script: "/full/path/JuiceShopAuthentication.js"
+        scriptEngine: "Oracle Nashorn"
+      verification:
+        method: "poll"
+        loggedInRegex: "\\Q{\"user\":{\"id\":\\E"
+        pollFrequency: 60
+        pollUnits: "requests"
+        pollUrl: "http://localhost:3000/rest/user/whoami"
+        pollPostData: ""
+    sessionManagement:
+      method: "script"
+      parameters:
+        script: "/full/path/JuiceShopSession.js"
+        scriptEngine: "Oracle Nashorn"
+    technology:
+      exclude: []
+    users:
+    - name: "test"
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+- name: "passiveScan-config"
+  type: "passiveScan-config"
+  parameters:
+    scanOnlyInScope: true
+    enableTags: false
+  rules: []
+- name: "script"
+  type: "script"
+  parameters:
+    action: "add"
+    type: "httpsender"
+    engine: "Oracle Nashorn"
+    name: "JuiceShopHttpSender.js"
+    file: "/full/path/JuiceShopHttpSender.js"
+    target: ""
+- name: "script"
+  type: "script"
+  parameters:
+    action: "add"
+    type: "selenium"
+    engine: Oracle Nashorn"
+    name: "JuiceShopSelenium.js"
+    file: "/full/path/JuiceShopSelenium.js"
+    target: ""
+- parameters: 
+    user: "test"
+  name: "spider"
+  type: "spider"
+  tests:
+  - onFail: "error"
+    statistic: "automation.spider.urls.added"
+    site: ""
+    operator: ">="
+    value: 100
+    name: "At least 100 URLs found"
+    type: "stats"
+  - onFail: "error"
+    statistic: "stats.auth.success"
+    site: "http://localhost:3000"
+    operator: ">="
+    value: 1
+    name: "At least 1 successful login"
+    type: "stats"
+  - onFail: "error"
+    statistic: "stats.auth.failure"
+    site: "http://localhost:3000"
+    operator: "<="
+    value: 0
+    name: "No login failures"
+    type: "stats"
+  - onFail: "error"
+    statistic: "stats.juiceshop.tokens.added"
+    site: ""
+    operator: ">="
+    value: 50
+    name: "At least 50 authentication tokens added"
+    type: "stats"
+- parameters:  {}
+  name: "spiderAjax"
+  type: "spiderAjax"
+  tests:
+  - onFail: "warn"
+    statistic: "spiderAjax.urls.added"
+    site: ""
+    operator: ">="
+    value: 1000
+    name: "At least 1000 URLs found"
+    type: "stats"
+  - onFail: "warn"
+    statistic: "stats.auth.success"
+    site: "http://localhost:3000"
+    operator: ">="
+    value: 1
+    name: "At least 1 successful login"
+    type: "stats"
+  - onFail: "warn"
+    statistic: "stats.auth.failure"
+    site: "http://localhost:3000"
+    operator: "<="
+    value: 0
+    name: "No login failures"
+    type: "stats"
+  - onFail: "warn"
+    statistic: "stats.juiceshop.authtoken.present"
+    site: ""
+    operator: ">="
+    value: 300
+    name: "At least 300 authentication tokens present"
+    type: "stats"
+  - onFail: "info"
+    statistic: "stats.juiceshop.authtoken.absent"
+    site: ""
+    operator: "<"
+    value: 500
+    name: "Less than 500 authentication tokens absent"
+    type: "stats"
+  - onFail: "warn"
+    statistic: "stats.juiceshop.cookie.present"
+    site: ""
+    operator: ">="
+    value: 500
+    name: "At least 300 authentication cookies present"
+    type: "stats"
+  - onFail: "info"
+    statistic: "stats.juiceshop.cookie.absent"
+    site: ""
+    operator: "<"
+    value: 500
+    name: "Less than 500 authentication cookies absent"
+    type: "stats"
+- parameters: {}
+  name: "passiveScan-wait"
+  type: "passiveScan-wait"
+
