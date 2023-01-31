@@ -1,0 +1,81 @@
+---
+env:
+  contexts:
+  - name: "JuiceShop-selenium-auth"
+    urls:
+    - "http://localhost:3000"
+    includePaths:
+    - "http://localhost:3000.*"
+    excludePaths: []
+    authentication:
+      method: "script"
+      parameters:
+        script: "/full/path/JuiceShopAuthentication.js"
+        scriptEngine: "Oracle Nashorn"
+      verification:
+        method: "poll"
+        loggedInRegex: "\\Q{\"user\":{\"id\":\\E"
+        pollFrequency: 60
+        pollUnits: "requests"
+        pollUrl: "http://localhost:3000/rest/user/whoami"
+        pollPostData: ""
+    sessionManagement:
+      method: "script"
+      parameters:
+        script: "/full/path/JuiceShopSession.js"
+        scriptEngine: "Oracle Nashorn"
+    technology:
+      exclude: []
+    users:
+    - name: "test"
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+- name: "passiveScan-config"
+  type: "passiveScan-config"
+  parameters:
+    scanOnlyInScope: true
+    enableTags: false
+  rules: []
+- name: "script"
+  type: "script"
+  parameters:
+    action: "add"
+    type: "httpsender"
+    engine: "Oracle Nashorn"
+    name: "JuiceShopHttpSender.js"
+    file: "/full/path/JuiceShopHttpSender.js"
+    target: ""
+- name: "script"
+  type: "script"
+  parameters:
+    action: "add"
+    type: "selenium"
+    engine: Oracle Nashorn"
+    name: "JuiceShopSelenium.js"
+    file: "/full/path/JuiceShopSelenium.js"
+    target: ""
+- name: "request - check auth works"
+  type: "requestor"
+  parameters: 
+    user: "test"
+  requests:
+    - url: "http://localhost:3000/"
+  tests:
+  - onFail: "error"
+    statistic: "stats.auth.success"
+    site: "http://localhost:3000"
+    operator: ">="
+    value: 1
+    name: "At least 1 successful login"
+    type: "stats"
+  - onFail: "error"
+    statistic: "stats.auth.failure"
+    site: "http://localhost:3000"
+    operator: "<="
+    value: 0
+    name: "No login failures"
+    type: "stats"
