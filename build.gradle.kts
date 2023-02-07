@@ -7,8 +7,8 @@ import org.zaproxy.gradle.addon.misc.ConvertMarkdownToHtml
 plugins {
     `java-library`
     id("org.zaproxy.add-on") version "0.8.0"
-    id("org.zaproxy.crowdin") version "0.1.0"
-    id("com.diffplug.spotless") version "6.11.0"
+    id("org.zaproxy.crowdin") version "0.3.1"
+    id("com.diffplug.spotless") version "6.14.1"
 }
 
 repositories {
@@ -48,16 +48,16 @@ crowdin {
     }
 }
 
-val jupiterVersion = "5.7.0-M1"
+val jupiterVersion = "5.9.2"
 
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$jupiterVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jupiterVersion")
 
-    testImplementation("commons-io:commons-io:2.6")
-    testImplementation("org.assertj:assertj-core:3.11.0")
-    testImplementation("org.apache.commons:commons-lang3:3.8")
+    testImplementation("commons-io:commons-io:2.11.0")
+    testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation("org.apache.commons:commons-lang3:3.12.0")
 
     // The following versions should match the ones of the add-ons.
     testImplementation("org.codehaus.groovy:groovy-all:2.4.14")
@@ -93,7 +93,7 @@ var scriptTypes = listOf(
     "targeted",
     "variant",
     "websocketfuzzerprocessor",
-    "websocketpassive"
+    "websocketpassive",
 )
 
 val syncScriptsDirTask by tasks.creating(Sync::class) {

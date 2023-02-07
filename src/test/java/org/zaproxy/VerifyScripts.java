@@ -68,7 +68,7 @@ class VerifyScripts {
     private static List<Path> files;
 
     @BeforeAll
-    private static void readScriptDirs() throws Exception {
+    static void readScriptDirs() throws Exception {
         readFiles();
     }
 
@@ -83,7 +83,7 @@ class VerifyScripts {
     }
 
     @AfterAll
-    private static void verifyAllFilesTested() {
+    static void verifyAllFilesTested() {
         assertThat(files).as("Not all files were tested: %s", files).isEmpty();
     }
 
