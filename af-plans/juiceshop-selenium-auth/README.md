@@ -5,6 +5,8 @@ This directory contains [Automation Framework](https://www.zaproxy.org/docs/auto
 Note that ZAP _can_ authenticate to Juice Shop _without_ using Selenium, and normally this is what we would recommend.
 However, in this case we are using it to show how to use Selenium to authenticate to your app if there is no alternative.
 
+There is a related blog post: https://www.zaproxy.org/blog/2023-02-01-authenticating-using-selenium/
+
 ## Requirements
 
 To run this plan you need to:
@@ -15,8 +17,7 @@ To run this plan you need to:
 * Add a user to Juice Shop with the credentials:
   * username: test@test.com
   * password: test123
-* Edit all of the automation plans and shell scripts to replace `/full/path/` to be the local full path of your scripts
-* Edit all of the shell scripts to correct the path to your ZAP installation
+* Edit all of the shell scripts to correct the path to your ZAP installation and to the plans
 * Ensure that the user credentials are available via the environmental variables (these _should_ be set up correctly via the supplied scripts):
   * JS_USER: test@test.com
   * JS_PWD: test123
@@ -78,8 +79,7 @@ Note that Firefox reports lots of messages to standard output - these are diffic
 
 The following related enhancements are planned:
 
-* Publishing a ZAP blog post explaining how and why these scripts work
-* Enhancing the Automation Framework to support relative file names
-* Enhancing ZAP to support header based session management
+* Add example docker commands
+* Update the plan to use header based session management
 * More investigations into why there are so many auth tokens and cookies absent in browser requests
 

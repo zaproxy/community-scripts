@@ -10,7 +10,7 @@ env:
     authentication:
       method: "script"
       parameters:
-        script: "/full/path/JuiceShopAuthentication.js"
+        script: "JuiceShopAuthentication.js"
         scriptEngine: "Oracle Nashorn"
       verification:
         method: "poll"
@@ -22,7 +22,7 @@ env:
     sessionManagement:
       method: "script"
       parameters:
-        script: "/full/path/JuiceShopSession.js"
+        script: "JuiceShopSession.js"
         scriptEngine: "Oracle Nashorn"
     technology:
       exclude: []
@@ -47,7 +47,7 @@ jobs:
     type: "httpsender"
     engine: "Oracle Nashorn"
     name: "JuiceShopHttpSender.js"
-    file: "/full/path/JuiceShopHttpSender.js"
+    file: "JuiceShopHttpSender.js"
     target: ""
 - name: "script"
   type: "script"
@@ -56,7 +56,7 @@ jobs:
     type: "selenium"
     engine: Oracle Nashorn"
     name: "JuiceShopSelenium.js"
-    file: "/full/path/JuiceShopSelenium.js"
+    file: "JuiceShopSelenium.js"
     target: ""
 - name: "request - check auth works"
   type: "requestor"
