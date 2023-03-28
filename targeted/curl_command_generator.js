@@ -3,6 +3,8 @@
 //You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //author:@haseebeqx
 
+// Note: The following code lives also in Script Console add-on.
+
 function invokeWith(msg) {
 	var string = "curl -i -s -k -X  '"+msg.getRequestHeader().getMethod()+"'  \\\n";
 	var header = msg.getRequestHeader().getHeadersAsString();
@@ -13,11 +15,14 @@ function invokeWith(msg) {
 		if (headerEntry.startsWith("@")) {
 			suspiciousHeaders = true;
 		}
-		//blacklisting Host (other blacklisting should also specify here
+		// deny listing Host (other deny listing should also specify here)
 		var keyval = headerEntry.split(":");
 		if(keyval[0].trim() != "Host")
 			string += " -H '"+headerEntry+"' ";
 	}
+	// if no User-Agent present ensures that curl request doesn't add one
+	if(string.indexOf("User-Agent") < 0)
+		string += " -A '' ";
 	string += " \\\n";
 	var body = msg.getRequestBody().toString();
 	if(body.length() != 0){
