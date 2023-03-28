@@ -16,6 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 - active/User defined attacks.js - correctly escape dot character in some evidence strings.
+- targeted/curl_command_generator.js - prevent and warn on local file inclusion when generating the command.
+  Thanks to James Kettle (@albinowax) for reporting.
 
 ## [15] - 2022-10-02
 ### Added
