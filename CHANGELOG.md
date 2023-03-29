@@ -3,7 +3,7 @@ All notable changes to this add-on will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [16] - 2023-03-29
 ### Added
 - httpsender/UpgradeHttp1To2.js - changes all HTTP/1.1 requests to use HTTP/2
 - standalone/devTools.js - Tools used to explore objects returned by the Java engine and better plug Nashorn objects into it
@@ -184,7 +184,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
-[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v15...HEAD
+[16]: https://github.com/zaproxy/community-scripts/compare/v15...v16
 [15]: https://github.com/zaproxy/community-scripts/compare/v14...v15
 [14]: https://github.com/zaproxy/community-scripts/compare/v13...v14
 [13]: https://github.com/zaproxy/community-scripts/compare/v12...v13
