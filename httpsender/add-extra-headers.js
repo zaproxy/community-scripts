@@ -36,7 +36,7 @@ var ignoreHeader = [
 function sendingRequest(msg, initiator, helper) {
   if (initiator === HttpSender.AUTHENTICATION_INITIATOR) {
     logger("Trying to auth")
-    return msg;
+    return;
   }
   var hostname = msg.getRequestHeader().getHostName()
   var varKey = "headers-" + hostname
@@ -81,7 +81,6 @@ function sendingRequest(msg, initiator, helper) {
        msg.getRequestHeader().setHeader(key, extras[key]);
      }
   }
-  return msg;
 }
 
 function responseReceived(msg, initiator, helper) {}

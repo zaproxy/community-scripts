@@ -16,7 +16,7 @@ var COOKIE_TYPE   = org.parosproxy.paros.network.HtmlParameter.Type.cookie;
 function sendingRequest(msg, initiator, helper) {
   if (initiator === HttpSender.AUTHENTICATION_INITIATOR) {
     logger("Trying to auth")
-  return msg;
+    return;
   }
 
   var token = ScriptVars.getGlobalVar("jwt-token")
@@ -26,7 +26,6 @@ function sendingRequest(msg, initiator, helper) {
   // For all non-authentication requests we want to include the authorization header
   logger("Added authorization token " + token.slice(0, 20) + " ... ")
   msg.getRequestHeader().setHeader('Authorization', 'Bearer ' + token);
-  return msg;
 }
 
 function responseReceived(msg, initiator, helper) {
