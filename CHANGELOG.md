@@ -4,7 +4,8 @@ All notable changes to this add-on will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
-
+### Changed
+- Remove statements that return the message in HTTP Sender scripts, the message passed as parameter is used/sent always.
 
 ## [16] - 2023-03-29
 ### Added
