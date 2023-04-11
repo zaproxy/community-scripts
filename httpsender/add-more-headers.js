@@ -55,8 +55,6 @@ function sendingRequest(msg, initiator, helper) {
         // logger("Setting " + key + " to " + value);
         msg.getRequestHeader().setHeader(key, value);
     }
-
-	return msg;
 }
 
 /* Called after receiving the response from the server.

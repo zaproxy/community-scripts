@@ -20,8 +20,6 @@ function sendingRequest(msg, initiator, helper) {
   if (initiator !== HttpSender.AUTHENTICATION_INITIATOR && msg.isInScope()) {
     msg.getRequestHeader().setHeader("Authorization", "Bearer " + ScriptVars.getGlobalVar("access_token"));
   }
-
-  return msg;
 }
 
 function responseReceived(msg, initiator, helper) {}
