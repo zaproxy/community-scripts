@@ -3,9 +3,6 @@
 // Juice Shop will need to be accessible via http://localhost:3000/ and you will need to change the 
 // username and password to match a valid Google account.
 
-var control
-if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
-
 var By = Java.type('org.openqa.selenium.By');
 var Thread = Java.type('java.lang.Thread');
 var juiceshop = 'http://localhost:3000/';

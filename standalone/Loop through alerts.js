@@ -2,9 +2,6 @@
 //
 // This is a standalone script which you can run from the Script Console
 
-var control
-if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
-
 extAlert = control.getExtensionLoader().getExtension(
         org.zaproxy.zap.extension.alert.ExtensionAlert.NAME) 
 if (extAlert != null) {

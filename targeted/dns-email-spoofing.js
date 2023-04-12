@@ -5,10 +5,6 @@
 var pluginid = 100031;
 var providerAddress = "dns.google";
 
-var control, model
-if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
-if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
-
 var URI = Java.type("org.apache.commons.httpclient.URI");
 var HttpSender = Java.type("org.parosproxy.paros.network.HttpSender");
 var HistoryReference = Java.type("org.parosproxy.paros.model.HistoryReference");
@@ -16,7 +12,6 @@ var ExtensionAlert = Java.type("org.zaproxy.zap.extension.alert.ExtensionAlert")
 var Alert = Java.type("org.parosproxy.paros.core.scanner.Alert");
 
 var session = model.getSession();
-var connectionParams = model.getOptionsParam().getConnectionParam();
 var extLoader = control.getExtensionLoader();
 
 // Print statements using script name
@@ -121,7 +116,7 @@ function fetchRecords(msg, policy) {
     msg.getRequestHeader().setURI(requestUri);
     logger("Fetching TXT records for domain - " + domain);
 
-    var sender = new HttpSender(connectionParams, true, 6);
+    var sender = new HttpSender(HttpSender.MANUAL_REQUEST_INITIATOR);
     sender.sendAndReceive(msg);
     // Debugging
     // logger("Request Header -> " + msg.getRequestHeader().toString())

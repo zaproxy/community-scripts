@@ -6,9 +6,6 @@ tot = 0
 maxparent = ""
 maxsub = 0
 
-var model
-if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
-
 function recurseDown(node) {
 	//print('recurseDown node: ' + node.getHierarchicNodeName() + " " + node.getChildCount())
 	tot++
