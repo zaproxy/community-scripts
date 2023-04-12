@@ -5,9 +5,6 @@
  * It's tab separated so you can simply copy/paste it into Excel (or whatever).
  */
 
-var control
-if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
-
 extAlert = control.getExtensionLoader().getExtension(
     org.zaproxy.zap.extension.alert.ExtensionAlert.NAME) 
 

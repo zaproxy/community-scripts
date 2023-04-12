@@ -72,8 +72,7 @@ function authenticate(helper, _paramsValues, _credentials) {
 	}
 
 	logger("Launching browser to authenticate to Juice Shop");
-	var extSel = control.getSingleton().
-		getExtensionLoader().getExtension(
+	var extSel = control.getExtensionLoader().getExtension(
 			org.zaproxy.zap.extension.selenium.ExtensionSelenium.class);
 
 	// Change to "firefox" (or "chrome") to see the browsers being launched

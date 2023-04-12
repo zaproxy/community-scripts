@@ -11,8 +11,8 @@ import re;
 from org.parosproxy.paros.view import AbstractFrame;
 from org.zaproxy.zap.utils import ZapTextArea;
 
-sessionId = Model.getSingleton().getSession();
-tbHist = Model.getSingleton().getDb().getTableHistory();
+sessionId = model.getSession();
+tbHist = model.getDb().getTableHistory();
 
 """ Change this variable to match the expression you are looking for """
 regex='soapactio.+';

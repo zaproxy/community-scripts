@@ -5,10 +5,6 @@
 
 var pluginid = 100032;
 
-var control, model
-if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
-if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton() 
-
 var URI = Java.type("org.apache.commons.httpclient.URI");
 var HttpSender = Java.type("org.parosproxy.paros.network.HttpSender");
 var HistoryReference = Java.type("org.parosproxy.paros.model.HistoryReference");
@@ -16,7 +12,6 @@ var ExtensionAlert = Java.type("org.zaproxy.zap.extension.alert.ExtensionAlert")
 var Alert = Java.type("org.parosproxy.paros.core.scanner.Alert");
 
 var session = model.getSession();
-var connectionParams = model.getOptionsParam().getConnectionParam();
 var extLoader = control.getExtensionLoader();
 
 // Print statements using script name
@@ -155,7 +150,7 @@ function sendReq(msg, query) {
     isNaN(query) ? uri.setPath(query) : uri.setQuery("author=" + query);
     logger("URL -> " + uri.toString());
     // Initialise the sender
-    var sender = new HttpSender(connectionParams, true, 6);
+    var sender = new HttpSender(HttpSender.MANUAL_REQUEST_INITIATOR);
     // Send and Receive Request
     sender.sendAndReceive(newReq);
     // Debugging

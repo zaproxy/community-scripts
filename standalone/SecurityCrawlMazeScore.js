@@ -2,9 +2,6 @@
 //
 // You will need to have run one or both of the ZAP spiders against https://security-crawl-maze.app/
 
-var model
-if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
-
 // Expected results sourced from:
 // https://raw.githubusercontent.com/google/security-crawl-maze/master/blueprints/utils/resources/expected-results.json
 
