@@ -48,7 +48,7 @@ import binascii
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-extWebSocket = Control.getSingleton().getExtensionLoader().getExtension(ExtensionWebSocket.NAME)
+extWebSocket = control.getExtensionLoader().getExtension(ExtensionWebSocket.NAME)
 pathToOrgFile = "/path/to/file.org"
 printSummary = True
 base = PyOrgMode.OrgDataStructure()

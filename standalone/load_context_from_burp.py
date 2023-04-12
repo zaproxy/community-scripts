@@ -78,7 +78,7 @@ def build_proper_regex(protocol, host):
 
 
 def create_new_context(ctx_name):
-    session = Model().getSingleton().getSession()
+    session = model.getSession()
     new_context = session.getNewContext(ctx_name)
     return new_context
 

@@ -32,8 +32,7 @@ if (token) {
 }
 
 // Reset the state for all users
-var extUser = control.getSingleton().
-	getExtensionLoader().getExtension(
+var extUser = control.getExtensionLoader().getExtension(
 		org.zaproxy.zap.extension.users.ExtensionUserManagement.class);
 var session = model.getSession();
 var contexts = session.getContexts();

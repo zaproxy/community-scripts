@@ -14,8 +14,8 @@ from javax.swing import JScrollPane;
 """ Change this regex to match the desired domain """
 cookie_domain_regex = ".+"
 
-sessionId = Model.getSingleton().getSession();
-tbHist = Model.getSingleton().getDb().getTableHistory();
+sessionId = model.getSession();
+tbHist = model.getDb().getTableHistory();
 
 def collect(msg):
   """ Collecting cookie from HttpMessage """

@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Changed
+- Update minimum ZAP version to 2.12.0:
+  - Remove compatibility code that provided the singletons (`control` and `model`) in JavaScript scripts, they can now be accessed directly always.
+  - Use provided singletons (`control` and `model`) in Python scripts.
+  - Use non-deprecated `HttpSender` constructor.
 - Remove statements that return the message in HTTP Sender scripts, the message passed as parameter is used/sent always.
 
 ## [16] - 2023-03-29

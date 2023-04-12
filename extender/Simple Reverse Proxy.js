@@ -1,9 +1,4 @@
 // An extender script that adds a simple reverse proxy.
-// Requires a ZAP version greater than 2.7.0.
-
-var control, model
-if (!control) control = Java.type("org.parosproxy.paros.control.Control").getSingleton()
-if (!model) model = Java.type("org.parosproxy.paros.model.Model").getSingleton()
 
 // To where the requests are sent.
 var remoteAddress = "example.com"
