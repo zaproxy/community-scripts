@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Remove compatibility code that provided the singletons (`control` and `model`) in JavaScript scripts, they can now be accessed directly always.
   - Use provided singletons (`control` and `model`) in Python scripts.
   - Use non-deprecated `HttpSender` constructor.
+  - extender/Simple Reverse Proxy.js - replace usage of deprecated core classes.
 - Remove statements that return the message in HTTP Sender scripts, the message passed as parameter is used/sent always.
 
 ## [16] - 2023-03-29
