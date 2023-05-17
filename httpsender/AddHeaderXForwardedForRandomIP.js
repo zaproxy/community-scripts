@@ -1,4 +1,4 @@
-// @author Ruffenach Timothée
+// The original script comes from the Fuzzer HTTP Processor section under the name random_x_forwarded_for_ip.js
 // Add in Header response X-Forwarded-For: Random IP
 // The sendingRequest and responseReceived functions will be called for all requests/responses sent/received by ZAP, 
 // including automated tools (e.g. active scanner, fuzzer, ...)
