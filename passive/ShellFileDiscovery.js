@@ -21,10 +21,10 @@ function scan(ps, msg, src)
     var cweId = [0,1]
     var wascId = [0,1]
 
-    var shellhistory = /(\.?(bash_|zsh_|sh_|z)+history)/g
+    var shellhistory = /(\.?(bash_|sh_|z)+history)/g
     var shellconfig = /(\.?(bash|zsh|csh)rc)/g
-    var shellprofile = /(\.?(bash_|zsh_)+profile)/g
-    var shellalias = /(\.?(bash_|zsh_)+aliases)/g
+    var shellprofile = /(\.?(bash_)+profile)/g
+    var shellalias = /(\.?(bash_)+aliases)/g
 
 	if (shellhistory.test(body))
 	  {
