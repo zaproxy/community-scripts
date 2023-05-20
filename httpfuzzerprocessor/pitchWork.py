@@ -63,7 +63,7 @@ def chooseFile():
     return filePath
 
 def chooseNumber():
-    number = JOptionPane.showInputDialog(None, "How many payload do you wante [2 to 20]:", "Input", JOptionPane.QUESTION_MESSAGE)
+    number = JOptionPane.showInputDialog(None, "How many payload do you want [2 to 20]:", "Input", JOptionPane.QUESTION_MESSAGE)
     
     # Check number between 2 to 20
     if int(number) > 1 and int(number) < 21:
