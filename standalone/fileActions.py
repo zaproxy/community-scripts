@@ -1,5 +1,5 @@
 # @author RUFFENACH Timothée
-# Version 1.0
+# Version 1.1
 # Scrip to edit file
 # Help me for lab burpsuite resolve with zap
 
@@ -16,11 +16,11 @@ class SelectionMenu(JFrame):
         self.getContentPane().setLayout(None)
 
         # Create selection menu
-        options = ["Inserting a character string alternately", "Duplicate data file"]
+        options = ["Inserting a character string alternately", "Duplicate data file", "Create Json tab with data file"]
 
         # Create scrolling menu
         self.dropdown = JComboBox(options)
-        self.dropdown.setBounds(50, 50, 200, 30)
+        self.dropdown.setBounds(50, 50, 400, 20)
         self.dropdown.addActionListener(self.selection_changee)
         self.getContentPane().add(self.dropdown)
 
@@ -39,6 +39,9 @@ class SelectionMenu(JFrame):
         elif selected_option == "Duplicate data file":
             self.dropdown.setPopupVisible(False)
             self.fonction_option2()
+        elif selected_option == "Create Json tab with data file":
+            self.dropdown.setPopupVisible(False)
+            self.fonction_option3()
 
         # close scrolling menu
         self.dropdown.setPopupVisible(False)
@@ -92,18 +95,8 @@ class SelectionMenu(JFrame):
         copy = self.getNumber(1,100, "How many copy data file do you want [1 to 100]")
         filePath = self.chooseFile()
         print("path", filePath)
-        # get number line of file
-        
-        file = open(filePath, "r")
-        nb_line = 0
-        for line in file:
-            nb_line += 1
-        file.close()
 
-        # the file can't have 0 line
-        if nb_line == 0:
-            JOptionPane.showMessageDialog(None, "Empty file", "Alerte", JOptionPane.WARNING_MESSAGE)
-            return 0
+        self.getNumberLine(filePath)
         
         # read data of file
         file = open(filePath, "r")
@@ -116,13 +109,53 @@ class SelectionMenu(JFrame):
 
         self.saveFile(dataCopy)
     
+    def fonction_option3(self):
+       
+        filePath = self.chooseFile()
+        print("path", filePath)
+        
+        # read data of file
+        file = open(filePath, "r")
+        data = file.readlines()
+        file.close()
+       
+        # get numberline
+        self.getNumberLine(filePath) 
+        
+        # create tab JSon
+        dataJson =[]
+        dataJson.append("[\n")
+
+        for i in range(len(data)):
+            dataJson.append("\""+data[i].rstrip('\n')+"\",\n")
+
+        dataJson.append("]\n")
+
+
+
+        self.saveFile(dataJson)
+    
+    
+    # get number line file
+    def getNumberLine(self,filePath):
+        nb_line = 0        
+
+        while nb_line < 1:
+            file = open(filePath, "r")
+
+            for line in file:
+                nb_line += 1
+            file.close()
+
+            # the file can't have 0 line
+            if nb_line == 0:
+                JOptionPane.showMessageDialog(None, "Empty file", "Alerte", JOptionPane.WARNING_MESSAGE)
+
+        return nb_line
+    
     def saveFile(self,data):
         # create instance JFileChooser
         file_chooser = JFileChooser()
-
-        # debug
-        #for i in range(len(data)):
-        #    print(data[i])
 
         # show dialog box 
         result = file_chooser.showSaveDialog(None)
@@ -202,4 +235,3 @@ def confirm_closing():
 # menu
 menu = SelectionMenu()
 menu.setVisible(True)
-
