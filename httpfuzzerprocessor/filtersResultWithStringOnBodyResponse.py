@@ -41,7 +41,7 @@ def processResult(utils, fuzzResult) :
     # test all posibility
     if isCheck == JOptionPane.NO_OPTION and entry in body:
         return bool(1);
-    elif isCheck == JOptionPane.YES_OPTION and entry in body:
+    elif isCheck == JOptionPane.YES_OPTION and not entry in body:
         return bool(1);
     else:
         return bool(0);
