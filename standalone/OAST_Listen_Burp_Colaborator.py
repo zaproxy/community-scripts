@@ -61,7 +61,7 @@ def convertBase64(text):
                 textBase64 += '=' * (4-padding)
         try:
                 # Decode string
-                textDecode = base64.b64decode(textBase64)
+                textDecode = base64.b64decode(textBase64).decode("ascii")
                 return textDecode
         except Exception as e:
                 if str(e) == 'Incorrect padding':
