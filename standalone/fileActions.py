@@ -127,15 +127,15 @@ class SelectionMenu(JFrame):
         dataJson.append("[\n")
 
         for i in range(len(data)):
-            dataJson.append("\""+data[i].rstrip('\n')+"\",\n")
-
+            if(i < len(data)-1):
+                dataJson.append("\""+data[i].rstrip('\n')+"\",\n")
+            else:
+                dataJson.append("\""+data[i].rstrip('\n')+"\"\n")
+        
         dataJson.append("]\n")
 
-
-
         self.saveFile(dataJson)
-    
-    
+        
     # get number line file
     def getNumberLine(self,filePath):
         nb_line = 0        
