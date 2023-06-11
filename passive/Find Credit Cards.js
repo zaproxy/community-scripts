@@ -20,15 +20,16 @@ function scan(ps, msg, src)
     // lets make some regular expressions for well known credit cards
     // regex must appear within /( and )/g
 
-   
-    var re_visa = /([3-5][0-9]{3}[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4})/g //visa or mastercard
-    var re_amex = /(3[47][0-9]{2}[ -]?[0-9]{6}[ -]?[0-9]{5})/g //amex
-    var re_disc = /(6011[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4})/g //discovery
+   // regex reviewed and revised by Anthony Cozamanis - kurobeats@yahoo.co.jp
+    var re_visa = /(^4[0-9]{12}(?:[0-9]{3})?$)/g //visa
+    var re_master = /(5[1-5][0-9]{14})/g //mastercard
+    var re_amex = /(3[47][0-9]{13})/g //amex
+    var re_disc = /(6(?:011|5[0-9]{2})[0-9]{12})/g //discovery
     var re_diner = /(3(?:0[0-5]|[68][0-9])[0-9]{11})/g //dinersclub
-    var re_jcb = /((?:2131|1800|35d{3})d{11})/g //jcb
+    var re_jcb = /(^(?:2131|1800|35\d{3})\d{11}$)/g //jcb
 
 	// now lets put all of those into a nice array so we can loop over it
-	var cards = [re_visa,re_amex,re_disc,re_diner,re_jcb]
+	var cards = [re_visa,re_master,re_amex,re_disc,re_diner,re_jcb]
 
 
 	// here we are going to check the content type and skip over things that
