@@ -15,7 +15,7 @@ function scan(ps, msg, src) {
     var cweId = 0
     var wascId = 0
     var url = msg.getRequestHeader().getURI().toString();
-    var re = /([A-Za-z0-9+\/]{15,}=+)/g
+    var re = /(^[A-Za-z0-9+/]*={0,2}$)/g
 
     var contenttype = msg.getResponseHeader().getHeader("Content-Type")
     var unwantedfiletypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash']
