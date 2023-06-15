@@ -1,5 +1,5 @@
 # @author RUFFENACH Timothée
-# Version 1.1
+# Version 1.3
 # Scrip to edit file
 # Help me for lab burpsuite resolve with zap
 
@@ -7,6 +7,7 @@ from javax.swing import JFrame, JPanel, JComboBox, JOptionPane,JFileChooser,JOpt
 from java.io import File, FileWriter
 from java.awt.event import WindowAdapter, WindowEvent
 from java.awt import Toolkit
+import hashlib
 
 class SelectionMenu(JFrame):
     def __init__(self):
@@ -16,7 +17,10 @@ class SelectionMenu(JFrame):
         self.getContentPane().setLayout(None)
 
         # Create selection menu
-        options = ["Inserting a character string alternately", "Duplicate data file", "Create Json tab with data file"]
+        options = ["Inserting a character string alternately", \ 
+                   "Duplicate data file", "Create Json tab with data file", \
+                   "Encode line file in MD5", \
+                   "Inserting string before line"]
 
         # Create scrolling menu
         self.dropdown = JComboBox(options)
@@ -42,6 +46,12 @@ class SelectionMenu(JFrame):
         elif selected_option == "Create Json tab with data file":
             self.dropdown.setPopupVisible(False)
             self.fonction_option3()
+        elif selected_option == "Encode line file in MD5":
+            self.dropdown.setPopupVisible(False)
+            self.fonction_option4()
+        elif selected_option == "Inserting string before line":
+            self.dropdown.setPopupVisible(False)
+            self.fonction_option5()
 
         # close scrolling menu
         self.dropdown.setPopupVisible(False)
@@ -135,8 +145,51 @@ class SelectionMenu(JFrame):
         dataJson.append("]\n")
 
         self.saveFile(dataJson)
+
+    def fonction_option4(self):
+       
+        filePath = self.chooseFile()
+        print("path", filePath)
         
-    # get number line file
+        # read data of file
+        file = open(filePath, "r")
+        data = file.readlines()
+        file.close()
+       
+        # get numberline
+        self.getNumberLine(filePath) 
+        
+        # create tab tanMD5
+        tabMD5 =[]
+
+        for i in range(len(data)):
+            data[i] = data[i].rstrip('\n')
+            tabMD5.append(self.encodeMD5(str(data[i]))+"\n")
+
+        self.saveFile(tabMD5)
+           
+    def fonction_option5(self):
+        
+        # get mandatory data
+        string = self.getString()
+        print("string", string)
+        
+        filePath = self.chooseFile()
+        print("path", filePath)
+       
+        # read data of file
+        file = open(filePath, "r")
+        data = file.readlines()
+        file.close()
+        
+        for i in range(len(data)):
+            data[i] = string + data[i]           
+        
+        # get numberline
+        self.getNumberLine(filePath) 
+
+        self.saveFile(data)
+ 
     def getNumberLine(self,filePath):
         nb_line = 0        
 
@@ -190,7 +243,6 @@ class SelectionMenu(JFrame):
             
         return filePath
 
-
     def getNumber(self,min,max,asked):
         number = JOptionPane.showInputDialog(None, asked, "Input", JOptionPane.QUESTION_MESSAGE)
     
@@ -201,13 +253,11 @@ class SelectionMenu(JFrame):
             JOptionPane.showMessageDialog(None, "Choose number between " +  min  + " to " + max)
             self.chooseNumber()
 
-
     def getString(self):
         stringInput = JOptionPane.showInputDialog(None, "what is your string : ", "Input", JOptionPane.QUESTION_MESSAGE)
     
         return stringInput 
-      
-    
+          
     def center_window(self):
         screenSize = Toolkit.getDefaultToolkit().getScreenSize()
         screenWidth = screenSize.width
@@ -220,6 +270,12 @@ class SelectionMenu(JFrame):
         posY = (screenHeight - windowHeight) // 2
 
         self.setLocation(posX, posY)
+
+    def encodeMD5(self,string_to_hash):
+        md5_hash = hashlib.md5()
+        md5_hash.update(string_to_hash.encode('ascii'))
+        md5_encoded_string = md5_hash.hexdigest()
+        return md5_encoded_string
 
 class CustomWindowAdapter(WindowAdapter):
     def windowClosing(self, event):
