@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 ### Added
 - targeted/SQLMapCommandGenerator.js - it will generate and copy sqlmap command based on the request
+- encode-decode/JwtDecode.js - Decodes JWTs
 
 ### Changed
 - Update minimum ZAP version to 2.12.0:
