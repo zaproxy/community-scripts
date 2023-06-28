@@ -14,10 +14,10 @@ global biid
 
 def main():
         global biid 
-        biid = getString("what is your biid ?")
+        biid = getString("What is your secret key (biid) ?")
          
         # Get number for update info
-        update = getNumber(1,3600, "how many time do you want refresh information ?")        
+        update = getNumber(1,3600, "How many time do you want refresh information ?")        
 
         while True:
                 # URL request
