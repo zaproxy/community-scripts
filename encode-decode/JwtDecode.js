@@ -12,11 +12,11 @@ var StandardCharsets = Java.type("java.nio.charset.StandardCharsets");
  * @returns {EncodeDecodeResult} - Decoded JWT (JSON)
  */
 function process(helper, value){
-    const parts = value.split('.')
+    var parts = value.split('.')
     
     if (parts.length == 2 || parts.length == 3) {
         try {
-            let result = formatJson(b64decode(parts[0])) + '\n' +  formatJson(b64decode(parts[1]))
+            var result = formatJson(b64decode(parts[0])) + '\n' +  formatJson(b64decode(parts[1]))
         
             if (parts.length == 3 && parts[2] != '') {
                 result += '\n{SIGNATURE}'
