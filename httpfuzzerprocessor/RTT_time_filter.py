@@ -41,3 +41,13 @@ def shouldInit():
 		options[0]
 		)
 	init = True
+
+# Called after receiving the fuzzed message from the server
+def processResult(utils, fuzzResult):
+	global choice, time;
+	if choice == JOptionPane.YES_OPTION and (int(fuzzResult.getHttpMessage().getTimeElapsedMillis()) >= time):
+		return True
+	elif choice == JOptionPane.NO_OPTION and (int(fuzzResult.getHttpMessage().getTimeElapsedMillis()) <= time):
+		return True
+	else:
+		return False
