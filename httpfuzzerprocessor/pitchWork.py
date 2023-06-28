@@ -86,7 +86,7 @@ def initialise():
     while number == -1:
         number = chooseNumber()
 
-    # choose file user        
+    # add files chosen by the user        
     for i in range(number):
         filePaths.append(chooseFile())
 
