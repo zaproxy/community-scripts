@@ -3,7 +3,7 @@ All notable changes to this add-on will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [17] - 2023-06-28
 ### Added
 - targeted/SQLMapCommandGenerator.js - it will generate and copy sqlmap command based on the request
 - encode-decode/JwtDecode.js - Decodes JWTs
@@ -197,7 +197,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
-[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v16...HEAD
+[17]: https://github.com/zaproxy/community-scripts/compare/v16...v17
 [16]: https://github.com/zaproxy/community-scripts/compare/v15...v16
 [15]: https://github.com/zaproxy/community-scripts/compare/v14...v15
 [14]: https://github.com/zaproxy/community-scripts/compare/v13...v14
