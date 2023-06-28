@@ -1,5 +1,5 @@
 # @author Timothée Ruffenach
-# Version 1.0
+# Version 1.1
 # filters the fuzzing result with a string.
 
 from javax.swing import JOptionPane
@@ -8,7 +8,7 @@ from javax.swing import JOptionPane
 # global variable
 init = False
 entry = ""
-isCheck = False
+choice = False
 
 # Called after injecting the payloads and before forward the message to the server.
 def processMessage(utils, message) :
@@ -18,33 +18,32 @@ def processMessage(utils, message) :
 
 
 def initialise():
-    global init,entry,isCheck
+    global init,entry,choice
     
     entry = ""
 
     # ask stings to find
     while entry == "":
-        entry = getString("what character string do you want to find ?")
+        entry = getString("What character string do you want to find ?")
         if entry == "":
-            JOptionPane.showMessageDialog(None, "Empty string","Waring", JOptionPane.WARNING_MESSAGE)
+            JOptionPane.showMessageDialog(None, "Empty string","Warning", JOptionPane.WARNING_MESSAGE)
     # ask reverse message
-    isCheck = JOptionPane.showConfirmDialog(None, "Reverse", "Confim", JOptionPane.YES_NO_OPTION)
-
+    choice = JOptionPane.showConfirmDialog(None, "Do you want to reverse the search result ?", "Confim", JOptionPane.YES_NO_OPTION)
 
     init = True
 
 # Called after receiving the fuzzed message from the server
 def processResult(utils, fuzzResult) :
-    global entry,isCheck
+    global entry,choice
     body = fuzzResult.getHttpMessage().getResponseBody().toString()
 
     # test all posibility
-    if isCheck == JOptionPane.NO_OPTION and entry in body:
-        return bool(1);
-    elif isCheck == JOptionPane.YES_OPTION and not entry in body:
-        return bool(1);
+    if choice == JOptionPane.NO_OPTION and entry in body:
+        return True;
+    elif choice == JOptionPane.YES_OPTION and not entry in body:
+        return True;
     else:
-        return bool(0);
+        return False;
 
 # Question
 def getString(question):
