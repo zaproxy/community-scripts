@@ -1,11 +1,11 @@
-# Version 1.0
+# Version 1.1
 # @author RUFFENACH Timothée
 # filter by RTT (time request).
 
 from javax.swing import JFrame, JPanel, JComboBox, JOptionPane,JFileChooser,JOptionPane
 
 # Auxiliary variables/constants needed for processing.
-global time,isCheck;
+global time,choice,init;
 init = False
 
 def getNumber(min,max,asked):
@@ -19,26 +19,25 @@ def getNumber(min,max,asked):
 		getNumber()
 
 # Called after injecting the payloads and before forward the message to the server.
-def processMessage(utils, message) :
+def processMessage(utils, message):
+	global init;
 	if (init == False):
-		initialise()
+		shouldInit()
 
-def initialise():
-	global init,entry,isCheck
-	global time;
-	time = getNumber(1,50000,"how many time do you want ?")
-	isCheck = JOptionPane.showConfirmDialog(None, "more high or equal (YES) esle less or equal (NO)", "Confirm", JOptionPane.YES_NO_OPTION)
-	init = True
+# Initialisation 
+def shouldInit():
+	global time, choice,init;
+	options = ["MORE", "LESS"] # choice options
 
-
-# Called after receiving the fuzzed message from the server
-def processResult(utils, fuzzResult) :
-	global isChek,time
-	if isCheck == JOptionPane.YES_OPTION and (int(fuzzResult.getHttpMessage().getTimeElapsedMillis()) >= time):
-		return bool(1)
-	elif isCheck == JOptionPane.NO_OPTION and (int(fuzzResult.getHttpMessage().getTimeElapsedMillis()) <= time):
-		return bool(1)
-	else:
-		return bool(0);
+	time = getNumber(1,50000,"What is the value of RTT (Raquest and Response Timing) do you want ?")
 	
-
+	choice = JOptionPane.showOptionDialog(
+		None, "Do want the value to be greater or equal than  to the previous input (MORE) or smaller or equal (LESS)", 
+		"Confirm", 
+		JOptionPane.YES_NO_OPTION,
+		JOptionPane.QUESTION_MESSAGE,
+		None,
+		options,
+		options[0]
+		)
+	init = True
