@@ -1,0 +1,36 @@
+// This script introduces a time delay between requests sent using the Param-Digger Extension
+// You may change it to apply to other Initiators such as the traditional Spider
+// Initiators such as the Active Scanner and Fuzzer come with built-in functionality to set time delays
+
+
+
+// 'initiator' is the component that initiated the request:
+//  17 PARAM_DIGGER_INITIATOR in this case
+// For the latest list of values see the HttpSender class:
+// https://github.com/zaproxy/zaproxy/blob/main/zap/src/main/java/org/parosproxy/paros/network/HttpSender.java
+
+var HttpSender    = Java.type('org.parosproxy.paros.network.HttpSender');
+
+function sendingRequest(msg, initiator, helper) {
+
+	// check if the initiator is the Param_Digger. If not, don't do anything
+	if(initiator=== HttpSender. PARAM_DIGGER_INITIATOR){
+		helper.getHttpSender().sendAndReceive(msg, false);
+		//set time delay in milliseconds before sending next request. Change the value to whatever suits you
+		wait(3000);
+	}
+	
+}
+
+function responseReceived(msg, initiator, helper) {
+	// leave the response alone
+}
+
+// create time delay between requests
+function wait(ms) {
+    var start = Date.now(),
+        now = start;
+    while (now - start < ms) {
+      now = Date.now();
+    }
+}
