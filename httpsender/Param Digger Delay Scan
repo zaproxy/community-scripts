@@ -10,6 +10,7 @@
 // https://github.com/zaproxy/zaproxy/blob/main/zap/src/main/java/org/parosproxy/paros/network/HttpSender.java
 
 var HttpSender    = Java.type('org.parosproxy.paros.network.HttpSender');
+var Thread = Java.type("java.lang.Thread");
 
 function sendingRequest(msg, initiator, helper) {
 
@@ -28,9 +29,5 @@ function responseReceived(msg, initiator, helper) {
 
 // create time delay between requests
 function wait(ms) {
-    var start = Date.now(),
-        now = start;
-    while (now - start < ms) {
-      now = Date.now();
-    }
+    Thread.sleep(ms);
 }
