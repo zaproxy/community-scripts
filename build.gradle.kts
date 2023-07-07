@@ -48,22 +48,22 @@ crowdin {
     }
 }
 
-val jupiterVersion = "5.9.2"
+val jupiterVersion = "5.9.3"
 
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:$jupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$jupiterVersion")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jupiterVersion")
 
-    testImplementation("commons-io:commons-io:2.11.0")
+    testImplementation("commons-io:commons-io:2.13.0")
     testImplementation("org.assertj:assertj-core:3.24.2")
     testImplementation("org.apache.commons:commons-lang3:3.12.0")
 
     // The following versions should match the ones of the add-ons.
-    testImplementation("org.codehaus.groovy:groovy-all:2.4.14")
+    testImplementation("org.codehaus.groovy:groovy-all:3.0.14")
     testImplementation("org.jruby:jruby-complete:1.7.4")
-    testImplementation("org.mozilla:zest:0.14.0")
-    testImplementation("org.python:jython-standalone:2.7.1")
+    testImplementation("org.zaproxy:zest:0.18.0")
+    testImplementation("org.python:jython-standalone:2.7.2")
 }
 
 tasks.withType<JavaCompile>().configureEach {
