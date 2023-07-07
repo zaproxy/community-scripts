@@ -55,10 +55,10 @@ import org.junit.jupiter.api.condition.JRE;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mozilla.zest.core.v1.ZestJSON;
-import org.mozilla.zest.core.v1.ZestScript;
 import org.python.core.Options;
 import org.python.jsr223.PyScriptEngineFactory;
+import org.zaproxy.zest.core.v1.ZestJSON;
+import org.zaproxy.zest.core.v1.ZestScript;
 
 /** Verifies that the scripts are parsed without errors. */
 class VerifyScripts {
