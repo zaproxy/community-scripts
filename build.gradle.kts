@@ -1,3 +1,4 @@
+import org.zaproxy.gradle.addon.AddOnPlugin
 import org.zaproxy.gradle.addon.AddOnStatus
 import org.zaproxy.gradle.addon.internal.model.ProjectInfo
 import org.zaproxy.gradle.addon.internal.model.ReleaseState
@@ -6,9 +7,9 @@ import org.zaproxy.gradle.addon.misc.ConvertMarkdownToHtml
 
 plugins {
     `java-library`
-    id("org.zaproxy.add-on") version "0.8.0"
+    id("org.zaproxy.add-on") version "0.9.0"
     id("org.zaproxy.crowdin") version "0.3.1"
-    id("com.diffplug.spotless") version "6.14.1"
+    id("com.diffplug.spotless") version "6.20.0"
 }
 
 repositories {
@@ -22,7 +23,7 @@ val scriptsDir = layout.buildDirectory.dir("scripts")
 zapAddOn {
     addOnId.set("communityScripts")
     addOnName.set("Community Scripts")
-    zapVersion.set("2.12.0")
+    zapVersion.set("2.13.0")
     addOnStatus.set(AddOnStatus.ALPHA)
 
     releaseLink.set("https://github.com/zaproxy/community-scripts/compare/v@PREVIOUS_VERSION@...v@CURRENT_VERSION@")
@@ -48,12 +49,9 @@ crowdin {
     }
 }
 
-val jupiterVersion = "5.9.3"
-
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$jupiterVersion")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:$jupiterVersion")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$jupiterVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     testImplementation("commons-io:commons-io:2.13.0")
     testImplementation("org.assertj:assertj-core:3.24.2")
@@ -106,6 +104,10 @@ val syncScriptsDirTask by tasks.creating(Sync::class) {
     }
 }
 
+tasks.named(AddOnPlugin.GENERATE_MANIFEST_TASK_NAME) {
+    dependsOn(syncScriptsDirTask)
+}
+
 java {
     val javaVersion = JavaVersion.VERSION_11
     sourceCompatibility = javaVersion
@@ -118,7 +120,7 @@ spotless {
     java {
         licenseHeaderFile("$rootDir/gradle/spotless/license.java")
 
-        googleJavaFormat("1.7").aosp()
+        googleJavaFormat("1.17.0").aosp()
     }
 
     kotlinGradle {
