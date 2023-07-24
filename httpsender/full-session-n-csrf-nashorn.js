@@ -95,7 +95,6 @@ function skipInitiator(initiator) {
 		case HttpSender.ACCESS_CONTROL_SCANNER_INITIATOR: return true;
 		case HttpSender.AUTHENTICATION_INITIATOR: return true;
 		case HttpSender.BEAN_SHELL_INITIATOR: return true;
-		case HttpSender.CHECK_FOR_UPDATES_INITIATOR: return true;
 		case HttpSender.PROXY_INITIATOR: return true;
 		default: return false;
 	}
@@ -534,7 +533,6 @@ function parseInitiator(initiator) {
 		case HttpSender.AJAX_SPIDER_INITIATOR: return "AJAX_SPIDER";
 		case HttpSender.AUTHENTICATION_INITIATOR: return "AUTHENTICATOR";
 		case HttpSender.BEAN_SHELL_INITIATOR: return "BEAN_SHELL";
-		case HttpSender.CHECK_FOR_UPDATES_INITIATOR: return "UPDATES";
 		case HttpSender.FORCED_BROWSE_INITIATOR: return "FORCED_BROWSE";
 		case HttpSender.FUZZER_INITIATOR: return "FUZZER";
 		case HttpSender.MANUAL_REQUEST_INITIATOR: return "MANUAL_REQUEST";
