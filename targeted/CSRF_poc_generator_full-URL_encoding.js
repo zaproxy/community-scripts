@@ -46,7 +46,9 @@ function invokeWith(msg) {
 	}
 	else if(methode == "GET")
 	{
-		result +=	"    <form action=\"" +msg.getRequestHeader().getURI().toString()+ "\">\n"
+		uri = msg.getRequestHeader().getURI().toString()
+		uri = uri.split('?')
+		result +=	"    <form action=\"" +uri[0]+ "\">\n"
 		
 		uri=msg.getRequestHeader().getURI().toString()
 		data = uri.split('?')
@@ -62,6 +64,7 @@ function invokeWith(msg) {
 			{
 				key = line.substring(0, indexEgal);
 				value = decodeURIComponent(line.substring(indexEgal + 1));
+				value = decodeURIComponent(value)
 				value = encodeSpecialCharactersToHTML(value)
 				result += "        <input type=\"hidden\" name=\"" +key+"\" value=\"" +value+ "\"/>\n"
 			}
