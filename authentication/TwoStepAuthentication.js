@@ -1,4 +1,4 @@
-// Author : aine-rb from Sopra Steria (based on the script of thc202 from the OWASP ZAP development team)
+// Author : aine-rb from Sopra Steria
 
 // This script is heavily based on the "Simple Form-Based Authentication.js" template
 // It can be used to authenticate in a webapplication via a form submission followed by a GET request

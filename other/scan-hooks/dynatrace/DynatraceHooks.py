@@ -2,7 +2,7 @@ import os
 from sre_compile import isstring
 import requests
 
-# Custom Hook to integrate Dynatrace with OWASP ZAP
+# Custom Hook to integrate Dynatrace with ZAP
 #
 # This integration will:
 # - Configure log attributes, log metrics and log events in DT
@@ -27,7 +27,7 @@ import requests
 # -e dt_api_token="dt0c01.*********" ^
 # -e dt_entity_selector="type(APPLICATION),entityName.equals(PROD - example.com)" ^
 # -e dt_create_config="true" ^
-# -t owasp/zap2docker-stable zap-baseline.py ^
+# -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py ^
 # -t https://example.com ^
 # --hook=DynatraceHooks.py
 #
@@ -38,7 +38,7 @@ import requests
 # -e dt_api_token="dt0c01.*********" \
 # -e dt_entity_selector="type(APPLICATION),entityName.equals(PROD - example.com)" \
 # -e dt_create_config="true" \
-# -t owasp/zap2docker-stable zap-baseline.py \
+# -t ghcr.io/zaproxy/zaproxy:stable zap-baseline.py \
 # -t https://example.com \
 # --hook=DynatraceHooks.py
 #

@@ -1,4 +1,4 @@
-# AWS Signing Script for OWASP Zed Attack Proxy - ZAP
+# AWS Signing Script for Zed Attack Proxy - ZAP
 # HelpAddOn Script - HTTPSender
 # Ismael Goncalves - https://sharingsec.blogspot.com
 # https://github.com/irgoncalves

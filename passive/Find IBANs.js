@@ -3,7 +3,7 @@
 // Regex evaluated at https://regexr.com/4kb6e
 // Tested against sample vulnerable page https://neverwind.azurewebsites.net/Admin/Download/Get
 // Runs as a part of nightly baseline scans in many DevSecOps environments
-// Complements the Pluralsight course - Writing Custom Scripts for OWASP Zed Attack Proxy
+// Complements the Pluralsight course - Writing Custom Scripts for Zed Attack Proxy
 
 function scan(ps, msg, src) {
     // first lets set up some details incase we find an IBAN, these will populate the alert later
