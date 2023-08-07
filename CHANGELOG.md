@@ -7,6 +7,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Update minimum ZAP version to 2.13.0.
 - Remove checks for CFU initiator in HTTP Sender scripts and docs, no longer needed.
+- Rename AWS signing script.
+- Update descriptions/comments in scripts.
 
 ## [17] - 2023-06-28
 ### Added

@@ -1,5 +1,5 @@
 # This dockerfile builds the Mass Baseline wrapper around the ZAP weekly release
-FROM owasp/zap2docker-weekly
+FROM ghcr.io/zaproxy/zaproxy:weekly
 MAINTAINER Simon Bennetts "psiinon@gmail.com"
 
 USER zap
