@@ -1,5 +1,5 @@
 # This script runs passive and active scans
-# It depends on https://pypi.python.org/pypi/python-owasp-zap-v2 and requests
+# It depends on https://pypi.python.org/pypi/zaproxy and requests
 # It assumes that zap_session.py has been previously run and traffic been pushed
 #
 # It will exit with codes of:
