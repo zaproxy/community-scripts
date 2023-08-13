@@ -5,7 +5,7 @@
 // Right click the script in the Scripts tree and select "enable"  
 
 // PassiveHTMLCommentFinder.js
-// kingthorin+owaspzap@gmail.com
+// Author: kingthorin
 
 // References:
 // RegEx Testing: http://regex101.com/r/tX1hS1

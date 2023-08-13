@@ -7,7 +7,7 @@
 // If an analyzed cookie decodes to a RFC1918 IPv4 address then an alert is raised.
 
 // Ref: https://support.f5.com/kb/en-us/solutions/public/6000/900/sol6917.html
-// Author: kingthorin+owaspzap@gmail.com
+// Author: kingthorin
 // 20150828 - Initial submission
 // 20160117 - Updated to include ipv6 variants - jkbowser[at]gmail[dot]com
 

@@ -1,8 +1,7 @@
 // Email finder by freakyclown@gmail.com
 // Based on:
 // PassiveHTMLCommentFinder.js
-// kingthorin+owaspzap@gmail.com
-// 20150106 - Updated by kingthorin+owaspzap@gmail.com to handle addresses (such as gmail) with alias portion:
+// 20150106 - Updated by kingthorin to handle addresses (such as gmail) with alias portion:
 //     https://support.google.com/mail/answer/12096?hl=en
 //     https://regex101.com/r/sH4vC0/2
 // 20181213 - Update by nil0x42+owaspzap@gmail.com to ignore false positives (such as '*@123' or '$@#!.')

@@ -14,7 +14,7 @@
 // available as: http://example.com/index.html.bak
 //
 // gof_lite.js
-// Author: kingthorin+owaspzap@gmail.com
+// Author: kingthorin
 // 20150828 - Initial submission 
 // 20150923 - Add check to see and handle if the user has stopped the scan
 

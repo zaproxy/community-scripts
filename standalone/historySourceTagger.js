@@ -3,7 +3,7 @@
 // SRC_Proxied, SRC_Manual, SRC_Other
 // The script can be run multiple times, history entries will only be tagged
 // if they don't already have a tag that starts with TAG_PREFIX as defined below.
-// Author: kingthorin+owaspzap@gmail.com
+// Author: kingthorin
 // 20160207: Initial release
 
 extHist = control.getExtensionLoader().
