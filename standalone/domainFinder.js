@@ -2,7 +2,7 @@
 //
 //Inspired partially by fierce domain scanner
 //Partially addresses https://github.com/zaproxy/zaproxy/issues/562
-//Author: kingthorin+owaspzap@gmail.com
+//Author: kingthorin
 //20160207: Initial release.
 
 var DOMAIN=".example.org"; //Update this with the domain you want to do lookups on 
