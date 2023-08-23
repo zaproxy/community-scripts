@@ -9,7 +9,7 @@ function scan(ps, msg, src) {
     var cweId = 209
     var wascId = 0
 
-    var re = /springframework|\.java|rootBeanClass/ig
+    var re = /springframework|\.java|rootBeanClass/i
 
     var url = msg.getRequestHeader().getURI().toString()
 
@@ -22,10 +22,8 @@ function scan(ps, msg, src) {
 
     var body = msg.getResponseBody().toString()
     if (re.test(body)) {
-        re.lastIndex = 0 // After testing reset index
         ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', body, alertSolution, body, cweId, wascId, msg)
-
-        console.log("Java leak detected");
+        //console.log("Java leak detected");
     }
 
 }
