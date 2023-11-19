@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Rename AWS signing script.
 - Update descriptions/comments in scripts.
 - standalone/Open Fortune 500 websites in a browser.zst - Fix typo in `http://www,pbfenergy.com`
+- Update export_session script to copy multiple zap files created during log file rotation
 
 ## [17] - 2023-06-28
 ### Added
