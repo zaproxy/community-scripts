@@ -4,6 +4,7 @@
 
 from shutil import copy2, copytree
 import os.path
+import glob
 
 # This assumes that you are running as zap - if you run as root change to use /root/.ZAP(_D)
 dev_path = '/home/zap/.ZAP_D'
@@ -14,4 +15,5 @@ def pre_exit(fail_count, warn_count, pass_count):
 	if os.path.exists(dev_path + '/session'):
 		dir = dev_path
 	copytree(dir + '/session', '/zap/wrk/session')
-	copy2(dir + '/zap.log', '/zap/wrk')
+	for zap_file in glob.iglob(dir + '/zap.log*'):
+		copy2(zap_file, '/zap/wrk')
