@@ -7,13 +7,10 @@ import org.zaproxy.gradle.addon.misc.ConvertMarkdownToHtml
 
 plugins {
     `java-library`
-    id("org.zaproxy.add-on") version "0.9.0"
+    id("org.zaproxy.add-on") version "0.10.0"
     id("org.zaproxy.crowdin") version "0.3.1"
-    id("com.diffplug.spotless") version "6.20.0"
-}
-
-repositories {
-    mavenCentral()
+    id("com.diffplug.spotless")
+    id("org.zaproxy.common")
 }
 
 description = "Useful ZAP scripts written by the ZAP community."
@@ -23,7 +20,7 @@ val scriptsDir = layout.buildDirectory.dir("scripts")
 zapAddOn {
     addOnId.set("communityScripts")
     addOnName.set("Community Scripts")
-    zapVersion.set("2.13.0")
+    zapVersion.set("2.14.0")
     addOnStatus.set(AddOnStatus.ALPHA)
 
     releaseLink.set("https://github.com/zaproxy/community-scripts/compare/v@PREVIOUS_VERSION@...v@CURRENT_VERSION@")
@@ -62,11 +59,6 @@ dependencies {
     testImplementation("org.jruby:jruby-complete:1.7.4")
     testImplementation("org.zaproxy:zest:0.18.0")
     testImplementation("org.python:jython-standalone:2.7.2")
-}
-
-tasks.withType<JavaCompile>().configureEach {
-    options.encoding = "UTF-8"
-    options.compilerArgs = listOf("-Xlint:all", "-Xlint:-options", "-Werror")
 }
 
 tasks.withType<Test>().configureEach {
@@ -117,12 +109,6 @@ java {
 sourceSets["main"].output.dir(mapOf("builtBy" to syncScriptsDirTask), scriptsDir)
 
 spotless {
-    java {
-        licenseHeaderFile("$rootDir/gradle/spotless/license.java")
-
-        googleJavaFormat("1.17.0").aosp()
-    }
-
     kotlinGradle {
         ktlint()
     }
