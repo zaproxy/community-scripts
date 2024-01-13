@@ -14,21 +14,13 @@ import base64
 import subprocess
 
 # path to private.key
-PRIVATE_KEY = "private.key"
+PRIVATE_KEY = "/Users/michalwalkowski/Projects/dsecure.me/pentesty/vodeno/blog/http_mock/private.key"
 SIGNATURE_HEADER = 'X-Signature'
 NONCE_HEADER = 'X-Nonce-Value'
 NONCE_CREATED_AT_HEADER = 'X-Nonce-Created-At'
 
-def sendingRequest(msg, initiator, helper):
-    method = msg.getRequestHeader().getMethod() 
-    path = urlparse.urlparse(msg.getRequestHeader().getURI().toString()).path
-    body = msg.getRequestBody().toString()
-    print(msg.getRequestBody().toString())
 
-    nonce_value = str(uuid.uuid4())
-    nonce_created_at = '{}+00:00'.format(datetime.datetime.utcnow().isoformat())
-
-    signature_input = "{}{}{}{}{}".format(method, path, nonce_value, nonce_created_at, body)
+def sign(signature_input):
     print('signature_input', signature_input)
     signature_input_b64 = base64.standard_b64encode(signature_input.encode()).decode()
     print('signature_input_b64', signature_input_b64)
@@ -41,7 +33,17 @@ def sendingRequest(msg, initiator, helper):
     if err.decode() != "":
         raise Exception(err)
 
-    signature = output.decode().replace("\n", "")
+    return output.decode().replace("\n", "")
+
+def sendingRequest(msg, initiator, helper):
+    method = msg.getRequestHeader().getMethod() 
+    path = urlparse.urlparse(msg.getRequestHeader().getURI().toString()).path
+    body = msg.getRequestBody().toString()
+    print(msg.getRequestBody().toString())
+
+    nonce_value = str(uuid.uuid4())
+    nonce_created_at = '{}+00:00'.format(datetime.datetime.utcnow().isoformat())
+    signature = sign("{}{}{}{}{}".format(method, path, nonce_value, nonce_created_at, body))
 
     print('Adding new {}: {}'.format(SIGNATURE_HEADER, signature))
     msg.getRequestHeader().setHeader(SIGNATURE_HEADER, signature)
