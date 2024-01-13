@@ -14,7 +14,7 @@ import base64
 import subprocess
 
 # path to private.key
-PRIVATE_KEY = "/Users/michalwalkowski/Projects/dsecure.me/pentesty/vodeno/blog/http_mock/private.key"
+PRIVATE_KEY = "private.key"
 SIGNATURE_HEADER = 'X-Signature'
 NONCE_HEADER = 'X-Nonce-Value'
 NONCE_CREATED_AT_HEADER = 'X-Nonce-Created-At'
