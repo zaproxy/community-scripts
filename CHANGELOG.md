@@ -4,6 +4,9 @@ All notable changes to this add-on will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- httpsender/RsaSigningForZap.py - A script that signs requests using RSA
+
 ### Changed
 - Update minimum ZAP version to 2.14.0.
 - Remove checks for CFU initiator in HTTP Sender scripts and docs, no longer needed.
