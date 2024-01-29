@@ -3,7 +3,7 @@ All notable changes to this add-on will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [18] - 2024-01-29
 ### Added
 - httpsender/RsaSigningForZap.py - A script that signs requests using RSA
 
@@ -208,7 +208,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
-[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v17...HEAD
+[18]: https://github.com/zaproxy/community-scripts/compare/v17...v18
 [17]: https://github.com/zaproxy/community-scripts/compare/v16...v17
 [16]: https://github.com/zaproxy/community-scripts/compare/v15...v16
 [15]: https://github.com/zaproxy/community-scripts/compare/v14...v15
