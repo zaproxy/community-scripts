@@ -1,0 +1,23 @@
+---
+# This plan show how you can access an env var in a script.
+env:
+  contexts:
+  - name: "Script EnvVar Example"
+    urls:
+    - "https://example.com/"
+jobs:
+- parameters:
+    action: "add"
+    type: "standalone"
+    engine: "ECMAScript : Graal.js"
+    name: "print-env-vars.js"
+    inline: |
+      print(Java.type("java.lang.System").getenv("PATH"));
+  name: "script"
+  type: "script"
+- parameters:
+    action: "run"
+    type: "standalone"
+    name: "print-env-vars.js"
+  name: "script"
+  type: "script"
