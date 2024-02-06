@@ -1,0 +1,61 @@
+---
+# A simple plan that performs a full unauthenticated scan against brokencrystals.com
+# It uses both of the spiders and active scanning.
+# The 2 spider tests will fail as they do not find at least 100 URLs, 
+# but they do not fail the whole plan as they just report at INFO level.
+env:
+  contexts:
+  - name: "BrokenCrystals"
+    urls:
+    - "https://brokencrystals.com/"
+    includePaths: []
+    excludePaths: []
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+- parameters:
+    scanOnlyInScope: true
+    enableTags: false
+  rules: []
+  name: "passiveScan-config"
+  type: "passiveScan-config"
+- parameters: {}
+  name: "spider"
+  type: "spider"
+  tests:
+  - onFail: "INFO"
+    statistic: "automation.spider.urls.added"
+    site: ""
+    operator: ">="
+    value: 100
+    type: "stats"
+    name: "At least 100 URLs found"
+- parameters:
+    maxDuration: 10
+    maxCrawlDepth: 10
+  name: "spiderAjax"
+  type: "spiderAjax"
+  tests:
+  - onFail: "INFO"
+    statistic: "spiderAjax.urls.added"
+    site: ""
+    operator: ">="
+    value: 100
+    type: "stats"
+    name: "At least 100 URLs found"
+- parameters: {}
+  name: "activeScan"
+  type: "activeScan"
+- parameters: {}
+  name: "passiveScan-wait"
+  type: "passiveScan-wait"
+- parameters:
+    template: "modern"
+    reportTitle: "ZAP Scanning Report"
+    reportDescription: ""
+  name: "report"
+  type: "report"
+
