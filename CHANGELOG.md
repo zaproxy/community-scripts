@@ -4,13 +4,19 @@ All notable changes to this add-on will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+### Added
+- passive/JavaDisclosure.js - Passive scan for Java error messages leaks
+
+## [18] - 2024-01-29
+### Added
+- httpsender/RsaSigningForZap.py - A script that signs requests using RSA
+
 ### Changed
-- Update minimum ZAP version to 2.13.0.
+- Update minimum ZAP version to 2.14.0.
 - Remove checks for CFU initiator in HTTP Sender scripts and docs, no longer needed.
 - Rename AWS signing script.
 - Update descriptions/comments in scripts.
-### Added
-- passive/JavaDisclosure.js - Passive scan for Java error messages
+- standalone/Open Fortune 500 websites in a browser.zst - Fix typo in `http://www,pbfenergy.com`
 
 ## [17] - 2023-06-28
 ### Added
@@ -206,7 +212,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
-[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v17...HEAD
+[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v18...HEAD
+[18]: https://github.com/zaproxy/community-scripts/compare/v17...v18
 [17]: https://github.com/zaproxy/community-scripts/compare/v16...v17
 [16]: https://github.com/zaproxy/community-scripts/compare/v15...v16
 [15]: https://github.com/zaproxy/community-scripts/compare/v14...v15

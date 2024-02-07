@@ -1,5 +1,5 @@
 ---
-# A simple plan that performs a baseline scan against a URL in the ZAP_TARGET env var.
+# A simple plan that performs a full scan against a URL in the ZAP_TARGET env var.
 # It uses the standard spider but only runs the AJAX spider if the app appears to be modern.
 # The 2 spider tests will fail as they do not find at least 100 URLs, 
 # but they do not fail the whole plan as they just report at INFO level.
@@ -49,6 +49,13 @@ jobs:
     value: 100
     type: "stats"
     name: "At least 100 URLs found"
+- parameters:
+  policyDefinition:
+    defaultStrength: "medium"
+    defaultThreshold: "medium"
+    rules: []
+  name: "activeScan"
+  type: "activeScan"
 - parameters: {}
   name: "passiveScan-wait-pre-report"
   type: "passiveScan-wait"
