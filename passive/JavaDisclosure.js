@@ -11,19 +11,19 @@ function scan(ps, msg, src) {
 
     var re = /springframework|\.java|rootBeanClass/i
 
-    var url = msg.getRequestHeader().getURI().toString()
-
     var contentType = msg.getResponseHeader().getHeader("Content-Type")
-    var unwantedFileTypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash','application/pdf']
+    var unwantedFileTypes = ['image/png', 'image/jpeg', 'image/gif', 'application/x-shockwave-flash', 'application/pdf']
 
-    if (unwantedFileTypes.indexOf(""+contentType) >= 0) {
+    if (unwantedFileTypes.indexOf("" + contentType) >= 0) {
         return
     }
 
     var body = msg.getResponseBody().toString()
     if (re.test(body)) {
+        let url = msg.getRequestHeader().getURI().toString();
         ps.raiseAlert(alertRisk, alertConfidence, alertTitle, alertDesc, url, '', '', body, alertSolution, body, cweId, wascId, msg)
-        //console.log("Java leak detected");
     }
 
 }
+
+
