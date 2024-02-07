@@ -3,7 +3,7 @@
 function scan(ps, msg, src) {
     var alertRisk = 2
     var alertConfidence = 3
-    var alertTitle = 'Java stack trace disclosure (or similar) - investigation required (script)'
+    var alertTitle = 'Java stack trace disclosure'
     var alertDesc = 'Java stack trace disclosure (or similar) was found'
     var alertSolution = 'Investigate Java stack trace disclosures found in the response, remove or mask as required'
     var cweId = 209
