@@ -56,6 +56,9 @@ dependencies {
 
     // The following versions should match the ones of the add-ons.
     testImplementation("org.codehaus.groovy:groovy-all:3.0.14")
+    val graalJsVersion = "22.3.3"
+    testImplementation("org.graalvm.js:js:$graalJsVersion")
+    testImplementation("org.graalvm.js:js-scriptengine:$graalJsVersion")
     testImplementation("org.jruby:jruby-complete:1.7.4")
     testImplementation("org.zaproxy:zest:0.18.0")
     testImplementation("org.python:jython-standalone:2.7.2")
