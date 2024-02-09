@@ -46,7 +46,7 @@ function authenticate(helper, paramsValues, credentials) {
 
   var csrfTokenValue = firstMsg.getResponseHeader().toString().match(csrfTokenValueRegEx)[1];
 
-
+  var cookieName = paramsValues.get("Session Cookie name") 
   // Get the csrf token from the response.
   var cookieSessionRegEx = /osdo_session=([A-Za-z0-9]*%3D)/i;
   var cookieSessionValue = firstMsg.getResponseHeader().toString().match(cookieSessionRegEx)[1];
@@ -57,9 +57,7 @@ function authenticate(helper, paramsValues, credentials) {
   var dataPageValue = firstMsg.getResponseBody().toString().match(dataPageRegEx)[1];
 
   var dataPageJsonString = dataPageValue.replace(/&quot;/g, '"');
-  var dataPageObject;
-
-  dataPageObject = JSON.parse(dataPageJsonString);
+  var dataPageObject = JSON.parse(dataPageJsonString);
 
   if (dataPageObject) {
     var inertiaVersion = dataPageObject.version;
@@ -78,7 +76,7 @@ function authenticate(helper, paramsValues, credentials) {
   secondMsg.getRequestHeader().setHeader("X-XSRF-TOKEN", decodeURIComponent(csrfTokenValue));
   secondMsg.getRequestHeader().setHeader("Content-Type", "application/json");
   secondMsg.getRequestHeader().setHeader("X-Requested-With", "XMLHttpRequest");
-  secondMsg.getRequestHeader().setHeader("Referer", "https://app.opensecdevops.com/login");
+  secondMsg.getRequestHeader().setHeader("Referer", targetURL);
   secondMsg.getRequestHeader().setHeader("X-Inertia", 'true');
   secondMsg.getRequestHeader().setHeader("X-Inertia-Version", inertiaVersion);
   secondMsg.getRequestHeader().setHeader("Accept", "text/html, application/xhtml+xml");
@@ -88,8 +86,8 @@ function authenticate(helper, paramsValues, credentials) {
 
   // Build body credentials
   var postData = {
-    "email": credentials.getParam("Username"),
-    "password": credentials.getParam("Password"),
+    paramsValues.get("Username field"): credentials.getParam("Username"),
+    paramsValues.get("PPassword field") : credentials.getParam("Password"),
     "remember": ""
   };
 
@@ -102,7 +100,6 @@ function authenticate(helper, paramsValues, credentials) {
   helper.sendAndReceive(secondMsg, false);
 
   // Get the status code of the response.
-  // Aquí puedes verificar el código de estado de la respuesta para confirmar si la autenticación fue exitosa
   var secondResponseStatusCode = secondMsg.getResponseHeader().getStatusCode();
 
   //
@@ -136,12 +133,6 @@ function authenticate(helper, paramsValues, credentials) {
 function getRequiredParamsNames() {
   return ["Target URL", "Username field", "Password field", "Session Cookie name"];
 }
-
-
-function getOptionalParamsNames() {
-  return ["Extra POST data"];
-}
-
 
 function getCredentialsParamsNames() {
   return ["Username", "Password"];
