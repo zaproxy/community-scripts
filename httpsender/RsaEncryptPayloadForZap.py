@@ -38,7 +38,7 @@ def sendingRequest(msg, initiator, helper):
     encrypted_body = encrypt_body(body)
     new_payload = PAYLOAD.replace(PAYLOAD_PLACEHOLDER, encrypted_body)
     msg.setRequestBody(new_payload)
-    msg.getRequestHeader().setHeader("content-length", str(len(new_payload)))
+    msg.getRequestHeader().setContentLength(msg.getRequestBody().length())
 
 
 def responseReceived(msg, initiator, helper):
