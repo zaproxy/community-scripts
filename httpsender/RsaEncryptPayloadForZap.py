@@ -42,5 +42,8 @@ def sendingRequest(msg, initiator, helper):
 
 
 def responseReceived(msg, initiator, helper):
+    # Restoring the original value of the sent request from before encryption to facilitate work in the Requester module.
+    # Without this change, ZAP would automatically replace the value with an encrypted one. Additionally, to more easily
+    # identify the requests sent to the server in the history, we store the plain text in notes.
     body = msg.getNote()
     msg.setRequestBody(body)
