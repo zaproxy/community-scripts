@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - extender/arpSyndicateSubdomainDiscovery.js - uses the API of [ARPSyndicate's Subdomain Center](https://www.subdomain.center/)
   to find and add subdomains to the Sites Tree.
 - passive/JavaDisclosure.js - Passive scan for Java error messages leaks
+- httpsender/RsaEncryptPayloadForZap.py - A script that encrypts requests using RSA
 
 ## [18] - 2024-01-29
 ### Added
