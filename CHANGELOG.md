@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   to find and add subdomains to the Sites Tree.
 - passive/JavaDisclosure.js - Passive scan for Java error messages leaks
 - httpsender/RsaEncryptPayloadForZap.py - A script that encrypts requests using RSA
+- selenium/FillOTPInMFA.js - A script that fills the OTP in MFA
 
 ## [18] - 2024-01-29
 ### Added
