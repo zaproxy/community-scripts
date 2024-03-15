@@ -1,6 +1,4 @@
-// This community script will analyze the response for base64 encoded strings
-// Regex Test: https://regex101.com/r/pS2oF3/3
-
+// This community script will analyze the response for ASCII Hex encoded strings
 
 function scan(ps, msg, src) {
     var RESULT_PER_FINDING = new Boolean(0) // If you want to see results on a per comment basis (i.e.: A single URL may be listed more than once), set this to true (1)
@@ -9,13 +7,13 @@ function scan(ps, msg, src) {
 
     var alertRisk = 0
     var alertConfidence = 1
-    var alertTitle = 'Base64-encoded string found (script)'
-    var alertDesc = "A Base64-encoded string has been found in the HTTP response body. Base64-encoded data may contain sensitive information such as usernames, passwords or cookies which should be further inspected."
-    var alertSolution = 'Base64-encoding should not be used to store or send sensitive information.'
+    var alertTitle = 'ASCII Hex-encoded string found (script)'
+    var alertDesc = "A ASCII Hex-encoded string has been found in the HTTP response body. ASCII Hex-encoded data may contain sensitive information which should be further inspected."
+    var alertSolution = 'ASCII Hex-encoding is used for all sorts of things. It is worth investigating and decoding.'
     var cweId = 0
     var wascId = 0
     var url = msg.getRequestHeader().getURI().toString();
-    var re = /(^[A-Za-z0-9+/]*={0,2}$)/g
+    var re = /(^(?:[0-9A-Fa-f]{2})*$)/g
 
     var contenttype = msg.getResponseHeader().getHeader("Content-Type")
     var unwantedfiletypes = ['image/png', 'image/jpeg','image/gif','application/x-shockwave-flash']
