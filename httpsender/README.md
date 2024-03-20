@@ -23,6 +23,13 @@ They are invoked for proxied requests and requests that originate from ZAP, for 
 // 		8	BEAN_SHELL_INITIATOR
 // 		9	ACCESS_CONTROL_SCANNER_INITIATOR
 // 		10	AJAX_SPIDER_INITIATOR
+//		11	FORCED_BROWSE_INITIATOR
+//		12	TOKEN_GENERATOR_INITIATOR
+// 		13	WEB_SOCKET_INITIATOR
+// 		14	AUTHENTICATION_HELPER_INITIATOR
+// 		15	AUTHENTICATION_POLL_INITIATOR
+//		16	OAST_INITIATOR
+//		17	PARAM_DIGGER_INITIATOR
 // For the latest list of values see the HttpSender class:
 // https://github.com/zaproxy/zaproxy/blob/main/zap/src/main/java/org/parosproxy/paros/network/HttpSender.java
 // 'helper' just has one method at the moment: helper.getHttpSender() which returns the HttpSender 
