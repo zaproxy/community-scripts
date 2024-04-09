@@ -6,38 +6,50 @@
 // Author: kingthorin
 // 20160207: Initial release
 
-extHist = control.getExtensionLoader().
-    getExtension(org.parosproxy.paros.extension.history.ExtensionHistory.NAME);
+extHist = control
+  .getExtensionLoader()
+  .getExtension(org.parosproxy.paros.extension.history.ExtensionHistory.NAME);
 
-TAG_PREFIX='SRC_';
+TAG_PREFIX = "SRC_";
 
 if (extHist != null) {
-  i=org.zaproxy.zap.extension.script.ScriptVars.getGlobalVar("tagged_ref");// Check for global reference
-  if(i==null) {
-    i=1;// Global reference was null so 1
+  i = org.zaproxy.zap.extension.script.ScriptVars.getGlobalVar("tagged_ref"); // Check for global reference
+  if (i == null) {
+    i = 1; // Global reference was null so 1
   }
-  lastRef=extHist.getLastHistoryId();// Get current max history reference 
-  while (i <= lastRef) {// Loop through the history table
+  lastRef = extHist.getLastHistoryId(); // Get current max history reference
+  while (i <= lastRef) {
+    // Loop through the history table
     hr = extHist.getHistoryReference(i);
-    if(i % 10 == 0 | i == 1 | i == lastRef) {// Progress update first, every 10, and last
-      print('Checking ' + i);
+    if ((i % 10 == 0) | (i == 1) | (i == lastRef)) {
+      // Progress update first, every 10, and last
+      print("Checking " + i);
     }
-    if (hr) { 
+    if (hr) {
       switch (hr.getHistoryType()) {
-        case 1: type="Proxied"; break;
-        case 15: type="Manual"; break;
-        default: type="Other"; break;
+        case 1:
+          type = "Proxied";
+          break;
+        case 15:
+          type = "Manual";
+          break;
+        default:
+          type = "Other";
+          break;
       }
-      newTag=TAG_PREFIX+type;
-      theTags=hr.getTags();
-      if(!theTags.contains(newTag)) {
+      newTag = TAG_PREFIX + type;
+      theTags = hr.getTags();
+      if (!theTags.contains(newTag)) {
         hr.addTag(newTag);
         try {
-          extHist.notifyHistoryItemChanged(hr);// Trigger GUI update
-        } catch (ex) { } //Ignore 
+          extHist.notifyHistoryItemChanged(hr); // Trigger GUI update
+        } catch (ex) {} //Ignore
       }
     }
-  i++;
+    i++;
   }
-  org.zaproxy.zap.extension.script.ScriptVars.setGlobalVar("tagged_ref",lastRef+1); // Set global reference
+  org.zaproxy.zap.extension.script.ScriptVars.setGlobalVar(
+    "tagged_ref",
+    lastRef + 1
+  ); // Set global reference
 }

@@ -1,3 +1,4 @@
+import org.gradle.api.internal.provider.TransformBackedProvider
 import org.zaproxy.gradle.addon.AddOnPlugin
 import org.zaproxy.gradle.addon.AddOnStatus
 import org.zaproxy.gradle.addon.internal.model.ProjectInfo
@@ -10,6 +11,7 @@ plugins {
     id("org.zaproxy.add-on") version "0.10.0"
     id("org.zaproxy.crowdin") version "0.3.1"
     id("com.diffplug.spotless")
+    id("com.github.node-gradle.node") version "7.0.2"
     id("org.zaproxy.common")
 }
 
@@ -68,26 +70,27 @@ tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 
-var scriptTypes = listOf(
-    "active",
-    "authentication",
-    "encode-decode",
-    "extender",
-    "httpfuzzerprocessor",
-    "httpsender",
-    "passive",
-    "payloadgenerator",
-    "payloadprocessor",
-    "proxy",
-    "selenium",
-    "sequence",
-    "session",
-    "standalone",
-    "targeted",
-    "variant",
-    "websocketfuzzerprocessor",
-    "websocketpassive",
-)
+var scriptTypes =
+    listOf(
+        "active",
+        "authentication",
+        "encode-decode",
+        "extender",
+        "httpfuzzerprocessor",
+        "httpsender",
+        "passive",
+        "payloadgenerator",
+        "payloadprocessor",
+        "proxy",
+        "selenium",
+        "sequence",
+        "session",
+        "standalone",
+        "targeted",
+        "variant",
+        "websocketfuzzerprocessor",
+        "websocketpassive",
+    )
 
 val syncScriptsDirTask by tasks.creating(Sync::class) {
     into(scriptsDir.get().dir(project.name))
@@ -111,15 +114,36 @@ java {
 
 sourceSets["main"].output.dir(mapOf("builtBy" to syncScriptsDirTask), scriptsDir)
 
+node {
+    version = "20.12.1"
+    download = true
+}
+
 spotless {
     kotlinGradle {
         ktlint()
     }
+    javascript {
+        target("**/*.js")
+        targetExclude("extender/HTTP Message Logger.js", "standalone/domainFinder.js")
+        // get the npm executable path from gradle-node-plugin
+        val npmDir = (tasks.named("npmSetup").get().property("npmDir") as TransformBackedProvider<*, *>).get().toString()
+        val npmExecutable = if (System.getProperty("os.name").lowercase().contains("windows")) "/npm.cmd" else "/bin/npm"
+        prettier().npmExecutable(npmDir.plus(npmExecutable))
+    }
+}
+
+tasks.named("spotlessJavascript").configure {
+    dependsOn("nodeSetup", "npmSetup")
 }
 
 val projectInfo = ProjectInfo.from(project)
 val generateReleaseStateLastCommit by tasks.registering(GenerateReleaseStateLastCommit::class) {
     projects.set(listOf(projectInfo))
+}
+
+repositories {
+    mavenCentral()
 }
 
 val releaseAddOn by tasks.registering {

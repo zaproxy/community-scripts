@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - httpsender/RsaEncryptPayloadForZap.py - A script that encrypts requests using RSA
 - selenium/FillOTPInMFA.js - A script that fills the OTP in MFA
 
+### Changed
+- Use Prettier to format all JavaScript scripts.
+
 ## [18] - 2024-01-29
 ### Added
 - httpsender/RsaSigningForZap.py - A script that signs requests using RSA

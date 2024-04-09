@@ -24,37 +24,56 @@
 // 'helper' just has one method at the moment: helper.getHttpSender() which returns the HttpSender
 // instance used to send the request.
 
-var SEP = '\n ---------------------------------';
-var Files = Java.type('java.nio.file.Files');
-var Paths = Java.type('java.nio.file.Paths');
-var StandardOpenOption = Java.type('java.nio.file.StandardOpenOption');
+var SEP = "\n ---------------------------------";
+var Files = Java.type("java.nio.file.Files");
+var Paths = Java.type("java.nio.file.Paths");
+var StandardOpenOption = Java.type("java.nio.file.StandardOpenOption");
 
 // Change this as required - this works well in Docker as long as a suitable local directory has been mapped to it
-var f = Paths.get('/zap/wrk/req-resp-log.txt');
+var f = Paths.get("/zap/wrk/req-resp-log.txt");
 
 function appendToFile(str) {
-        Files.write(f, str.toString().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+  Files.write(
+    f,
+    str.toString().getBytes(),
+    StandardOpenOption.CREATE,
+    StandardOpenOption.APPEND
+  );
 }
 
 function sendingRequest(msg, initiator, helper) {
-        // You can change this to print out just the requests you want e.g. by surounding with an 'if' statement like:
-        // if (msg.getRequestHeader().getURI().toString().startsWith('http://www.example.com'))
-        // or
-        // if (initiator == 5)
+  // You can change this to print out just the requests you want e.g. by surounding with an 'if' statement like:
+  // if (msg.getRequestHeader().getURI().toString().startsWith('http://www.example.com'))
+  // or
+  // if (initiator == 5)
 
-        // Print everything on one line so that threads dont mix the output
-        appendToFile(SEP + 'ZAP Request Init=' + initiator + '\n' +
-                msg.getRequestHeader().toString() +
-                SEP + 'ZAP Request Body\n' +
-                msg.getRequestBody().toString() +
-                SEP + 'ZAP Request End');
+  // Print everything on one line so that threads dont mix the output
+  appendToFile(
+    SEP +
+      "ZAP Request Init=" +
+      initiator +
+      "\n" +
+      msg.getRequestHeader().toString() +
+      SEP +
+      "ZAP Request Body\n" +
+      msg.getRequestBody().toString() +
+      SEP +
+      "ZAP Request End"
+  );
 }
 
 function responseReceived(msg, initiator, helper) {
-        // Print everything on one line so that threads dont mix the output
-        appendToFile(SEP + 'ZAP Response Init=' + initiator + '\n' +
-                msg.getResponseHeader().toString() +
-                SEP + 'ZAP Response Body\n' +
-                msg.getResponseBody().toString() +
-                SEP + 'ZAP Response End');
+  // Print everything on one line so that threads dont mix the output
+  appendToFile(
+    SEP +
+      "ZAP Response Init=" +
+      initiator +
+      "\n" +
+      msg.getResponseHeader().toString() +
+      SEP +
+      "ZAP Response Body\n" +
+      msg.getResponseBody().toString() +
+      SEP +
+      "ZAP Response End"
+  );
 }

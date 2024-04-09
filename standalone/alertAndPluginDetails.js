@@ -5,47 +5,59 @@
  * It's tab separated so you can simply copy/paste it into Excel (or whatever).
  */
 
-extAlert = control.getExtensionLoader().getExtension(
-    org.zaproxy.zap.extension.alert.ExtensionAlert.NAME) 
+extAlert = control
+  .getExtensionLoader()
+  .getExtension(org.zaproxy.zap.extension.alert.ExtensionAlert.NAME);
 
-extPscan = control.getExtensionLoader().getExtension(
-    org.zaproxy.zap.extension.pscan.ExtensionPassiveScan.NAME);
+extPscan = control
+  .getExtensionLoader()
+  .getExtension(org.zaproxy.zap.extension.pscan.ExtensionPassiveScan.NAME);
 
 var pf = Java.type("org.parosproxy.paros.core.scanner.PluginFactory");
 
 printHeaders();
 
 if (extAlert != null) {
-    var Alert = org.parosproxy.paros.core.scanner.Alert;
-    var alerts = extAlert.getAllAlerts();
-    for (var i = 0; i < alerts.length; i++) {
-        var alert = alerts[i]
-        printAlert(alert);
-    }
+  var Alert = org.parosproxy.paros.core.scanner.Alert;
+  var alerts = extAlert.getAllAlerts();
+  for (var i = 0; i < alerts.length; i++) {
+    var alert = alerts[i];
+    printAlert(alert);
+  }
 }
 
 function printHeaders() {
-    print('AlertName\tSource:PluginName\tWASC\tCWE');
+  print("AlertName\tSource:PluginName\tWASC\tCWE");
 }
 
 function printAlert(alert) {
-    var scanner = '';
+  var scanner = "";
 
-    // If the session is loaded in ZAP and one of the extensions that provided a plugin for the 
-    // existing alerts is missing then plugin (below) will be null, and hence scanner will end-up being empty
+  // If the session is loaded in ZAP and one of the extensions that provided a plugin for the
+  // existing alerts is missing then plugin (below) will be null, and hence scanner will end-up being empty
 
-    if (alert.getSource() == Alert.Source.ACTIVE) {
-        var plugin = pf.getLoadedPlugin(alert.getPluginId());
-        if (plugin != null) {
-            scanner = plugin.getName();
-        }
+  if (alert.getSource() == Alert.Source.ACTIVE) {
+    var plugin = pf.getLoadedPlugin(alert.getPluginId());
+    if (plugin != null) {
+      scanner = plugin.getName();
     }
-    if (alert.getSource() == Alert.Source.PASSIVE && extPscan != null) {
-        plugin = extPscan.getPluginPassiveScanner(alert.getPluginId());
-        if (plugin != null) {
-            scanner = plugin.getName();
-        }
+  }
+  if (alert.getSource() == Alert.Source.PASSIVE && extPscan != null) {
+    plugin = extPscan.getPluginPassiveScanner(alert.getPluginId());
+    if (plugin != null) {
+      scanner = plugin.getName();
     }
-    print(alert.getName() + '\t' + alert.getSource() + ':' + scanner + '\t' + alert.getWascId()  + '\t' + alert.getCweId());
-    // For more alert properties see https://static.javadoc.io/org.zaproxy/zap/latest/org/parosproxy/paros/core/scanner/Alert.html
+  }
+  print(
+    alert.getName() +
+      "\t" +
+      alert.getSource() +
+      ":" +
+      scanner +
+      "\t" +
+      alert.getWascId() +
+      "\t" +
+      alert.getCweId()
+  );
+  // For more alert properties see https://static.javadoc.io/org.zaproxy/zap/latest/org/parosproxy/paros/core/scanner/Alert.html
 }

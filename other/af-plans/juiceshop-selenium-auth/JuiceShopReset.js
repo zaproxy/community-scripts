@@ -11,7 +11,7 @@ It is not needed for automation but can be useful for manual testing.
 */
 
 function logger() {
-	print('[' + this['zap.script.name'] + '] ' + arguments[0]);
+  print("[" + this["zap.script.name"] + "] " + arguments[0]);
 }
 
 var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
@@ -19,30 +19,29 @@ var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 var proxy = ScriptVars.getGlobalCustomVar("auth-proxy");
 
 if (proxy) {
-	logger("Found auth proxy - stopping");
-	proxy.stop();
-	ScriptVars.setGlobalCustomVar("auth-proxy", null);
+  logger("Found auth proxy - stopping");
+  proxy.stop();
+  ScriptVars.setGlobalCustomVar("auth-proxy", null);
 }
 
 var token = ScriptVars.getGlobalVar("juiceshop.token");
 if (token) {
-	logger("Found token - removing");
-	ScriptVars.setGlobalVar("juiceshop.token", null);
-
+  logger("Found token - removing");
+  ScriptVars.setGlobalVar("juiceshop.token", null);
 }
 
 // Reset the state for all users
-var extUser = control.getExtensionLoader().getExtension(
-		org.zaproxy.zap.extension.users.ExtensionUserManagement.class);
+var extUser = control
+  .getExtensionLoader()
+  .getExtension(org.zaproxy.zap.extension.users.ExtensionUserManagement.class);
 var session = model.getSession();
 var contexts = session.getContexts();
 for (i in contexts) {
-	var users = extUser.getContextUserAuthManager(contexts[i].getId()).getUsers();
-	for (j in users) {
-		logger("Resetting user " + users[j]);
-		users[j].getAuthenticationState().setLastPollResult(false);
-	}
+  var users = extUser.getContextUserAuthManager(contexts[i].getId()).getUsers();
+  for (j in users) {
+    logger("Resetting user " + users[j]);
+    users[j].getAuthenticationState().setLastPollResult(false);
+  }
 }
 
 logger("Reset complete.");
-

@@ -5,52 +5,57 @@
 
 // Logging with the script name is super helpful!
 function logger() {
-  print('[' + this['zap.script.name'] + '] ' + arguments[0]);
+  print("[" + this["zap.script.name"] + "] " + arguments[0]);
 }
 
 function isStaticUrl(url) {
-  if (url.indexOf('.xml') !== -1) {
+  if (url.indexOf(".xml") !== -1) {
     return true;
   }
 
-  if (url.indexOf('.css') !== -1) {
+  if (url.indexOf(".css") !== -1) {
     return true;
   }
 
-  if (url.indexOf('.gif') !== -1) {
+  if (url.indexOf(".gif") !== -1) {
     return true;
   }
 
-  if (url.indexOf('.js') !== -1) {
+  if (url.indexOf(".js") !== -1) {
     return true;
   }
 
-  if (url.indexOf('.txt') !== -1) {
+  if (url.indexOf(".txt") !== -1) {
     return true;
   }
 
-  if (url.indexOf('.htm') !== -1) {
+  if (url.indexOf(".htm") !== -1) {
     return true;
   }
   return false;
 }
 
-var HttpSender    = Java.type('org.parosproxy.paros.network.HttpSender');
-var ScriptVars    = Java.type('org.zaproxy.zap.extension.script.ScriptVars');
+var HttpSender = Java.type("org.parosproxy.paros.network.HttpSender");
+var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 
 function sendingRequest(msg, initiator, helper) {
   var headers = msg.getRequestHeader();
-  var url     = headers.getURI().toString();
+  var url = headers.getURI().toString();
 
-  if (initiator === HttpSender.SPIDER_INITIATOR) {}
-  if (isStaticUrl(url)) {return true;}
+  if (initiator === HttpSender.SPIDER_INITIATOR) {
+  }
+  if (isStaticUrl(url)) {
+    return true;
+  }
 
   // @todo prevent re-auth
-  var token = ScriptVars.getGlobalVar("target-api.token")
+  var token = ScriptVars.getGlobalVar("target-api.token");
 
-  if (!token) {return true;}
+  if (!token) {
+    return true;
+  }
 
-  msg.getRequestHeader().setHeader('Authorization', 'Bearer ' + token);
+  msg.getRequestHeader().setHeader("Authorization", "Bearer " + token);
   // @todo set active session
 }
 

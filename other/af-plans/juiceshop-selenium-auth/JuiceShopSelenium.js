@@ -19,25 +19,24 @@ perform any authenticated actions.
 */
 
 function logger() {
-	print('[' + this['zap.script.name'] + '] ' + arguments[0]);
+  print("[" + this["zap.script.name"] + "] " + arguments[0]);
 }
 
 var ArrayList = Java.type("java.util.ArrayList");
-var By = Java.type('org.openqa.selenium.By');
+var By = Java.type("org.openqa.selenium.By");
 var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 var System = Java.type("java.lang.System");
 
 var juiceshopAddr = "http://localhost:3000/";
 
 function browserLaunched(utils) {
-	var wd = utils.getWebDriver();
-	wd.get(juiceshopAddr);
-	// This request will get the login page without the pesky popup
-	wd.get(juiceshopAddr + "#/login");
-	// These are standard selenium methods for filling out fields
-	// You will need to change them to support different apps
-	wd.findElement(By.id("email")).sendKeys(System.getenv("JS_USER"));
-	wd.findElement(By.id("password")).sendKeys(System.getenv("JS_PWD"));
-	wd.findElement(By.id("loginButton")).click();
+  var wd = utils.getWebDriver();
+  wd.get(juiceshopAddr);
+  // This request will get the login page without the pesky popup
+  wd.get(juiceshopAddr + "#/login");
+  // These are standard selenium methods for filling out fields
+  // You will need to change them to support different apps
+  wd.findElement(By.id("email")).sendKeys(System.getenv("JS_USER"));
+  wd.findElement(By.id("password")).sendKeys(System.getenv("JS_PWD"));
+  wd.findElement(By.id("loginButton")).click();
 }
-

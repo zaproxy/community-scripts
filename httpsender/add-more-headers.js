@@ -23,13 +23,13 @@ user_headers = null;
 
 // Logging with the script name is super helpful!
 function logger() {
-	print('[' + this['zap.script.name'] + '] ' + arguments[0]);
+  print("[" + this["zap.script.name"] + "] " + arguments[0]);
 }
 
 // Parse and store headers where we can get at them quickly
 function initializeHeaders(variableName) {
-	logger("Initializing...");
-	user_headers = JSON.parse(ScriptVars.getGlobalVar(variableName));
+  logger("Initializing...");
+  user_headers = JSON.parse(ScriptVars.getGlobalVar(variableName));
 }
 
 /*
@@ -44,17 +44,17 @@ function initializeHeaders(variableName) {
  * @param {HttpSenderScriptHelper} helper - A utility object with helper functions.
  */
 function sendingRequest(msg, initiator, helper) {
-	// Get user-supplied headers if we didn't already do it
-	if (!user_headers) {
-		initializeHeaders(PARAMETER_VARIABLE);
-	}
+  // Get user-supplied headers if we didn't already do it
+  if (!user_headers) {
+    initializeHeaders(PARAMETER_VARIABLE);
+  }
 
-	// Ensure each header is present with the required value
-    for (var key in user_headers) {
-        var value = user_headers[key];
-        // logger("Setting " + key + " to " + value);
-        msg.getRequestHeader().setHeader(key, value);
-    }
+  // Ensure each header is present with the required value
+  for (var key in user_headers) {
+    var value = user_headers[key];
+    // logger("Setting " + key + " to " + value);
+    msg.getRequestHeader().setHeader(key, value);
+  }
 }
 
 /* Called after receiving the response from the server.
@@ -64,5 +64,5 @@ function sendingRequest(msg, initiator, helper) {
  * @param {HttpSenderScriptHelper} helper - A utility object with helper functions.
  */
 function responseReceived(msg, initiator, helper) {
-	// Nothing to do here
+  // Nothing to do here
 }

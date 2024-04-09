@@ -22,20 +22,26 @@ function scan(ps, msg, src) {
 
   // Do not scan unwanted file types.
   var contentType = msg.getResponseHeader().getHeader("Content-Type");
-  var unwantedFileTypes = ["image/png", "image/jpeg", "image/gif", "application/x-shockwave-flash", "application/pdf"];
+  var unwantedFileTypes = [
+    "image/png",
+    "image/jpeg",
+    "image/gif",
+    "application/x-shockwave-flash",
+    "application/pdf",
+  ];
 
   if (unwantedFileTypes.indexOf("" + contentType) >= 0) {
     return;
   }
 
-  var body = msg.getResponseBody().toString()
+  var body = msg.getResponseBody().toString();
 
   if (re.test(body)) {
     re.lastIndex = 0;
     var foundKeys = [];
     var key;
 
-    while (key = re.exec(body)) {
+    while ((key = re.exec(body))) {
       foundKeys.push(key[0]);
     }
 
@@ -47,7 +53,8 @@ function scan(ps, msg, src) {
       url,
       "",
       "",
-      "The following Google API keys have been found in the page: " + foundKeys.join(", "), // Other info
+      "The following Google API keys have been found in the page: " +
+        foundKeys.join(", "), // Other info
       alertSolution,
       foundKeys[0].toString(), // Evidence
       cweId,

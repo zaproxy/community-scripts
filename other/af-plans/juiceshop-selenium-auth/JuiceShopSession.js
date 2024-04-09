@@ -16,44 +16,44 @@ It is not used by the AJAX Spider as that need the client side state to be set.
 */
 
 function logger() {
-	print('[' + this['zap.script.name'] + '] ' + arguments[0]);
+  print("[" + this["zap.script.name"] + "] " + arguments[0]);
 }
 
 var COOKIE_TYPE = org.parosproxy.paros.network.HtmlParameter.Type.cookie;
-var HtmlParameter = Java.type('org.parosproxy.paros.network.HtmlParameter');
-var ScriptVars = Java.type('org.zaproxy.zap.extension.script.ScriptVars');
-var Stats = Java.type('org.zaproxy.zap.utils.Stats');
+var HtmlParameter = Java.type("org.parosproxy.paros.network.HtmlParameter");
+var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
+var Stats = Java.type("org.zaproxy.zap.utils.Stats");
 
 function extractWebSession(_sessionWrapper) {
-	// Handled in the auth script
+  // Handled in the auth script
 }
 
 function clearWebSessionIdentifiers(sessionWrapper) {
-	var headers = sessionWrapper.getHttpMessage().getRequestHeader();
-	headers.setHeader("Authorization", null);
-	ScriptVars.setGlobalVar("juiceshop.token", null);
+  var headers = sessionWrapper.getHttpMessage().getRequestHeader();
+  headers.setHeader("Authorization", null);
+  ScriptVars.setGlobalVar("juiceshop.token", null);
 }
 
 function processMessageToMatchSession(sessionWrapper) {
-	var token = ScriptVars.getGlobalVar("juiceshop.token");
-	if (token === null) {
-		logger('no token');
-		return;
-	}
-	var cookie = new HtmlParameter(COOKIE_TYPE, "token", token);
-	// add the saved authentication token as an Authentication header and a cookie
-	var msg = sessionWrapper.getHttpMessage();
-	msg.getRequestHeader().setHeader("Authorization", "Bearer " + token);
-	var cookies = msg.getRequestHeader().getCookieParams();
-	cookies.add(cookie);
-	msg.getRequestHeader().setCookieParams(cookies);
-	Stats.incCounter("stats.juiceshop.tokens.added");
+  var token = ScriptVars.getGlobalVar("juiceshop.token");
+  if (token === null) {
+    logger("no token");
+    return;
+  }
+  var cookie = new HtmlParameter(COOKIE_TYPE, "token", token);
+  // add the saved authentication token as an Authentication header and a cookie
+  var msg = sessionWrapper.getHttpMessage();
+  msg.getRequestHeader().setHeader("Authorization", "Bearer " + token);
+  var cookies = msg.getRequestHeader().getCookieParams();
+  cookies.add(cookie);
+  msg.getRequestHeader().setCookieParams(cookies);
+  Stats.incCounter("stats.juiceshop.tokens.added");
 }
 
 function getRequiredParamsNames() {
-	return [];
+  return [];
 }
 
 function getOptionalParamsNames() {
-	return [];
+  return [];
 }
