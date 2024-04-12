@@ -4,47 +4,49 @@
 // Targeted scripts can only be invoked by you, the user, eg via a right-click option on the Sites or History tabs
 
 function recurseDown(sitestree, node) {
-	//print('recurseDown node: ' + node.getHierarchicNodeName() + " " + node.getChildCount())
-	// Loop down through the children first
-	var j;
-	for (j=0;j<node.getChildCount();j++) {
-		if (recurseDown(sitestree, node.getChildAt(j))) {
-			// just removed the child
-			j--
-		}
-	}
-	if (deleteThis(node)) {
-		print('Removing node: ' + node.getHierarchicNodeName())
-		org.zaproxy.zap.extension.history.PopupMenuPurgeSites.purge(sitestree, node)
-		return true
-	}
-	return false
+  //print('recurseDown node: ' + node.getHierarchicNodeName() + " " + node.getChildCount())
+  // Loop down through the children first
+  var j;
+  for (j = 0; j < node.getChildCount(); j++) {
+    if (recurseDown(sitestree, node.getChildAt(j))) {
+      // just removed the child
+      j--;
+    }
+  }
+  if (deleteThis(node)) {
+    print("Removing node: " + node.getHierarchicNodeName());
+    org.zaproxy.zap.extension.history.PopupMenuPurgeSites.purge(
+      sitestree,
+      node
+    );
+    return true;
+  }
+  return false;
 }
 
 function deleteThis(node) {
-	// change this to match any other criteria you want!
-	if (node.getChildCount() == 0) {
-		// only remove child nodes
-		var href = node.getHistoryReference()
-		if (href != null) {
-			if (href.getStatusCode() == 302) {
-				return true
-			}
-		}
-	}
-	return false
+  // change this to match any other criteria you want!
+  if (node.getChildCount() == 0) {
+    // only remove child nodes
+    var href = node.getHistoryReference();
+    if (href != null) {
+      if (href.getStatusCode() == 302) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 function invokeWith(msg) {
-	// Debugging can be done using print like this
-	//print('invokeWith called for url=' + msg.getRequestHeader().getURI().toString())
+  // Debugging can be done using print like this
+  //print('invokeWith called for url=' + msg.getRequestHeader().getURI().toString())
 
-	var sitestree = model.getSession().getSiteTree()
-	var node = sitestree.findNode(msg, true)
+  var sitestree = model.getSession().getSiteTree();
+  var node = sitestree.findNode(msg, true);
 
-	if (node != null) {
-		//print('found node: ' + node.getHierarchicNodeName())
-		recurseDown(sitestree, node)
-	}
-
+  if (node != null) {
+    //print('found node: ' + node.getHierarchicNodeName())
+    recurseDown(sitestree, node);
+  }
 }

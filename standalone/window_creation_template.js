@@ -9,20 +9,20 @@ var window = new absframe();
 
 init();
 
-function init(){
-    window.setAlwaysOnTop(false);
-    window.setSize(500, 500);
-    var menubar = new jmenubar();
-    var menu = new jmenu("A Menu");
-    var menu_ac = menu.getAccessibleContext();
-    menu_ac.setAccessibleDescription("The only menu in this program");
-    var menuitem = new jmenuitem("A Menu Item");
-    menu.add(menuitem);
-    menubar.add(menu);
-    window.setJMenuBar(menubar);
-    var lbl = new jlabel("A Label");
-    lbl.setHorizontalAlignment(jlabel.CENTER);
-    lbl.setVerticalAlignment(jlabel.CENTER);
-    window.setContentPane(lbl);
-    window.setVisible(true);
+function init() {
+  window.setAlwaysOnTop(false);
+  window.setSize(500, 500);
+  var menubar = new jmenubar();
+  var menu = new jmenu("A Menu");
+  var menu_ac = menu.getAccessibleContext();
+  menu_ac.setAccessibleDescription("The only menu in this program");
+  var menuitem = new jmenuitem("A Menu Item");
+  menu.add(menuitem);
+  menubar.add(menu);
+  window.setJMenuBar(menubar);
+  var lbl = new jlabel("A Label");
+  lbl.setHorizontalAlignment(jlabel.CENTER);
+  lbl.setVerticalAlignment(jlabel.CENTER);
+  window.setContentPane(lbl);
+  window.setVisible(true);
 }

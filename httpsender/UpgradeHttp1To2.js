@@ -5,22 +5,25 @@
 var Locale = Java.type("java.util.Locale");
 
 function sendingRequest(msg, initiator, helper) {
-	var reqHeader = msg.getRequestHeader()
-	if (reqHeader.getVersion() === 'HTTP/1.1') {
-		// print('Upgrading to HTTP/2 url=' + msg.getRequestHeader().getURI().toString())
-		reqHeader.setVersion('HTTP/2')
-		// HTTP/2 headers have to be lowercase, so re-add them all to ensure the order is not changed
-		var headers = reqHeader.getHeaders()
-		for (i in headers) {
-			reqHeader.setHeader(headers[i].getName(), null)
-		}
-		// Re-add in a second loop in case a header appears twice
-		for (i in headers) {
-			reqHeader.addHeader(headers[i].getName().toLowerCase(Locale.ROOT), headers[i].getValue())
-		}
-	}
+  var reqHeader = msg.getRequestHeader();
+  if (reqHeader.getVersion() === "HTTP/1.1") {
+    // print('Upgrading to HTTP/2 url=' + msg.getRequestHeader().getURI().toString())
+    reqHeader.setVersion("HTTP/2");
+    // HTTP/2 headers have to be lowercase, so re-add them all to ensure the order is not changed
+    var headers = reqHeader.getHeaders();
+    for (i in headers) {
+      reqHeader.setHeader(headers[i].getName(), null);
+    }
+    // Re-add in a second loop in case a header appears twice
+    for (i in headers) {
+      reqHeader.addHeader(
+        headers[i].getName().toLowerCase(Locale.ROOT),
+        headers[i].getValue()
+      );
+    }
+  }
 }
 
 function responseReceived(msg, initiator, helper) {
-	// Nothing to do
+  // Nothing to do
 }

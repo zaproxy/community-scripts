@@ -15,5 +15,7 @@ function browserLaunched(utils) {
   Thread.sleep(30000); //Wait for ZAP to handle the auth.
   wd.findElement(By.id("one-time-code")).sendKeys(OTP); //Replace the input field as per your web-app's DOM
   Thread.sleep(1000);
-  wd.executeScript("document.querySelector('[aria-label=\"Verify Code\"]').click()"); //Replace the submit label as per your web-app's DOM
+  wd.executeScript(
+    "document.querySelector('[aria-label=\"Verify Code\"]').click()"
+  ); //Replace the submit label as per your web-app's DOM
 }

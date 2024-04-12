@@ -4,25 +4,37 @@
 var consumer;
 
 function install(helper) {
-  var ConsumerClass = Java.extend(Java.type("org.zaproxy.zap.eventBus.EventConsumer"));
+  var ConsumerClass = Java.extend(
+    Java.type("org.zaproxy.zap.eventBus.EventConsumer")
+  );
   consumer = new ConsumerClass({
-    eventReceived: function(event) { 
+    eventReceived: function (event) {
       // Print in one statement to prevent threads interleaving
-      var target = '---';
+      var target = "---";
       if (event.getTarget()) {
         target = event.getTarget().getDisplayName();
       }
       print(
-        'Event received: \n' +
-        '  Publisher: ' + event.getPublisher().getPublisherName() + '\n' +
-        '  Type:      ' + event.getEventType() + '\n' +
-        '  Target:    ' + target + '\n' +
-        '  Params:    ' + event.getParameters());
-    }
+        "Event received: \n" +
+          "  Publisher: " +
+          event.getPublisher().getPublisherName() +
+          "\n" +
+          "  Type:      " +
+          event.getEventType() +
+          "\n" +
+          "  Target:    " +
+          target +
+          "\n" +
+          "  Params:    " +
+          event.getParameters()
+      );
+    },
   });
 
-  org.zaproxy.zap.ZAP.getEventBus().registerConsumer(consumer, 
-    "org.parosproxy.paros.extension.history.ProxyListenerLogEventPublisher");
+  org.zaproxy.zap.ZAP.getEventBus().registerConsumer(
+    consumer,
+    "org.parosproxy.paros.extension.history.ProxyListenerLogEventPublisher"
+  );
 }
 
 function uninstall(helper) {

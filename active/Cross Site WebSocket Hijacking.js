@@ -37,73 +37,83 @@
  * Note: Active scripts are initially disabled, right click the script to enable it.
  */
 
-var Base64 = Java.type("java.util.Base64")
-var Random = Java.type("java.util.Random")
-var String = Java.type("java.lang.String")
-var ByteArray = Java.type("byte[]")
+var Base64 = Java.type("java.util.Base64");
+var Random = Java.type("java.util.Random");
+var String = Java.type("java.lang.String");
+var ByteArray = Java.type("byte[]");
 
-var LOG_DEBUG_MESSAGES = false // change to true for more logs
+var LOG_DEBUG_MESSAGES = false; // change to true for more logs
 
-var RISK = 3
-var CONFIDENCE = 2
-var TITLE = "Cross-Site WebSocket Hijacking"
-var DESCRIPTION = "Server accepted WebSocket connection through HTTP Upgrade request with modified Origin header."
-var SOLUTION = "Validate Origin header on WebSocket connection handshake, to ensure only specified origins are allowed to connect.\
- Also, WebSocket handshake should use random tokens, similar to anti CSRF tokens."
-var REFERENCE = "https://tools.ietf.org/html/rfc6455#section-10.2"
-var OTHER = "See also https://portswigger.net/web-security/websockets/cross-site-websocket-hijacking\
- or https://christian-schneider.net/CrossSiteWebSocketHijacking.html"
-var CWEID = 346 // CWE-346: Origin Validation Error, http://cwe.mitre.org/data/definitions/346.html
-var WASCID = 9 // WASC-9 Cross Site Request Forgery, http://projects.webappsec.org/w/page/13246919/Cross%20Site%20Request%20Forgery
+var RISK = 3;
+var CONFIDENCE = 2;
+var TITLE = "Cross-Site WebSocket Hijacking";
+var DESCRIPTION =
+  "Server accepted WebSocket connection through HTTP Upgrade request with modified Origin header.";
+var SOLUTION =
+  "Validate Origin header on WebSocket connection handshake, to ensure only specified origins are allowed to connect.\
+ Also, WebSocket handshake should use random tokens, similar to anti CSRF tokens.";
+var REFERENCE = "https://tools.ietf.org/html/rfc6455#section-10.2";
+var OTHER =
+  "See also https://portswigger.net/web-security/websockets/cross-site-websocket-hijacking\
+ or https://christian-schneider.net/CrossSiteWebSocketHijacking.html";
+var CWEID = 346; // CWE-346: Origin Validation Error, http://cwe.mitre.org/data/definitions/346.html
+var WASCID = 9; // WASC-9 Cross Site Request Forgery, http://projects.webappsec.org/w/page/13246919/Cross%20Site%20Request%20Forgery
 
 function scanNode(as, msg) {
-    var target = msg.getRequestHeader().getURI().toString()
+  var target = msg.getRequestHeader().getURI().toString();
 
-    // check if this is a WebSocket HTTP Upgrade request (the message should include also "Connection: Upgrade" header if we wanted to check it strictly)
-    // TODO: in ZAP 2.11 we might use msg.isWebSocketUpgrade() check instead
-    var upgradeHeader = msg.getRequestHeader().getHeader("Upgrade")
-    if (!upgradeHeader || upgradeHeader.toLowerCase() !== "websocket") {
-        if (LOG_DEBUG_MESSAGES) {
-            print("Cross-Site WebSocket Hijacking rule skipped for url=" + target + ", it does not appear to be a WebSocket upgrade request")
-        }
-        return
-    }
-
+  // check if this is a WebSocket HTTP Upgrade request (the message should include also "Connection: Upgrade" header if we wanted to check it strictly)
+  // TODO: in ZAP 2.11 we might use msg.isWebSocketUpgrade() check instead
+  var upgradeHeader = msg.getRequestHeader().getHeader("Upgrade");
+  if (!upgradeHeader || upgradeHeader.toLowerCase() !== "websocket") {
     if (LOG_DEBUG_MESSAGES) {
-        print("Cross-Site WebSocket Hijacking rule started for url=" + target)
+      print(
+        "Cross-Site WebSocket Hijacking rule skipped for url=" +
+          target +
+          ", it does not appear to be a WebSocket upgrade request"
+      );
     }
-    msg = msg.cloneRequest()
+    return;
+  }
 
-    // set random Sec-WebSocket-Key
-    var randomBytes = new ByteArray(16)
-    new Random().nextBytes(randomBytes)
-    var secWsKey = new String(Base64.getEncoder().encode(randomBytes))
-    msg.getRequestHeader().setHeader("Sec-WebSocket-Key", secWsKey)
+  if (LOG_DEBUG_MESSAGES) {
+    print("Cross-Site WebSocket Hijacking rule started for url=" + target);
+  }
+  msg = msg.cloneRequest();
 
-    // set Origin header using custom domain, .example is a reserved TLD in RFC 2606 so it should not match domain name of a scanned service
-    msg.getRequestHeader().setHeader("Origin", "https://cswsh.example")
+  // set random Sec-WebSocket-Key
+  var randomBytes = new ByteArray(16);
+  new Random().nextBytes(randomBytes);
+  var secWsKey = new String(Base64.getEncoder().encode(randomBytes));
+  msg.getRequestHeader().setHeader("Sec-WebSocket-Key", secWsKey);
 
-    as.sendAndReceive(msg, true, false)
+  // set Origin header using custom domain, .example is a reserved TLD in RFC 2606 so it should not match domain name of a scanned service
+  msg.getRequestHeader().setHeader("Origin", "https://cswsh.example");
 
-    var responseStatus = msg.getResponseHeader().getStatusCode()
-    if (responseStatus === 101) {
-        // should not have accepted connection with different origin
-        if (LOG_DEBUG_MESSAGES) {
-            print("Cross-Site WebSocket Hijacking vulnerability found, sending alert for url=" + target)
-        }
-        as.newAlert()
-          .setRisk(RISK)
-          .setConfidence(CONFIDENCE)
-          .setName(TITLE)
-          .setDescription(DESCRIPTION)
-          .setParam(target)
-          .setEvidence(msg.getResponseHeader().getPrimeHeader())
-          .setOtherInfo(OTHER)
-          .setSolution(SOLUTION)
-          .setReference(REFERENCE)
-          .setCweId(CWEID)
-          .setWascId(WASCID)
-          .setMessage(msg)
-          .raise()
-     }
+  as.sendAndReceive(msg, true, false);
+
+  var responseStatus = msg.getResponseHeader().getStatusCode();
+  if (responseStatus === 101) {
+    // should not have accepted connection with different origin
+    if (LOG_DEBUG_MESSAGES) {
+      print(
+        "Cross-Site WebSocket Hijacking vulnerability found, sending alert for url=" +
+          target
+      );
+    }
+    as.newAlert()
+      .setRisk(RISK)
+      .setConfidence(CONFIDENCE)
+      .setName(TITLE)
+      .setDescription(DESCRIPTION)
+      .setParam(target)
+      .setEvidence(msg.getResponseHeader().getPrimeHeader())
+      .setOtherInfo(OTHER)
+      .setSolution(SOLUTION)
+      .setReference(REFERENCE)
+      .setCweId(CWEID)
+      .setWascId(WASCID)
+      .setMessage(msg)
+      .raise();
+  }
 }

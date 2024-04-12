@@ -40,56 +40,77 @@ var parameterTypesList = [formParamType, urlParamType, cookieParamType];
 //print ("AntiCsrfTokenValue: " + org.zaproxy.zap.extension.script.ScriptVars.getGlobalVar("anti.csrf.token.value"))
 
 function sendingRequest(msg, initiator, helper) {
-    // print('sendingRequest called for url=' + msg.getRequestHeader().getURI().toString())
-    var numberOfParameterTypes = parameterTypesList.length;
-    for (var index=0; index < numberOfParameterTypes; index++) {
-        if (parameterTypesList[index] != null && parameterTypesList[index] === formParamType) {
-            var formParams = msg.getFormParams();
-            // print ("Form Params before update: " + formParams);
-            var updatedFormParams = modifyParams(formParams);
-            // print ("Form Params after update: " + updatedFormParams);
-            msg.setFormParams(updatedFormParams);
-        } else if (parameterTypesList[index] != null && parameterTypesList[index] === urlParamType) {
-            var urlParams = msg.getUrlParams();
-            // print ("Url Params before update: " + urlParams);
-            var updatedUrlParams = modifyParams(urlParams);
-            // print ("Url Params after update: " + updatedUrlParams);
-            msg.setGetParams(updatedUrlParams);
-        } else if (parameterTypesList[index] != null && parameterTypesList[index] === cookieParamType) {
-            var cookieParams = msg.getCookieParams();
-            // print ("Cookie Params before update: " + cookieParams);
-            var updatedCookieParams = modifyParams(cookieParams);
-            // print ("Cookie Params after update: " + updatedCookieParams);
-            msg.setCookieParams(updatedCookieParams);
-        }
+  // print('sendingRequest called for url=' + msg.getRequestHeader().getURI().toString())
+  var numberOfParameterTypes = parameterTypesList.length;
+  for (var index = 0; index < numberOfParameterTypes; index++) {
+    if (
+      parameterTypesList[index] != null &&
+      parameterTypesList[index] === formParamType
+    ) {
+      var formParams = msg.getFormParams();
+      // print ("Form Params before update: " + formParams);
+      var updatedFormParams = modifyParams(formParams);
+      // print ("Form Params after update: " + updatedFormParams);
+      msg.setFormParams(updatedFormParams);
+    } else if (
+      parameterTypesList[index] != null &&
+      parameterTypesList[index] === urlParamType
+    ) {
+      var urlParams = msg.getUrlParams();
+      // print ("Url Params before update: " + urlParams);
+      var updatedUrlParams = modifyParams(urlParams);
+      // print ("Url Params after update: " + updatedUrlParams);
+      msg.setGetParams(updatedUrlParams);
+    } else if (
+      parameterTypesList[index] != null &&
+      parameterTypesList[index] === cookieParamType
+    ) {
+      var cookieParams = msg.getCookieParams();
+      // print ("Cookie Params before update: " + cookieParams);
+      var updatedCookieParams = modifyParams(cookieParams);
+      // print ("Cookie Params after update: " + updatedCookieParams);
+      msg.setCookieParams(updatedCookieParams);
     }
+  }
 }
 
 function responseReceived(msg, initiator, helper) {
-    // print('responseReceived called for url=' + msg.getRequestHeader().getURI().toString())
-    if (msg.getRequestHeader().getURI().toString().match(urlRegEx) != null) {
-        var csrfTokenValue = msg.getResponseBody().toString().match(csrfTokenValueRegEx);
-        if (csrfTokenValue != null && csrfTokenValue.length > matcherGroupNumber) {
-            print('Latest CSRF Token value: ' + csrfTokenValue[matcherGroupNumber]);
-            org.zaproxy.zap.extension.script.ScriptVars.setGlobalVar("anti.csrf.token.value", csrfTokenValue[matcherGroupNumber]);
-        }
+  // print('responseReceived called for url=' + msg.getRequestHeader().getURI().toString())
+  if (msg.getRequestHeader().getURI().toString().match(urlRegEx) != null) {
+    var csrfTokenValue = msg
+      .getResponseBody()
+      .toString()
+      .match(csrfTokenValueRegEx);
+    if (csrfTokenValue != null && csrfTokenValue.length > matcherGroupNumber) {
+      print("Latest CSRF Token value: " + csrfTokenValue[matcherGroupNumber]);
+      org.zaproxy.zap.extension.script.ScriptVars.setGlobalVar(
+        "anti.csrf.token.value",
+        csrfTokenValue[matcherGroupNumber]
+      );
     }
+  }
 }
 
 function modifyParams(params) {
-    var iterator = params.iterator();
-    while(iterator.hasNext()) {
-        var param = iterator.next();
-        // Check if the url parameters has the antiCsrfTokenName in it.
-        if (param.getName().equals(antiCsrfTokenName)) {
-            var secureTokenValue = param.getValue();
-            var antiCsrfTokenValue = org.zaproxy.zap.extension.script.ScriptVars.getGlobalVar("anti.csrf.token.value");
-            // Check for the value of AntiCsrfTokenName in the existing request with the latest value captured from previous requests.
-            if (antiCsrfTokenValue != null && !secureTokenValue.equals(antiCsrfTokenValue)) {
-                param.setValue(antiCsrfTokenValue);
-                break;
-            }
-        }
+  var iterator = params.iterator();
+  while (iterator.hasNext()) {
+    var param = iterator.next();
+    // Check if the url parameters has the antiCsrfTokenName in it.
+    if (param.getName().equals(antiCsrfTokenName)) {
+      var secureTokenValue = param.getValue();
+      var antiCsrfTokenValue =
+        org.zaproxy.zap.extension.script.ScriptVars.getGlobalVar(
+          "anti.csrf.token.value"
+        );
+      // Check for the value of AntiCsrfTokenName in the existing request with the latest value captured from previous requests.
+      if (
+        antiCsrfTokenValue != null &&
+        !secureTokenValue.equals(antiCsrfTokenValue)
+      ) {
+        param.setValue(antiCsrfTokenValue);
+        break;
+      }
     }
-    return params;
+  }
+  return params;
 }

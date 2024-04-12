@@ -10,10 +10,13 @@
  * Every request made by this script is logged separately to the History tab.
  */
 
-
 function authenticate(helper, paramsValues, credentials) {
-  var AuthenticationHelper = Java.type('org.zaproxy.zap.authentication.AuthenticationHelper');
-  var HttpRequestHeader = Java.type("org.parosproxy.paros.network.HttpRequestHeader");
+  var AuthenticationHelper = Java.type(
+    "org.zaproxy.zap.authentication.AuthenticationHelper"
+  );
+  var HttpRequestHeader = Java.type(
+    "org.parosproxy.paros.network.HttpRequestHeader"
+  );
   var HttpHeader = Java.type("org.parosproxy.paros.network.HttpHeader");
   var URI = Java.type("org.apache.commons.httpclient.URI");
 
@@ -28,7 +31,11 @@ function authenticate(helper, paramsValues, credentials) {
   // Build message.
   var firstRequestURI = new URI(targetURL, false);
   var firstRequestMethod = HttpRequestHeader.GET;
-  var firstRequestMainHeader = new HttpRequestHeader(firstRequestMethod, firstRequestURI, HttpHeader.HTTP11);
+  var firstRequestMainHeader = new HttpRequestHeader(
+    firstRequestMethod,
+    firstRequestURI,
+    HttpHeader.HTTP11
+  );
   var firstMsg = helper.prepareMessage();
   firstMsg.setRequestHeader(firstRequestMainHeader);
 
@@ -39,8 +46,12 @@ function authenticate(helper, paramsValues, credentials) {
   AuthenticationHelper.addAuthMessageToHistory(firstMsg);
 
   // Get the csrf token from the response.
-  var csrfTokenValueRegEx = /name="csrfmiddlewaretoken"\svalue="([A-Za-z0-9]*)"/i;
-  var csrfTokenValue = firstMsg.getResponseBody().toString().match(csrfTokenValueRegEx)[1];
+  var csrfTokenValueRegEx =
+    /name="csrfmiddlewaretoken"\svalue="([A-Za-z0-9]*)"/i;
+  var csrfTokenValue = firstMsg
+    .getResponseBody()
+    .toString()
+    .match(csrfTokenValueRegEx)[1];
 
   //
   // Now, make a POST request to the login page with user credentials and
@@ -49,24 +60,38 @@ function authenticate(helper, paramsValues, credentials) {
 
   // Build body.
   var secondRequestBody = "csrfmiddlewaretoken=" + csrfTokenValue;
-  secondRequestBody += "&" + paramsValues.get("Username field") + "=" + encodeURIComponent(credentials.getParam("Username"));
-  secondRequestBody+= "&" + paramsValues.get("Password field") + "=" + encodeURIComponent(credentials.getParam("Password"));
+  secondRequestBody +=
+    "&" +
+    paramsValues.get("Username field") +
+    "=" +
+    encodeURIComponent(credentials.getParam("Username"));
+  secondRequestBody +=
+    "&" +
+    paramsValues.get("Password field") +
+    "=" +
+    encodeURIComponent(credentials.getParam("Password"));
   var extraPostData = paramsValues.get("Extra POST data");
   if (extraPostData && extraPostData.trim().length() > 0) {
     secondRequestBody += "&" + extraPostData.trim();
-  };
+  }
 
   // Build header.
   var secondRequestURI = new URI(targetURL, false);
   var secondRequestMethod = HttpRequestHeader.POST;
-  var secondRequestMainHeader = new HttpRequestHeader(secondRequestMethod, secondRequestURI, HttpHeader.HTTP11);
+  var secondRequestMainHeader = new HttpRequestHeader(
+    secondRequestMethod,
+    secondRequestURI,
+    HttpHeader.HTTP11
+  );
 
   // Build message.
   var secondMsg = helper.prepareMessage();
   secondMsg.setRequestBody(secondRequestBody);
   secondMsg.setRequestHeader(secondRequestMainHeader);
-  secondMsg.getRequestHeader().setContentLength(secondMsg.getRequestBody().length());
-  secondMsg.getRequestHeader().setHeader(HttpHeader.REFERER, targetURL);  // Required by Django for HTTPS connections.
+  secondMsg
+    .getRequestHeader()
+    .setContentLength(secondMsg.getRequestBody().length());
+  secondMsg.getRequestHeader().setHeader(HttpHeader.REFERER, targetURL); // Required by Django for HTTPS connections.
 
   // Send message.
   helper.sendAndReceive(secondMsg, false);
@@ -84,12 +109,17 @@ function authenticate(helper, paramsValues, credentials) {
     AuthenticationHelper.addAuthMessageToHistory(secondMsg);
 
     // Build the URL to redirect to.
-    var redirectURL = baseURL + secondMsg.getResponseHeader().getHeader('Location');
+    var redirectURL =
+      baseURL + secondMsg.getResponseHeader().getHeader("Location");
 
     // Build message.
     var thirdRequestURI = new URI(redirectURL, false);
     var thirdRequestMethod = HttpRequestHeader.GET;
-    var thirdRequestMainHeader = new HttpRequestHeader(thirdRequestMethod, thirdRequestURI, HttpHeader.HTTP11);
+    var thirdRequestMainHeader = new HttpRequestHeader(
+      thirdRequestMethod,
+      thirdRequestURI,
+      HttpHeader.HTTP11
+    );
     var thirdMsg = helper.prepareMessage();
     thirdMsg.setRequestHeader(thirdRequestMainHeader);
 
@@ -102,16 +132,13 @@ function authenticate(helper, paramsValues, credentials) {
   }
 }
 
-
 function getRequiredParamsNames() {
   return ["Target URL", "Username field", "Password field"];
 }
 
-
 function getOptionalParamsNames() {
   return ["Extra POST data"];
 }
-
 
 function getCredentialsParamsNames() {
   return ["Username", "Password"];

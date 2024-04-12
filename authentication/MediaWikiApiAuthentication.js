@@ -22,80 +22,99 @@
  *
  * @author grunny
  */
- 
-var HttpRequestHeader = Java.type("org.parosproxy.paros.network.HttpRequestHeader");
+
+var HttpRequestHeader = Java.type(
+  "org.parosproxy.paros.network.HttpRequestHeader"
+);
 var HttpHeader = Java.type("org.parosproxy.paros.network.HttpHeader");
 var URI = Java.type("org.apache.commons.httpclient.URI");
 
 function authenticate(helper, paramsValues, credentials) {
-	print("Authenticating via JavaScript script...");
+  print("Authenticating via JavaScript script...");
 
-	var authHelper = new MWApiAuthenticator(helper, paramsValues, credentials);
+  var authHelper = new MWApiAuthenticator(helper, paramsValues, credentials);
 
-	return authHelper.login();
+  return authHelper.login();
 }
 
-function getRequiredParamsNames(){
-	return ['API URL'];
+function getRequiredParamsNames() {
+  return ["API URL"];
 }
 
-function getOptionalParamsNames(){
-	return [];
+function getOptionalParamsNames() {
+  return [];
 }
 
-function getCredentialsParamsNames(){
-	return ['Username', 'Password'];
+function getCredentialsParamsNames() {
+  return ["Username", "Password"];
 }
 
 function MWApiAuthenticator(helper, paramsValues, credentials) {
-	this.helper = helper;
-	this.loginApiUrl = paramsValues.get('API URL') + '?action=login&format=json';
-	this.userName = credentials.getParam('Username');
-	this.password = credentials.getParam('Password');
+  this.helper = helper;
+  this.loginApiUrl = paramsValues.get("API URL") + "?action=login&format=json";
+  this.userName = credentials.getParam("Username");
+  this.password = credentials.getParam("Password");
 
-	return this;
+  return this;
 }
 
 MWApiAuthenticator.prototype = {
-	login: function () {
-		var loginToken,
-			requestBody = 'lgname=' + encodeURIComponent(this.userName) +
-				'&lgpassword=' + encodeURIComponent(this.password),
-			response = this.doRequest(
-				this.loginApiUrl,
-				HttpRequestHeader.POST,
-				requestBody
-			),
-			parsedResponse = JSON.parse(response.getResponseBody().toString());
+  login: function () {
+    var loginToken,
+      requestBody =
+        "lgname=" +
+        encodeURIComponent(this.userName) +
+        "&lgpassword=" +
+        encodeURIComponent(this.password),
+      response = this.doRequest(
+        this.loginApiUrl,
+        HttpRequestHeader.POST,
+        requestBody
+      ),
+      parsedResponse = JSON.parse(response.getResponseBody().toString());
 
-		if (parsedResponse.login.result == 'NeedToken') {
-			loginToken = parsedResponse.login.token;
-			requestBody += '&lgtoken=' + encodeURIComponent(loginToken);
+    if (parsedResponse.login.result == "NeedToken") {
+      loginToken = parsedResponse.login.token;
+      requestBody += "&lgtoken=" + encodeURIComponent(loginToken);
 
-			response = this.doRequest(
-				this.loginApiUrl,
-				HttpRequestHeader.POST,
-				requestBody
-			);
-		}
+      response = this.doRequest(
+        this.loginApiUrl,
+        HttpRequestHeader.POST,
+        requestBody
+      );
+    }
 
-		return response;
-	},
+    return response;
+  },
 
-	doRequest: function (url, requestMethod, requestBody) {
-		var msg,
-			requestUri = new URI(url, false),
-			requestHeader = new HttpRequestHeader(requestMethod, requestUri, HttpHeader.HTTP10);
+  doRequest: function (url, requestMethod, requestBody) {
+    var msg,
+      requestUri = new URI(url, false),
+      requestHeader = new HttpRequestHeader(
+        requestMethod,
+        requestUri,
+        HttpHeader.HTTP10
+      );
 
-		msg = this.helper.prepareMessage();
-		msg.setRequestHeader(requestHeader);
-		msg.setRequestBody(requestBody);
-		msg.getRequestHeader().setContentLength(msg.getRequestBody().length());
+    msg = this.helper.prepareMessage();
+    msg.setRequestHeader(requestHeader);
+    msg.setRequestBody(requestBody);
+    msg.getRequestHeader().setContentLength(msg.getRequestBody().length());
 
-		print('Sending ' + requestMethod + ' request to ' + requestUri + ' with body: ' + requestBody);
-		this.helper.sendAndReceive(msg);
-		print("Received response status code for authentication request: " + msg.getResponseHeader().getStatusCode());
+    print(
+      "Sending " +
+        requestMethod +
+        " request to " +
+        requestUri +
+        " with body: " +
+        requestBody
+    );
+    this.helper.sendAndReceive(msg);
+    print(
+      "Received response status code for authentication request: " +
+        msg.getResponseHeader().getStatusCode()
+    );
 
-		return msg;
-	}
+    return msg;
+  },
 };

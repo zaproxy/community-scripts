@@ -20,17 +20,23 @@ again using the script which is already running.
 The proxy can be stopped via the JuiceShopReset script.
 */
 
-var By = Java.type('org.openqa.selenium.By');
+var By = Java.type("org.openqa.selenium.By");
 var Cookie = Java.type("org.openqa.selenium.Cookie");
-var HttpRequestHeader = Java.type('org.parosproxy.paros.network.HttpRequestHeader');
-var HttpResponseHeader = Java.type("org.parosproxy.paros.network.HttpResponseHeader");
-var HttpHeader = Java.type('org.parosproxy.paros.network.HttpHeader');
+var HttpRequestHeader = Java.type(
+  "org.parosproxy.paros.network.HttpRequestHeader"
+);
+var HttpResponseHeader = Java.type(
+  "org.parosproxy.paros.network.HttpResponseHeader"
+);
+var HttpHeader = Java.type("org.parosproxy.paros.network.HttpHeader");
 var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 var System = Java.type("java.lang.System");
-var Thread = Java.type('java.lang.Thread');
-var URI = Java.type('org.apache.commons.httpclient.URI');
+var Thread = Java.type("java.lang.Thread");
+var URI = Java.type("org.apache.commons.httpclient.URI");
 
-var extensionNetwork = control.getExtensionLoader().getExtension("ExtensionNetwork");
+var extensionNetwork = control
+  .getExtensionLoader()
+  .getExtension("ExtensionNetwork");
 
 var juiceshopAddr = "http://localhost:3000/";
 var proxyAddress = "127.0.0.1";
@@ -40,90 +46,97 @@ var count = 0;
 var limit = 2;
 
 function logger() {
-	print('[' + this['zap.script.name'] + '] ' + arguments[0]);
+  print("[" + this["zap.script.name"] + "] " + arguments[0]);
 }
 
 function messageHandler(ctx, msg) {
-	if (ctx.isFromClient()) {
-		return;
-	}
-	var url = msg.getRequestHeader().getURI().toString();
-	//logger("messageHandler " + url);
-	if (url === juiceshopAddr + "rest/user/login" && msg.getRequestHeader().getMethod() === "POST") {
-		var json = JSON.parse(msg.getResponseBody().toString());
-		var token = json.authentication.token;
-		logger("Saving Juice Shop token");
-		// save the authentication token
-		ScriptVars.setGlobalVar("juiceshop.token", token);
-	}
+  if (ctx.isFromClient()) {
+    return;
+  }
+  var url = msg.getRequestHeader().getURI().toString();
+  //logger("messageHandler " + url);
+  if (
+    url === juiceshopAddr + "rest/user/login" &&
+    msg.getRequestHeader().getMethod() === "POST"
+  ) {
+    var json = JSON.parse(msg.getResponseBody().toString());
+    var token = json.authentication.token;
+    logger("Saving Juice Shop token");
+    // save the authentication token
+    ScriptVars.setGlobalVar("juiceshop.token", token);
+  }
 }
 
 function authenticate(helper, _paramsValues, _credentials) {
-	// Remove an existing token (if present) - in theory it may now be invalid
-	ScriptVars.setGlobalVar("juiceshop.token", null);
-	var proxy = ScriptVars.getGlobalCustomVar("auth-proxy");
-	if (!proxy) {
-		// We need to start a new proxy so that the request doesn't trigger another login sequence
-		logger("Starting proxy");
-		var proxy = extensionNetwork.createHttpProxy(5, messageHandler);
-		proxy.start(proxyAddress, proxyPort);
-		// Store the proxy in a global script var
-		ScriptVars.setGlobalCustomVar("auth-proxy", proxy);
-	}
+  // Remove an existing token (if present) - in theory it may now be invalid
+  ScriptVars.setGlobalVar("juiceshop.token", null);
+  var proxy = ScriptVars.getGlobalCustomVar("auth-proxy");
+  if (!proxy) {
+    // We need to start a new proxy so that the request doesn't trigger another login sequence
+    logger("Starting proxy");
+    var proxy = extensionNetwork.createHttpProxy(5, messageHandler);
+    proxy.start(proxyAddress, proxyPort);
+    // Store the proxy in a global script var
+    ScriptVars.setGlobalCustomVar("auth-proxy", proxy);
+  }
 
-	logger("Launching browser to authenticate to Juice Shop");
-	var extSel = control.getExtensionLoader().getExtension(
-			org.zaproxy.zap.extension.selenium.ExtensionSelenium.class);
+  logger("Launching browser to authenticate to Juice Shop");
+  var extSel = control
+    .getExtensionLoader()
+    .getExtension(org.zaproxy.zap.extension.selenium.ExtensionSelenium.class);
 
-	// Change to "firefox" (or "chrome") to see the browsers being launched
-	var wd = extSel.getWebDriver(5, "firefox-headless", proxyAddress, proxyPort);
-	logger("Got webdriver");
+  // Change to "firefox" (or "chrome") to see the browsers being launched
+  var wd = extSel.getWebDriver(5, "firefox-headless", proxyAddress, proxyPort);
+  logger("Got webdriver");
 
-	// Initial request will display a popup that is difficult to get rid of
-	wd.get(juiceshopAddr);
-	wd.manage().addCookie(new Cookie('cookieconsent_status', 'dismiss'));
-	wd.manage().addCookie(new Cookie('welcomebanner_status', 'dismiss'));
-	Thread.sleep(1000);
-	// This request will get the login page without the pesky popup
-	logger("Requesting login page");
-	wd.get(juiceshopAddr + "#/login");
-	Thread.sleep(1000);
+  // Initial request will display a popup that is difficult to get rid of
+  wd.get(juiceshopAddr);
+  wd.manage().addCookie(new Cookie("cookieconsent_status", "dismiss"));
+  wd.manage().addCookie(new Cookie("welcomebanner_status", "dismiss"));
+  Thread.sleep(1000);
+  // This request will get the login page without the pesky popup
+  logger("Requesting login page");
+  wd.get(juiceshopAddr + "#/login");
+  Thread.sleep(1000);
 
-	// These are standard selenium methods for filling out fields
-	// You will need to change them to support different apps
-	wd.findElement(By.id("email")).sendKeys(System.getenv("JS_USER"));
-	wd.findElement(By.id("password")).sendKeys(System.getenv("JS_PWD"));
-	wd.findElement(By.id("loginButton")).click();
-	logger("Submitting form");
+  // These are standard selenium methods for filling out fields
+  // You will need to change them to support different apps
+  wd.findElement(By.id("email")).sendKeys(System.getenv("JS_USER"));
+  wd.findElement(By.id("password")).sendKeys(System.getenv("JS_PWD"));
+  wd.findElement(By.id("loginButton")).click();
+  logger("Submitting form");
 
-	Thread.sleep(500);
-	wd.quit();
+  Thread.sleep(500);
+  wd.quit();
 
-	Thread.sleep(500);
-	logger("Checking verification URL for Juice Shop");
-	token = ScriptVars.getGlobalVar("juiceshop.token");
+  Thread.sleep(500);
+  logger("Checking verification URL for Juice Shop");
+  token = ScriptVars.getGlobalVar("juiceshop.token");
 
-	// This is the verification URL
-	var requestUri = new URI(juiceshopAddr + "rest/user/whoami", false);
-	var requestMethod = HttpRequestHeader.GET;
-	var requestHeader = new HttpRequestHeader(requestMethod, requestUri, HttpHeader.HTTP11);
-	// The auth token and cookie will be added by the httpsender script
-	var msg = helper.prepareMessage();
-	msg.setRequestHeader(requestHeader);
-	helper.sendAndReceive(msg);
+  // This is the verification URL
+  var requestUri = new URI(juiceshopAddr + "rest/user/whoami", false);
+  var requestMethod = HttpRequestHeader.GET;
+  var requestHeader = new HttpRequestHeader(
+    requestMethod,
+    requestUri,
+    HttpHeader.HTTP11
+  );
+  // The auth token and cookie will be added by the httpsender script
+  var msg = helper.prepareMessage();
+  msg.setRequestHeader(requestHeader);
+  helper.sendAndReceive(msg);
 
-	return msg;
+  return msg;
 }
 
 function getRequiredParamsNames() {
-	return [];
+  return [];
 }
 
 function getOptionalParamsNames() {
-	return [];
+  return [];
 }
 
 function getCredentialsParamsNames() {
-	return ["username", "password"];
+  return ["username", "password"];
 }
-

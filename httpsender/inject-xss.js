@@ -3,13 +3,10 @@
 
 // Logging with the script name is super helpful!
 function logger() {
-    print(this['zap.script.name'] + '] ' +  arguments[0]);
+  print(this["zap.script.name"] + "] " + arguments[0]);
 }
 
-
-var ignoreKeys = [
-   'id', 'status'
-];
+var ignoreKeys = ["id", "status"];
 
 function injectXssPayloads(data) {
   if (Array.isArray(data)) {
@@ -19,7 +16,7 @@ function injectXssPayloads(data) {
     return data;
   }
 
-  if (typeof data !== 'object') {
+  if (typeof data !== "object") {
     return data;
   }
 
@@ -31,13 +28,13 @@ function injectXssPayloads(data) {
   var idx = 0;
   for (var key in data) {
     var val = data[key];
-      // logger(key, typeof val)
+    // logger(key, typeof val)
     if (ignoreKeys.indexOf(key) !== -1) {
       continue;
     }
 
-    if (typeof val === 'object') {
-      val = injectXssPayloads(val)
+    if (typeof val === "object") {
+      val = injectXssPayloads(val);
     } else {
       if (!payloads[idx]) {
         idx = 0;
@@ -60,7 +57,7 @@ function responseReceived(msg, initiator, helper) {
 
   var path = msg.getRequestHeader().getURI().getPath();
   var body = msg.getResponseBody().toString();
-  var contentType = msg.getResponseHeader().getHeader('Content-Type');
+  var contentType = msg.getResponseHeader().getHeader("Content-Type");
 
   if (contentType === null) {
     return;
@@ -86,14 +83,14 @@ function responseReceived(msg, initiator, helper) {
     try {
       data = JSON.parse(body);
     } catch (e) {
-      logger("err", e)
+      logger("err", e);
       return;
     }
 
-    logger("Injecting for " + path)
+    logger("Injecting for " + path);
     data = injectXssPayloads(data);
-    var serialized = JSON.stringify(data)
-    msg.setResponseBody(serialized );
-    msg.getResponseHeader().setContentLength(1000000000000000000) // serialized.length)
+    var serialized = JSON.stringify(data);
+    msg.setResponseBody(serialized);
+    msg.getResponseHeader().setContentLength(1000000000000000000); // serialized.length)
   }
 }
