@@ -11,8 +11,36 @@
 var LoggerManager = Java.type("org.apache.logging.log4j.LogManager");
 var log = LoggerManager.getLogger("SSTI");
 
-// HasMap for alertTags
-var HashMap = Java.type("java.util.HashMap");
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
+
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100033
+name: Server Side Template Injection
+description: >
+  Server Side Template Injection (SSTI) occurs when user input is directly embedded into the template without any
+  proper sanitization, a hacker can use this vulnerability to inject malicious code and try to achieve remote code execution.
+solution: >
+  Always use proper functions provided by the template engine to insert data,
+  if that is not possible try to sanitize user input as efficiently as possible.
+references:
+  - https://portswigger.net/research/server-side-template-injection
+category: injection
+risk: high
+confidence: medium
+cweId: 20  # CWE-20: Improper Input Validation
+wascId: 20  # WASC-20: Improper Input Handling
+alertTags:
+  ${CommonAlertTag.OWASP_2021_A03_INJECTION.getTag()}: ${CommonAlertTag.OWASP_2021_A03_INJECTION.getValue()}
+  ${CommonAlertTag.OWASP_2017_A01_INJECTION.getTag()}: ${CommonAlertTag.OWASP_2017_A01_INJECTION.getValue()}
+  ${CommonAlertTag.WSTG_V42_INPV_18_SSTI.getTag()}: ${CommonAlertTag.WSTG_V42_INPV_18_SSTI.getValue()}
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/active/SSTI.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
 
 function logger() {
   print("[" + this["zap.script.name"] + "] " + arguments[0]);
@@ -168,44 +196,18 @@ function raiseAlert(as, msg, payload, evidence, confidence, param, engine) {
   var badErrors = ["Infinity", "INF"];
 
   //Alert variables
-  var pluginId = 100033;
   var alertName = "Server Side Template Injection";
   if (badErrors.indexOf(engine) == -1) {
     alertName += " - " + toTitleCase(engine);
   }
-  var alertDesc =
-    "Server Side Template Injection (SSTI) occurs when user input is directly embedded into the template without any proper sanitization, a hacker can use this vulnerability to inject malicious code and try to achieve remote code execution.";
-  var alertSol =
-    "Always use proper functions provided by the template engine to insert data, if that is not possible try to sanitize user input as efficiently as possible.";
-  var alertRef =
-    "https://portswigger.net/research/server-side-template-injection";
-  var cweId = 20; // Improper Input Validation
-  var wascId = 20; // Improper Input Handling
-  var alertTags = new HashMap();
-  alertTags.put(
-    "OWASP_2021_A03",
-    "https://owasp.org/Top10/A03_2021-Injection/"
-  );
-  alertTags.put(
-    "OWASP_2017_A01",
-    "https://owasp.org/www-project-top-ten/2017/A1_2017-Injection.html"
-  );
 
   as.newAlert()
-    .setAlertId(pluginId)
-    .setRisk(3)
     .setConfidence(confidence)
     .setName(alertName)
-    .setDescription(alertDesc)
     .setParam(param)
     .setAttack(payload)
     .setEvidence(evidence)
-    .setSolution(alertSol)
-    .setReference(alertRef)
-    .setCweId(cweId)
-    .setWascId(wascId)
     .setMessage(msg)
-    .setTags(alertTags)
     .raise();
 }
 

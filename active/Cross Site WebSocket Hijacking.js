@@ -41,31 +41,45 @@ var Base64 = Java.type("java.util.Base64");
 var Random = Java.type("java.util.Random");
 var String = Java.type("java.lang.String");
 var ByteArray = Java.type("byte[]");
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
+var CommonAlertTag = Java.type("org.zaproxy.addon.commonlib.CommonAlertTag");
 
 var LOG_DEBUG_MESSAGES = false; // change to true for more logs
 
-var RISK = 3;
-var CONFIDENCE = 2;
-var TITLE = "Cross-Site WebSocket Hijacking";
-var DESCRIPTION =
-  "Server accepted WebSocket connection through HTTP Upgrade request with modified Origin header.";
-var SOLUTION =
-  "Validate Origin header on WebSocket connection handshake, to ensure only specified origins are allowed to connect.\
- Also, WebSocket handshake should use random tokens, similar to anti CSRF tokens.";
-var REFERENCE = "https://tools.ietf.org/html/rfc6455#section-10.2";
-var OTHER =
-  "See also https://portswigger.net/web-security/websockets/cross-site-websocket-hijacking\
- or https://christian-schneider.net/CrossSiteWebSocketHijacking.html";
-var CWEID = 346; // CWE-346: Origin Validation Error, http://cwe.mitre.org/data/definitions/346.html
-var WASCID = 9; // WASC-9 Cross Site Request Forgery, http://projects.webappsec.org/w/page/13246919/Cross%20Site%20Request%20Forgery
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100025
+name: Cross-Site WebSocket Hijacking
+description: Server accepted WebSocket connection through HTTP Upgrade request with modified Origin header.
+solution: >
+    Validate Origin header on WebSocket connection handshake, to ensure only specified origins are allowed to connect.
+    Also, WebSocket handshake should use random tokens, similar to anti CSRF tokens.
+references:
+  - https://tools.ietf.org/html/rfc6455#section-10.2
+category: server
+risk: high
+confidence: medium
+cweId: 346  # CWE-346: Origin Validation Error, http://cwe.mitre.org/data/definitions/346.html
+wascId: 9  # WASC-9 Cross Site Request Forgery, http://projects.webappsec.org/w/page/13246919/Cross%20Site%20Request%20Forgery
+alertTags:
+  ${CommonAlertTag.OWASP_2021_A01_BROKEN_AC.getTag()}: ${CommonAlertTag.OWASP_2021_A01_BROKEN_AC.getValue()}
+  ${CommonAlertTag.OWASP_2017_A05_BROKEN_AC.getTag()}: ${CommonAlertTag.OWASP_2017_A05_BROKEN_AC.getValue()}
+  ${CommonAlertTag.WSTG_V42_CLNT_10_WEBSOCKETS.getTag()}: ${CommonAlertTag.WSTG_V42_CLNT_10_WEBSOCKETS.getValue()}
+otherInfo: >
+  See also https://portswigger.net/web-security/websockets/cross-site-websocket-hijacking
+  or https://christian-schneider.net/CrossSiteWebSocketHijacking.html
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/active/Cross%20Site%20WebSocket%20Hijacking.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
 
 function scanNode(as, msg) {
   var target = msg.getRequestHeader().getURI().toString();
-
-  // check if this is a WebSocket HTTP Upgrade request (the message should include also "Connection: Upgrade" header if we wanted to check it strictly)
-  // TODO: in ZAP 2.11 we might use msg.isWebSocketUpgrade() check instead
-  var upgradeHeader = msg.getRequestHeader().getHeader("Upgrade");
-  if (!upgradeHeader || upgradeHeader.toLowerCase() !== "websocket") {
+  // check if this is a WebSocket HTTP Upgrade request
+  if (msg.isWebSocketUpgrade()) {
     if (LOG_DEBUG_MESSAGES) {
       print(
         "Cross-Site WebSocket Hijacking rule skipped for url=" +
@@ -102,17 +116,8 @@ function scanNode(as, msg) {
       );
     }
     as.newAlert()
-      .setRisk(RISK)
-      .setConfidence(CONFIDENCE)
-      .setName(TITLE)
-      .setDescription(DESCRIPTION)
       .setParam(target)
       .setEvidence(msg.getResponseHeader().getPrimeHeader())
-      .setOtherInfo(OTHER)
-      .setSolution(SOLUTION)
-      .setReference(REFERENCE)
-      .setCweId(CWEID)
-      .setWascId(WASCID)
       .setMessage(msg)
       .raise();
   }
