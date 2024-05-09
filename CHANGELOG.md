@@ -13,6 +13,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Use Prettier to format all JavaScript scripts.
+- Update the following scripts to implement the `getMetadata()` function:
+  - active/Cross Site WebSocket Hijacking.js
+  - active/cve-2019-5418.js
+  - active/gof_lite.js
+  - active/JWT None Exploit.js
+  - active/SSTI.js
 
 ## [18] - 2024-01-29
 ### Added

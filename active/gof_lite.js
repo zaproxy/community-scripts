@@ -1,9 +1,3 @@
-// The scanNode function will typically be called once for every page
-// The scan function will typically be called for every parameter in every URL and Form for every page
-
-// Note that new active scripts will initially be disabled
-// Right click the script in the Scripts tree and select "enable"
-
 // NOTE: This active scanner is VERY chatty, making a lot of request per URL
 // Under certain conditions it can greatly increase your scan time and resource consumption
 
@@ -17,6 +11,34 @@
 // Author: kingthorin
 // 20150828 - Initial submission
 // 20150923 - Add check to see and handle if the user has stopped the scan
+
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
+var CommonAlertTag = Java.type("org.zaproxy.addon.commonlib.CommonAlertTag");
+
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100030
+name: Backup File Detected
+description: >
+  A backup or alternate version of a page or component was detected. An attacker
+  may leverage information in such files to further attack or abuse the system.
+solution: Ensure that backups are made in locations which are not web accessible.
+category: info_gather
+risk: low
+confidence: medium
+cweId: 425  # CWE-425: Direct Request ('Forced Browsing')
+wascId: 34  # WASC-34: Predictable Resource Location
+alertTags:
+  ${CommonAlertTag.OWASP_2021_A05_SEC_MISCONFIG.getTag()}: ${CommonAlertTag.OWASP_2021_A05_SEC_MISCONFIG.getValue()}
+  ${CommonAlertTag.OWASP_2017_A06_SEC_MISCONFIG.getTag()}: ${CommonAlertTag.OWASP_2017_A06_SEC_MISCONFIG.getValue()}
+  ${CommonAlertTag.WSTG_V42_CONF_04_BACKUP_FILES.getTag()}: ${CommonAlertTag.WSTG_V42_CONF_04_BACKUP_FILES.getValue()}
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/active/gof_lite.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
 
 mutationStrings = [
   "old",
@@ -47,17 +69,6 @@ mutationStrings = [
 //The default setting "Sorry, we can't seem to find what you were looking for" is based upon some of the tests from WAVSEP: http://sourceforge.net/projects/wavsep/
 customErrorString = "Sorry, we can't seem to find what you were looking for";
 
-alertRisk = 1;
-alertConfidence = 2;
-alertTitle = "Backup File Detected";
-alertDesc =
-  "A backup or alternate version of a page or component was detected. An attacker \
-may leverage information in such files to further attack or abuse the system.";
-alertSoln =
-  "Ensure that backups are made in locations which are not web accessible.";
-cweId = 425; //Direct Request ('Forced Browsing')
-wascId = 34; //Predictable Resource Location
-
 alertRiskDenied = 0;
 alertConfidenceDenied = 1;
 alertTitleDenied = "Backup File Detected (Access Denied)";
@@ -87,11 +98,11 @@ function scanNode(as, msg) {
     msg
       .getRequestHeader()
       .getURI()
-      .setPath(mutate(msg, "." + mutationStrings[idx])); //TODO: handle seperators other than period
+      .setPath(mutate(msg, "." + mutationStrings[idx])); //TODO: handle separators other than period
 
     var newURL = msg.getRequestHeader().getURI().toString();
     if (newURL.equals(origURL)) {
-      // Don't bother if no change (perhaps the user alerady proxied a backup/alternative)
+      // Don't bother if no change (perhaps the user already proxied a backup/alternative)
       return;
     }
 
@@ -118,10 +129,6 @@ function scanNode(as, msg) {
   }
 }
 
-function scan(as, msg, param, value) {
-  //gof_lite doesn't deal with parameters
-}
-
 function mutate(msg, mutationString) {
   var path = msg.getRequestHeader().getURI().getPath(); //getURI might include query, might need getPath/setPath
 
@@ -138,42 +145,16 @@ function mutate(msg, mutationString) {
 }
 
 function raiseAlert(wasSuccess, msg, origMsg, as) {
-  var url = msg.getRequestHeader().getURI().toString();
-  if (wasSuccess == true) {
-    //200
-    as.raiseAlert(
-      alertRisk,
-      alertConfidence,
-      alertTitle,
-      alertDesc,
-      url,
-      "",
-      "",
-      "",
-      alertSoln,
-      "",
-      cweId,
-      wascId,
-      msg
-    );
-  } else {
+  var alert = as.newAlert().setMessage(msg);
+  if (!wasSuccess) {
     //401 or 403
-    as.raiseAlert(
-      alertRiskDenied,
-      alertConfidenceDenied,
-      alertTitleDenied,
-      alertDescDenied,
-      url,
-      "",
-      "",
-      "",
-      alertSoln,
-      "",
-      cweId,
-      wascId,
-      msg
-    );
+    alert
+      .setRisk(alertRiskDenied)
+      .setConfidence(alertConfidenceDenied)
+      .setName(alertTitleDenied)
+      .setDescription(alertDescDenied);
   }
+  alert.raise();
 }
 //TODO List
 //Handle various prefixes and suffixes such as:
