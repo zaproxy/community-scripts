@@ -13,19 +13,29 @@ dominique.righetto@gmail.com
 */
 
 var Locale = Java.type("java.util.Locale");
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
 
-function scan(ps, msg, src) {
-  //Docs on alert raising function:
-  // raiseAlert(risk, int confidence, String name, String description, String uri,
-  //		String param, String attack, String otherInfo, String solution, String evidence,
-  //		int cweId, int wascId, HttpMessage msg)
-  // risk: 0: info, 1: low, 2: medium, 3: high
-  // confidence: 0: falsePositive, 1: low, 2: medium, 3: high, 4: confirmed
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100005
+name: SameSite Cookie Attribute Protection Used
+solution: >
+  CSRF possible vulnerabilities presents on the site will be mitigated depending on the browser used by the user
+  (browser defines the support level for this cookie attribute).
+references:
+  - https://tools.ietf.org/html/draft-west-first-party-cookies
+  - https://chloe.re/2016/04/13/goodbye-csrf-samesite-to-the-rescue
+risk: info
+confidence: high
+cweId: 352  # CWE-352: Cross-Site Request Forgery (CSRF)
+wascId: 9  # WASC-9: Cross Site Request Forgery
+status: alpha
+`);
+}
 
-  //Common variables
-  var cweId = 352;
-  var wascId = 9;
-  var url = msg.getRequestHeader().getURI().toString();
+function scan(helper, msg, src) {
   var cookieHeaderNames = ["Set-Cookie", "Set-Cookie2"];
   var cookieSameSiteAttributeNameLower = "samesite";
 
@@ -57,25 +67,13 @@ function scan(ps, msg, src) {
               "', value is set to '" +
               sameSiteAttrValue +
               "' protection level.";
-            var infoLinkRef =
-              "https://tools.ietf.org/html/draft-west-first-party-cookies\nhttps://chloe.re/2016/04/13/goodbye-csrf-samesite-to-the-rescue";
-            var solution =
-              "CSRF possible vulnerabilities presents on the site will be mitigated depending on the browser used by the user (browser defines the support level for this cookie attribute).";
-            ps.raiseAlert(
-              0,
-              3,
-              "SameSite cookie attribute protection used",
-              description,
-              url,
-              "Cookie named: '" + cookieName + "'",
-              "",
-              infoLinkRef,
-              solution,
-              sameSiteAttrValue,
-              cweId,
-              wascId,
-              msg
-            );
+            helper
+              .newAlert()
+              .setDescription(description)
+              .setParam("Cookie named: '" + cookieName + "'")
+              .setEvidence(sameSiteAttrValue)
+              .setMessage(msg)
+              .raise();
             break;
           }
         }

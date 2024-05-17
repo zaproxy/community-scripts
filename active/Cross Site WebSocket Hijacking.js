@@ -61,8 +61,8 @@ references:
 category: server
 risk: high
 confidence: medium
-cweId: 346  # CWE-346: Origin Validation Error, http://cwe.mitre.org/data/definitions/346.html
-wascId: 9  # WASC-9 Cross Site Request Forgery, http://projects.webappsec.org/w/page/13246919/Cross%20Site%20Request%20Forgery
+cweId: 346  # CWE-346: Origin Validation Error
+wascId: 9  # WASC-9 Cross Site Request Forgery
 alertTags:
   ${CommonAlertTag.OWASP_2021_A01_BROKEN_AC.getTag()}: ${CommonAlertTag.OWASP_2021_A01_BROKEN_AC.getValue()}
   ${CommonAlertTag.OWASP_2017_A05_BROKEN_AC.getTag()}: ${CommonAlertTag.OWASP_2017_A05_BROKEN_AC.getValue()}

@@ -18,6 +18,26 @@ dominique.righetto@gmail.com
 */
 
 var Locale = Java.type("java.util.Locale");
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
+
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100004
+name: Content Security Policy Violations Reporting Enabled
+solution: >
+  Site owner will be notified at each policies violations, so, start by analyzing if a real monitoring of the
+  notifications is in place before to use fuzzing or to be more aggressive.
+references:
+  - https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_CSP_violation_reports
+risk: info
+confidence: high
+cweId: 200  # CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+`);
+}
 
 function extractUrl(cspPolicies, cspReportInstruction) {
   //Extract the URL to which any CSP violations are reported
@@ -37,18 +57,7 @@ function extractUrl(cspPolicies, cspReportInstruction) {
   }
 }
 
-function scan(ps, msg, src) {
-  //Docs on alert raising function:
-  // raiseAlert(risk, int confidence, String name, String description, String uri,
-  //		String param, String attack, String otherInfo, String solution, String evidence,
-  //		int cweId, int wascId, HttpMessage msg)
-  // risk: 0: info, 1: low, 2: medium, 3: high
-  // confidence: 0: falsePositive, 1: low, 2: medium, 3: high, 4: confirmed
-
-  //Common variables
-  var cweId = 200;
-  var wascId = 13;
-  var url = msg.getRequestHeader().getURI().toString();
+function scan(helper, msg, src) {
   var cspHeaderNames = [
     "Content-Security-Policy",
     "X-Content-Security-Policy",
@@ -57,7 +66,6 @@ function scan(ps, msg, src) {
   ];
   var cspReportInstruction = "report-uri";
 
-  //Response headers collection
   var responseHeaders = msg.getResponseHeader();
 
   //Detect and analyze presence of the CSP headers
@@ -84,25 +92,13 @@ function scan(ps, msg, src) {
             " mode) report violation to '" +
             reportUrl +
             "'.";
-          var infoLinkRef =
-            "https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Using_CSP_violation_reports";
-          var solution =
-            "Site owner will be notified at each policies violations, so, start by analyzing if a real monitoring of the notifications is in place before to use fuzzing or to be more aggressive.";
-          ps.raiseAlert(
-            0,
-            3,
-            "Content Security Policy violations reporting enabled",
-            description,
-            url,
-            "HTTP response header '" + headerName + "'",
-            "",
-            infoLinkRef,
-            solution,
-            headerValues[j],
-            cweId,
-            wascId,
-            msg
-          );
+          helper
+            .newAlert()
+            .setDescription(description)
+            .setParam("HTTP response header '" + headerName + "'")
+            .setEvidence(headerValues[j])
+            .setMessage(msg)
+            .raise();
         }
       }
     }
