@@ -12,25 +12,29 @@
 // 20160117 - Updated to include ipv6 variants - jkbowser[at]gmail[dot]com
 
 var Locale = Java.type("java.util.Locale");
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
 
-function scan(ps, msg, src) {
-  //Setup some details we will need for alerts later if we find something
-  var alertRisk = [1, 0];
-  var alertConfidence = 3;
-  var alertTitle = [
-    "Internal IP Exposed via F5 BigIP Persistence Cookie",
-    "IP Exposed via F5 BigIP Presistence Cookie",
-  ];
-  var alertDesc = [
-    "The F5 Big-IP Persistence cookie set for this website can be decoded to a specific internal IP and port. An attacker may leverage this information to conduct Social Engineering attacks or other exploits.",
-    "The F5 Big-IP Persistence cookie set for this website can be decoded to a specific IP and port. An attacker may leverage this information to conduct Social Engineering attacks or other exploits.",
-  ];
-  var alertSolution = "Configure BIG-IP cookie encryption.";
-  var alertRefs =
-    "https://support.f5.com/kb/en-us/solutions/public/6000/900/sol6917.html";
-  var cweId = 311;
-  var wascId = 13;
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100006
+name: Information Disclosure - IP Exposed via F5 BIG-IP Persistence Cookie
+description: >
+  The F5 BIG-IP Persistence cookie set for this website can be decoded to a specific IP and port.
+  An attacker may leverage this information to conduct Social Engineering attacks or other exploits.
+solution: Configure BIG-IP cookie encryption.
+references:
+  - https://support.f5.com/kb/en-us/solutions/public/6000/900/sol6917.html
+risk: info
+confidence: high
+cweId: 311  # CWE-311: Missing Encryption of Sensitive Data
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+`);
+}
 
+function scan(helper, msg, src) {
   var url = msg.getRequestHeader().getURI().toString();
   //Only check when a cookie is set
   if (msg.getResponseHeader().getHeaders("Set-Cookie")) {
@@ -65,22 +69,21 @@ function scan(ps, msg, src) {
             decodedValue = theIP + ":" + thePort;
           }
           var alertOtherInfo = cookieValue + " decoded to " + decodedValue;
-          //ps.raiseAlert(risk, confidence, title, description, url, param, attack, otherinfo, solution, evidence, cweId, wascId, msg);
-          ps.raiseAlert(
-            alertRisk[0],
-            alertConfidence,
-            alertTitle[0],
-            alertDesc[0],
-            url,
-            cookieName,
-            "",
-            alertOtherInfo,
-            alertSolution + "\n" + alertRefs,
-            cookieValue,
-            cweId,
-            wascId,
-            msg
-          );
+          helper
+            .newAlert()
+            .setRisk(1)
+            .setName(
+              "Information Disclosure - Internal IP Exposed via F5 BIG-IP Persistence Cookie"
+            )
+            .setDescription(
+              "The F5 Big-IP Persistence cookie set for this website can be decoded to a specific internal IP and port. " +
+                "An attacker may leverage this information to conduct Social Engineering attacks or other exploits."
+            )
+            .setParam(cookieName)
+            .setOtherInfo(alertOtherInfo)
+            .setEvidence(cookieValue)
+            .setMessage(msg)
+            .raise();
         } else if (isExternal(theIP)) {
           if (theIP.match(/:/g)) {
             //matching again just so I can format it correctly with []
@@ -89,22 +92,13 @@ function scan(ps, msg, src) {
             decodedValue = theIP + ":" + thePort;
           }
           alertOtherInfo = cookieValue + " decoded to " + decodedValue;
-          //ps.raiseAlert(risk, confidence, title, description, url, param, attack, otherinfo, solution, evidence, cweId, wascId, msg);
-          ps.raiseAlert(
-            alertRisk[1],
-            alertConfidence,
-            alertTitle[1],
-            alertDesc[1],
-            url,
-            cookieName,
-            "",
-            alertOtherInfo,
-            alertSolution + "\n" + alertRefs,
-            cookieValue,
-            cweId,
-            wascId,
-            msg
-          );
+          helper
+            .newAlert()
+            .setParam(cookieName)
+            .setOtherInfo(alertOtherInfo)
+            .setEvidence(cookieValue)
+            .setMessage(msg)
+            .raise();
         } else {
           //Not what we're looking for
           continue;

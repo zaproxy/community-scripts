@@ -19,6 +19,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - active/gof_lite.js
   - active/JWT None Exploit.js
   - active/SSTI.js
+  - passive/clacks.js
+  - passive/CookieHTTPOnly.js
+  - passive/detect_csp_notif_and_reportonly.js
+  - passive/detect_samesite_protection.js
+  - passive/f5_bigip_cookie_internal_ip.js
 
 ## [18] - 2024-01-29
 ### Added
