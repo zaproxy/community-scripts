@@ -11,14 +11,14 @@
  */
 
 const HttpRequestHeader = Java.type(
-  'org.parosproxy.paros.network.HttpRequestHeader'
+  "org.parosproxy.paros.network.HttpRequestHeader"
 );
-const HttpHeader = Java.type('org.parosproxy.paros.network.HttpHeader');
-const URI = Java.type('org.apache.commons.httpclient.URI');
+const HttpHeader = Java.type("org.parosproxy.paros.network.HttpHeader");
+const URI = Java.type("org.apache.commons.httpclient.URI");
 const AuthenticationHelper = Java.type(
-  'org.zaproxy.zap.authentication.AuthenticationHelper'
+  "org.zaproxy.zap.authentication.AuthenticationHelper"
 );
-const Source = Java.type('net.htmlparser.jericho.Source');
+const Source = Java.type("net.htmlparser.jericho.Source");
 
 /**
  * @typedef {Object} AuthHelper
@@ -44,12 +44,12 @@ const Source = Java.type('net.htmlparser.jericho.Source');
  * @returns {Object} The HTTP message used to perform the authentication.
  */
 function authenticate(helper, paramsValues, credentials) {
-  print('Authenticating via Ory Kratos...');
+  print("Authenticating via Ory Kratos...");
 
   // Step 1: Initialize the login flow
-  const kratosBaseUri = paramsValues.get('Kratos Base URL');
+  const kratosBaseUri = paramsValues.get("Kratos Base URL");
   const initLoginUri = new URI(
-    kratosBaseUri + '/self-service/login/browser',
+    kratosBaseUri + "/self-service/login/browser",
     false
   );
   const initLoginMsg = helper.prepareMessage();
@@ -60,10 +60,10 @@ function authenticate(helper, paramsValues, credentials) {
       HttpHeader.HTTP11
     )
   );
-  print('Sending GET request to ' + initLoginUri);
+  print("Sending GET request to " + initLoginUri);
   helper.sendAndReceive(initLoginMsg, true);
   print(
-    'Received response status code: ' +
+    "Received response status code: " +
       initLoginMsg.getResponseHeader().getStatusCode()
   );
   AuthenticationHelper.addAuthMessageToHistory(initLoginMsg);
@@ -74,12 +74,12 @@ function authenticate(helper, paramsValues, credentials) {
   const loginMsg = helper.prepareMessage();
   const csrf_token = getCsrfToken(initLoginMsg);
   const requestBody =
-    'identifier=' +
-    encodeURIComponent(credentials.getParam('username')) +
-    '&password=' +
-    encodeURIComponent(credentials.getParam('password')) +
-    '&method=password' +
-    '&csrf_token=' +
+    "identifier=" +
+    encodeURIComponent(credentials.getParam("username")) +
+    "&password=" +
+    encodeURIComponent(credentials.getParam("password")) +
+    "&method=password" +
+    "&csrf_token=" +
     encodeURIComponent(csrf_token);
   loginMsg.setRequestBody(requestBody);
   const requestHeader = new HttpRequestHeader(
@@ -91,16 +91,16 @@ function authenticate(helper, paramsValues, credentials) {
 
   loginMsg
     .getRequestHeader()
-    .setHeader(HttpHeader.CONTENT_TYPE, 'application/x-www-form-urlencoded');
+    .setHeader(HttpHeader.CONTENT_TYPE, "application/x-www-form-urlencoded");
   loginMsg
     .getRequestHeader()
     .setContentLength(loginMsg.getRequestBody().length());
 
-  print('Sending POST request to ' + loginUri);
+  print("Sending POST request to " + loginUri);
   //! disable redirect to get the cookies from Kratos
   helper.sendAndReceive(loginMsg, false);
   print(
-    'Received response status code: ' +
+    "Received response status code: " +
       loginMsg.getResponseHeader().getStatusCode()
   );
   AuthenticationHelper.addAuthMessageToHistory(loginMsg);
@@ -121,11 +121,11 @@ function getActionurl(request) {
     request.getResponseHeader().toString() +
     request.getResponseBody().toString();
   const src = new Source(pageSource);
-  const elements = src.getAllElements('form');
+  const elements = src.getAllElements("form");
 
   for (iterator = elements.iterator(); iterator.hasNext(); ) {
     element = iterator.next();
-    actionUrl = element.getAttributeValue('action');
+    actionUrl = element.getAttributeValue("action");
     break;
   }
 
@@ -140,12 +140,12 @@ function getCsrfToken(request) {
     request.getResponseHeader().toString() +
     request.getResponseBody().toString();
   const src = new Source(pageSource);
-  const elements = src.getAllElements('input');
+  const elements = src.getAllElements("input");
 
   for (iterator = elements.iterator(); iterator.hasNext(); ) {
     element = iterator.next();
-    if (element.getAttributeValue('name') == 'csrf_token') {
-      loginToken = element.getAttributeValue('value');
+    if (element.getAttributeValue("name") == "csrf_token") {
+      loginToken = element.getAttributeValue("value");
       break;
     }
   }
@@ -158,7 +158,7 @@ function getCsrfToken(request) {
  * @returns {Array<string>} An array of required parameter names.
  */
 function getRequiredParamsNames() {
-  return ['Kratos Base URL'];
+  return ["Kratos Base URL"];
 }
 
 /**
@@ -176,5 +176,5 @@ function getOptionalParamsNames() {
  * @returns {Array<string>} An array of credentials parameter names.
  */
 function getCredentialsParamsNames() {
-  return ['username', 'password'];
+  return ["username", "password"];
 }

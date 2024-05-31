@@ -11,12 +11,12 @@
  */
 
 const HttpRequestHeader = Java.type(
-  'org.parosproxy.paros.network.HttpRequestHeader'
+  "org.parosproxy.paros.network.HttpRequestHeader"
 );
-const HttpHeader = Java.type('org.parosproxy.paros.network.HttpHeader');
-const URI = Java.type('org.apache.commons.httpclient.URI');
+const HttpHeader = Java.type("org.parosproxy.paros.network.HttpHeader");
+const URI = Java.type("org.apache.commons.httpclient.URI");
 const AuthenticationHelper = Java.type(
-  'org.zaproxy.zap.authentication.AuthenticationHelper'
+  "org.zaproxy.zap.authentication.AuthenticationHelper"
 );
 
 /**
@@ -43,12 +43,12 @@ const AuthenticationHelper = Java.type(
  * @returns {Object} The HTTP message used to perform the authentication.
  */
 function authenticate(helper, paramsValues, credentials) {
-  print('Authenticating via Ory Kratos...');
+  print("Authenticating via Ory Kratos...");
 
   // Step 1: Initialize the login flow
-  const kratosBaseUri = paramsValues.get('Kratos Base URL');
+  const kratosBaseUri = paramsValues.get("Kratos Base URL");
   const initLoginUri = new URI(
-    kratosBaseUri + '/self-service/login/api',
+    kratosBaseUri + "/self-service/login/api",
     false
   );
   const initLoginMsg = helper.prepareMessage();
@@ -59,10 +59,10 @@ function authenticate(helper, paramsValues, credentials) {
       HttpHeader.HTTP11
     )
   );
-  print('Sending GET request to ' + initLoginUri);
+  print("Sending GET request to " + initLoginUri);
   helper.sendAndReceive(initLoginMsg);
   print(
-    'Received response status code: ' +
+    "Received response status code: " +
       initLoginMsg.getResponseHeader().getStatusCode()
   );
   AuthenticationHelper.addAuthMessageToHistory(initLoginMsg);
@@ -73,9 +73,9 @@ function authenticate(helper, paramsValues, credentials) {
   const loginUri = new URI(actionUrl, false);
   const loginMsg = helper.prepareMessage();
   const requestBody = JSON.stringify({
-    method: 'password',
-    identifier: credentials.getParam('username'),
-    password: credentials.getParam('password'),
+    method: "password",
+    identifier: credentials.getParam("username"),
+    password: credentials.getParam("password"),
   });
   loginMsg.setRequestBody(requestBody);
 
@@ -89,15 +89,15 @@ function authenticate(helper, paramsValues, credentials) {
   // Build the POST request header
   loginMsg
     .getRequestHeader()
-    .setHeader(HttpHeader.CONTENT_TYPE, 'application/json');
+    .setHeader(HttpHeader.CONTENT_TYPE, "application/json");
   loginMsg
     .getRequestHeader()
     .setContentLength(loginMsg.getRequestBody().length());
 
-  print('Sending POST request to ' + loginUri);
+  print("Sending POST request to " + loginUri);
   helper.sendAndReceive(loginMsg, false);
   print(
-    'Received response status code: ' +
+    "Received response status code: " +
       loginMsg.getResponseHeader().getStatusCode()
   );
   AuthenticationHelper.addAuthMessageToHistory(loginMsg);
@@ -111,7 +111,7 @@ function authenticate(helper, paramsValues, credentials) {
  * @returns {Array<string>} An array of required parameter names.
  */
 function getRequiredParamsNames() {
-  return ['Kratos Base URL'];
+  return ["Kratos Base URL"];
 }
 
 /**
@@ -129,5 +129,5 @@ function getOptionalParamsNames() {
  * @returns {Array<string>} An array of credentials parameter names.
  */
 function getCredentialsParamsNames() {
-  return ['username', 'password'];
+  return ["username", "password"];
 }
