@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - passive/JavaDisclosure.js - Passive scan for Java error messages leaks
 - httpsender/RsaEncryptPayloadForZap.py - A script that encrypts requests using RSA
 - selenium/FillOTPInMFA.js - A script that fills the OTP in MFA
+- authentication/KratosApiAuthentication.js - A script to authenticate with Kratos using the API flow
+- authentication/KratosBrowserAuthentication.js - A script to authenticate with Kratos using the browser flow
 
 ### Changed
 - Use Prettier to format all JavaScript scripts.
