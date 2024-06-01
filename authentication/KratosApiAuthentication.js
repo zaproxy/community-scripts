@@ -1,8 +1,10 @@
 /*
  * This script is used to authenticate a user using Ory Kratos self-service API for clients without browsers.
  *
- * Authentication Verification can be configured with a Logged In Regex as something like:
- *  \Qactive.*
+ * Authentication Verification can be configured with the following rule:
+ * - Verification Strategy: Poll the Specified URL
+ * - Regex Pattern used to identify Logged In message: \Qactive.*
+ * - URL to poll: <Kratos Base URL>/sessions/whoami
  *
  * Zap must be configured to use HTTP header-based session management with the value: {%json:session_token%}
  *
