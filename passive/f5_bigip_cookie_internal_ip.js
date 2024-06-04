@@ -31,6 +31,8 @@ confidence: high
 cweId: 311  # CWE-311: Missing Encryption of Sensitive Data
 wascId: 13  # WASC-13: Information Leakage
 status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/f5_bigip_cookie_internal_ip.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
 `);
 }
 

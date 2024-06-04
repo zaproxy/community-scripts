@@ -1,20 +1,40 @@
 // Encryption Hash Finder by freakyclown@gmail.com
 
-function scan(ps, msg, src) {
-  var url = msg.getRequestHeader().getURI().toString();
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
+
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100010
+name: Information Disclosure - Hash
+description: A hash was discovered in the HTTP response body.
+solution: >
+  Ensure that hashes that are used to protect credentials or other resources
+  are not leaked by the web server or database. There is typically no requirement
+  for password hashes to be accessible to the web browser.
+risk: low
+confidence: medium
+cweId: 327  # CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/Find%20Hashes.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
+
+function scan(helper, msg, src) {
   var body = msg.getResponseBody().toString();
-  var alertRisk = [0, 1, 2, 3]; //1=informational, 2=low, 3=medium, 4=high
-  var alertConfidence = [0, 1, 2, 3, 4]; //0=fp,1=low,2=medium,3=high,4=confirmed
   var alertTitle = [
-    "Wordpress hash Disclosed (script)",
-    "Sha512 hash Disclosed (script)",
-    "phpBB3 hash Disclosed (script)",
-    "Joomla hash Disclosed (script)",
-    "MySQL(old) hash Disclosed (script)",
-    "Drupal hash Disclosed (script)",
-    "Blowfish hash Disclosed (script)",
-    "VBulletin hash Disclosed (script)",
-    "MD4/MD5 hash Disclosed (script)",
+    "Information Disclosure - Wordpress Hash",
+    "Information Disclosure - Sha512 Hash",
+    "Information Disclosure - phpBB3 Hash",
+    "Information Disclosure - Joomla Hash",
+    "Information Disclosure - MySQL(old) Hash",
+    "Information Disclosure - Drupal Hash",
+    "Information Disclosure - Blowfish Hash",
+    "Information Disclosure - VBulletin Hash",
+    "Information Disclosure - MD4/MD5 Hash",
     "",
   ];
   var alertDesc = [
@@ -29,12 +49,6 @@ function scan(ps, msg, src) {
     "A MD4/MD5 hash Disclosed was discovered",
     "",
   ];
-  var alertSolution = [
-    "Ensure that hashes that are used to protect credentials or other resources are not leaked by the web server or database. There is typically no requirement for password hashes to be accessible to the web browser.",
-    "",
-  ];
-  var cweId = [0, 1];
-  var wascId = [0, 1];
 
   // regex must appear within /( and )/g
 
@@ -55,21 +69,14 @@ function scan(ps, msg, src) {
     while ((comm = wordpress.exec(body))) {
       foundwordpress.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[1],
-      alertConfidence[2],
-      alertTitle[0],
-      alertDesc[0],
-      url,
-      "",
-      "",
-      foundwordpress.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    helper
+      .newAlert()
+      .setName(alertTitle[0])
+      .setDescription(alertDesc[0])
+      .setEvidence(foundwordpress[0])
+      .setOtherInfo(`Other instances: ${foundwordpress.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
 
   if (sha512.test(body)) {
@@ -78,21 +85,14 @@ function scan(ps, msg, src) {
     while ((comm = sha512.exec(body))) {
       foundsha512.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[1],
-      alertConfidence[2],
-      alertTitle[1],
-      alertDesc[1],
-      url,
-      "",
-      "",
-      foundsha512.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    helper
+      .newAlert()
+      .setName(alertTitle[1])
+      .setDescription(alertDesc[1])
+      .setEvidence(foundsha512[0])
+      .setOtherInfo(`Other instances: ${foundsha512.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
   if (phpbb3.test(body)) {
     phpbb3.lastIndex = 0;
@@ -100,21 +100,14 @@ function scan(ps, msg, src) {
     while ((comm = phpbb3.exec(body))) {
       foundphpbb3.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[1],
-      alertConfidence[2],
-      alertTitle[2],
-      alertDesc[2],
-      url,
-      "",
-      "",
-      foundphpbb3.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    helper
+      .newAlert()
+      .setName(alertTitle[2])
+      .setDescription(alertDesc[2])
+      .setEvidence(foundphpbb3[0])
+      .setOtherInfo(`Other instances: ${foundphpbb3.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
 
   if (mysqlold.test(body)) {
@@ -123,21 +116,14 @@ function scan(ps, msg, src) {
     while ((comm = mysqlold.exec(body))) {
       foundmysqlold.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[1],
-      alertConfidence[2],
-      alertTitle[3],
-      alertDesc[3],
-      url,
-      "",
-      "",
-      foundmysqlold.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    helper
+      .newAlert()
+      .setName(alertTitle[3])
+      .setDescription(alertDesc[3])
+      .setEvidence(foundmysqlold[0])
+      .setOtherInfo(`Other instances: ${foundmysqlold.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
 
   if (joomla.test(body)) {
@@ -146,21 +132,14 @@ function scan(ps, msg, src) {
     while ((comm = joomla.exec(body))) {
       foundjoomla.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[1],
-      alertConfidence[2],
-      alertTitle[4],
-      alertDesc[4],
-      url,
-      "",
-      "",
-      foundjoomla.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    helper
+      .newAlert()
+      .setName(alertTitle[4])
+      .setDescription(alertDesc[4])
+      .setEvidence(foundjoomla[0])
+      .setOtherInfo(`Other instances: ${foundjoomla.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
   if (drupal.test(body)) {
     drupal.lastIndex = 0;
@@ -168,21 +147,14 @@ function scan(ps, msg, src) {
     while ((comm = drupal.exec(body))) {
       founddrupal.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[1],
-      alertConfidence[2],
-      alertTitle[5],
-      alertDesc[5],
-      url,
-      "",
-      "",
-      founddrupal.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    helper
+      .newAlert()
+      .setName(alertTitle[5])
+      .setDescription(alertDesc[5])
+      .setEvidence(founddrupal[0])
+      .setOtherInfo(`Other instances: ${founddrupal.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
 
   if (blowfish.test(body)) {
@@ -191,21 +163,14 @@ function scan(ps, msg, src) {
     while ((comm = blowfish.exec(body))) {
       foundblowfish.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[1],
-      alertConfidence[2],
-      alertTitle[6],
-      alertDesc[6],
-      url,
-      "",
-      "",
-      foundblowfish.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    helper
+      .newAlert()
+      .setName(alertTitle[6])
+      .setDescription(alertDesc[6])
+      .setEvidence(foundblowfish[0])
+      .setOtherInfo(`Other instances: ${foundblowfish.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
 
   if (vbull.test(body)) {
@@ -214,21 +179,14 @@ function scan(ps, msg, src) {
     while ((comm = vbull.exec(body))) {
       foundvbull.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[1],
-      alertConfidence[2],
-      alertTitle[7],
-      alertDesc[7],
-      url,
-      "",
-      "",
-      foundvbull.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    helper
+      .newAlert()
+      .setName(alertTitle[7])
+      .setDescription(alertDesc[7])
+      .setEvidence(foundvbull[0])
+      .setOtherInfo(`Other instances: ${foundvbull.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
 
   if (md45.test(body)) {
@@ -237,20 +195,14 @@ function scan(ps, msg, src) {
     while ((comm = md45.exec(body))) {
       foundmd45.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[1],
-      alertConfidence[1],
-      alertTitle[8],
-      alertDesc[8],
-      url,
-      "",
-      "",
-      foundmd45.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    helper
+      .newAlert()
+      .setName(alertTitle[8])
+      .setDescription(alertDesc[8])
+      .setConfidence(1)
+      .setEvidence(foundmd45[0])
+      .setOtherInfo(`Other instances: ${foundmd45.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
 }

@@ -36,6 +36,8 @@ confidence: high
 cweId: 200  # CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
 wascId: 13  # WASC-13: Information Leakage
 status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/detect_csp_notif_and_reportonly.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
 `);
 }
 

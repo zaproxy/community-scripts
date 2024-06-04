@@ -1,23 +1,32 @@
 // CreditCard Finder by freakyclown@gmail.com
 
-function scan(ps, msg, src) {
-  // lets set up some stuff we are going to need for the alert later if we find a credit card
-  var url = msg.getRequestHeader().getURI().toString();
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
+
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100008
+name: Information Disclosure - Credit Card Number
+description: A credit card number was found in the HTTP response body.
+solution: >
+  Encrypt credit card numbers during transmission, use tokenization,
+  and adhere to PCI DSS standards for secure handling and storage.
+risk: high
+confidence: medium
+cweId: 311  # CWE-311: Missing Encryption of Sensitive Data
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/Find%20Credit%20Cards.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
+
+function scan(helper, msg, src) {
   var body = msg.getResponseBody().toString();
-  var alertRisk = [0, 1, 2, 3]; //1=informational, 2=low, 3=medium, 4=high
-  var alertConfidence = [0, 1, 2, 3, 4]; //0=fp,1=low,2=medium,3=high,4=confirmed
-  var alertTitle = ["Credit Card Number(s) Disclosed (script)", ""];
-  var alertDesc = ["Credit Card number(s) was discovered.", ""];
-  var alertSolution = [
-    "why are you showing Credit and debit card numbers?",
-    "",
-  ];
-  var cweId = [0, 1];
-  var wascId = [0, 1];
 
   // lets make some regular expressions for well known credit cards
   // regex must appear within /( and )/g
-
   var re_visa = /([3-5][0-9]{3}[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4})/g; //visa or mastercard
   var re_amex = /(3[47][0-9]{2}[ -]?[0-9]{6}[ -]?[0-9]{5})/g; //amex
   var re_disc = /(6011[ -]?[0-9]{4}[ -]?[0-9]{4}[ -]?[0-9]{4})/g; //discovery
@@ -56,21 +65,12 @@ function scan(ps, msg, src) {
           }
         }
         if (foundCard.length != 0) {
-          ps.raiseAlert(
-            alertRisk[3],
-            alertConfidence[2],
-            alertTitle[0],
-            alertDesc[0],
-            url,
-            "",
-            "",
-            foundCard.toString(),
-            alertSolution[0],
-            "",
-            cweId[0],
-            wascId[0],
-            msg
-          );
+          helper
+            .newAlert()
+            .setEvidence(foundCard[0])
+            .setOtherInfo(`Other instances: ${foundCard.slice(1).toString()}`)
+            .setMessage(msg)
+            .raise();
         }
       }
     }
