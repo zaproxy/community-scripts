@@ -9,6 +9,8 @@ Right click the script in the Scripts tree and select "enable"
 Refactored & Improved by nil0x42
 """
 
+from org.zaproxy.addon.commonlib.scanrules import ScanRuleMetadata
+
 # Set to True if you want to see results on a per param basis
 #  (i.e.: A single URL may be listed more than once)
 RESULT_PER_FINDING = False
@@ -17,19 +19,25 @@ RESULT_PER_FINDING = False
 MIN_PARAM_VALUE_LENGTH = 8
 
 
-def scan(ps, msg, src): 
-    # Docs on alert raising function:
-    #  raiseAlert(int risk, int confidence, str name, str description, str uri,
-    #               str param, str attack, str otherInfo, str solution,
-    # 		   str evidence, int cweId, int wascId, HttpMessage msg)
-    #  risk: 0: info, 1: low, 2: medium, 3: high
-    #  confidence: 0: falsePositive, 1: low, 2: medium, 3: high, 4: confirmed
-    alert_title = "Reflected HTTP GET parameter(s) (script)"
-    alert_desc = ("Reflected parameter value has been found. "
-                  "A reflected parameter values may introduce XSS "
-                  "vulnerability or HTTP header injection.")
+def getMetadata():
+    return ScanRuleMetadata.fromYaml("""
+id: 100014
+name: Reflected HTTP GET Parameter(s)
+description: >
+    A reflected parameter value has been found in the HTTP response.
+    Reflected parameter values may introduce XSS vulnerability or HTTP header injection.
+risk: info
+confidence: medium
+cweId: 79  # CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')
+wascId: 8  # WASC-8: Cross-site Scripting (XSS)
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/find_reflected_params.py
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+""")
 
-    uri = header = body = None
+
+def scan(helper, msg, src):
+    header = body = None
     reflected_params = []
 
     for param in msg.getUrlParams():
@@ -38,19 +46,16 @@ def scan(ps, msg, src):
             continue
 
         if not header:
-            uri = msg.getRequestHeader().getURI().toString()
             header = msg.getResponseHeader().toString()
             body = msg.getResponseBody().toString()
 
         if value in header or value in body:
             if RESULT_PER_FINDING:
-                param_name = param.getName()
-                ps.raiseAlert(0, 2, alert_title, alert_desc, uri, param_name,
-                        None, None, None, value, 0, 0, msg)
+                helper.newAlert().setParam(param.getName()).setEvidence(value).setMessage(msg).raise()
             else:
                 reflected_params.append(param.getName())
 
     if reflected_params and not RESULT_PER_FINDING:
-        reflected_params = u",".join(reflected_params)
-        ps.raiseAlert(0, 2, alert_title, alert_desc, uri, reflected_params,
-                None, None, None, None, 0, 0, msg)
+        other_info = 'Other instances: ' + u",".join(reflected_params[1:])
+        helper.newAlert().setParam(param.getName()).setEvidence(reflected_params[0]).setOtherInfo(
+            other_info).setMessage(msg).raise()

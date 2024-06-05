@@ -1,7 +1,23 @@
 import re
 from org.zaproxy.zap.extension.script import ScriptVars
+from org.zaproxy.addon.commonlib.scanrules import ScanRuleMetadata
 
 '''find possible vulnerable entry points using Hunt Methodology - https://github.com/bugcrowd/HUNT'''
+
+
+def getMetadata():
+    return ScanRuleMetadata.fromYaml("""
+id: 100015
+name: HUNT Methodology
+description: >
+    Find possible vulnerable entry points using HUNT Methodology (https://github.com/bugcrowd/HUNT).
+risk: info
+confidence: low
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/HUNT.py
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+""")
+
 
 
 def appliesToHistoryType(histType):
@@ -23,7 +39,7 @@ def find_words_in_params(param_list, word_list):
     return result
 
 
-def hunt_alert(ps, msg, uri, result, title, desc):
+def hunt_alert(helper, msg, uri, result, title, desc):
     if not result:
         return
 
@@ -34,14 +50,8 @@ def hunt_alert(ps, msg, uri, result, title, desc):
     info = msg.getRequestHeader().toString()
     info += "\n" + msg.getRequestBody().toString()
 
-    # Docs on alert raising function:
-    #  raiseAlert(int risk, int confidence, str name, str description, str uri,
-    #             str param, str attack, str otherInfo, str solution,
-    #             str evidence, int cweId, int wascId, HttpMessage msg)
-    #  risk: 0: info, 1: low, 2: medium, 3: high
-    #  confidence: 0: falsePositive, 1: low, 2: medium, 3: high, 4: confirmed
-    ps.raiseAlert(0, 1, title, desc, uri, result_repr,
-            None, info, None, None, 0, 0, msg)
+    helper.newAlert().setName(title).setDescription(
+        desc).setParam(result_repr).setOtherInfo(info).setMessage(msg).raise()
 
 
 def scan(ps, msg, src):
