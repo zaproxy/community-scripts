@@ -4,15 +4,27 @@
  * @SkypLabs
  */
 
-function scan(ps, msg, src) {
-  var alertRisk = 0; // Informational
-  var alertConfidence = 3; // High
-  var alertTitle = "Information Disclosure - Google API Keys Found";
-  var alertDesc = "Google API keys have been found.";
-  var alertSolution = "Make sure the API key is not overly permissive.";
-  var cweId = 200; // "Exposure of Sensitive Information to an Unauthorized Actor"
-  var wascId = 13; // "Information Leakage"
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
 
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100034
+name: Information Disclosure - Google API Key
+description: A Google API Key was found in the HTTP response body.
+solution: Ensure the API key is not overly permissive.
+risk: info
+confidence: high
+cweId: 200  # CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/google_api_keys_finder.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
+
+function scan(helper, msg, src) {
   // Regex targeting Google API keys.
   // Taken from Table III of "How Bad Can It Git? Characterizing Secret Leakage in Public GitHub Repositories".
   // https://www.ndss-symposium.org/ndss-paper/how-bad-can-it-git-characterizing-secret-leakage-in-public-github-repositories/
@@ -45,21 +57,11 @@ function scan(ps, msg, src) {
       foundKeys.push(key[0]);
     }
 
-    ps.raiseAlert(
-      alertRisk,
-      alertConfidence,
-      alertTitle,
-      alertDesc,
-      url,
-      "",
-      "",
-      "The following Google API keys have been found in the page: " +
-        foundKeys.join(", "), // Other info
-      alertSolution,
-      foundKeys[0].toString(), // Evidence
-      cweId,
-      wascId,
-      msg
-    );
+    helper
+      .newAlert()
+      .setEvidence(foundKeys[0])
+      .setOtherInfo(`Other instances: ${foundKeys.slice(1).toString()}`)
+      .setMessage(msg)
+      .raise();
   }
 }
