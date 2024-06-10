@@ -24,6 +24,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - passive/detect_csp_notif_and_reportonly.js
   - passive/detect_samesite_protection.js
   - passive/f5_bigip_cookie_internal_ip.js
+  - passive/find base64 strings.js
+  - passive/Find Credit Cards.js
+  - passive/Find Emails.js
+  - passive/Find Hashes.js
+  - passive/Find HTML Comments.js
 
 ## [18] - 2024-01-29
 ### Added

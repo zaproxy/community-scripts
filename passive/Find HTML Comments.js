@@ -18,26 +18,36 @@
 // NOTE: This script will only find HTML comments in content which passes through ZAP.
 //		Therefore if you browser is caching you may not see something you expect to.
 
-function scan(ps, msg, src) {
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
+
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100011
+name: Information Disclosure - HTML Comments
+description: >
+  While adding general comments is very useful, some programmers tend to leave important data,
+  such as: filenames related to the web application, old links or links which were not meant
+  to be browsed by users, old code fragments, etc.
+solution: >
+  Remove comments which have sensitive information about the design/implementation
+  of the application. Some of the comments may be exposed to the user and affect 
+  the security posture of the application.
+risk: info
+confidence: medium
+cweId: 615  # CWE-615: Inclusion of Sensitive Information in Source Code Comments
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/Find%20HTML%20Comments.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
+
+function scan(helper, msg, src) {
   // Both can be true, just know that you'll see duplication.
   var RESULT_PER_FINDING = new Boolean(0); // If you want to see results on a per comment basis (i.e.: A single URL may be listed more than once), set this to true (1)
   var RESULT_PER_URL = new Boolean(1); // If you want to see results on a per URL basis (i.e.: all comments for a single URL will be grouped together), set this to true (1)
-
-  // lets set up some details we will need for alerts later if we find some comments
-  var alertRisk = 0;
-  var alertConfidence = 2;
-  var alertTitle = "Information Exposure Through HTML Comments (script)";
-  var alertDesc =
-    "While adding general comments is very useful, \
-some programmers tend to leave important data, such as: filenames related to the web application, old links \
-or links which were not meant to be browsed by users, old code fragments, etc.";
-  var alertSolution =
-    "Remove comments which have sensitive information about the design/implementation \
-of the application. Some of the comments may be exposed to the user and affect the security posture of the \
-application.";
-  var cweId = 615;
-  var wascId = 13;
-  var url = msg.getRequestHeader().getURI().toString();
 
   // this is a rough regular expression to find HTML comments
   // regex needs to be inside /( and )/g to work
@@ -66,40 +76,22 @@ application.";
         if (RESULT_PER_FINDING == true) {
           counter = counter + 1;
           //fakeparam+counter gives us parameter differientiation per comment alert (RESULT_PER_FINDING)
-          ps.raiseAlert(
-            alertRisk,
-            alertConfidence,
-            alertTitle,
-            alertDesc,
-            url,
-            "fakeparam" + counter,
-            "",
-            comm[0],
-            alertSolution,
-            "",
-            cweId,
-            wascId,
-            msg
-          );
+          helper
+            .newAlert()
+            .setParam("fakeparam" + counter)
+            .setEvidence(comm[0])
+            .setMessage(msg)
+            .raise();
         }
         foundComments.push(comm[0]);
       }
       if (RESULT_PER_URL == true) {
-        ps.raiseAlert(
-          alertRisk,
-          alertConfidence,
-          alertTitle,
-          alertDesc,
-          url,
-          "",
-          "",
-          foundComments.toString(),
-          alertSolution,
-          "",
-          cweId,
-          wascId,
-          msg
-        );
+        helper
+          .newAlert()
+          .setEvidence(foundComments[0])
+          .setOtherInfo(`Other instances: ${foundComments.slice(1).toString()}`)
+          .setMessage(msg)
+          .raise();
       }
     }
   }

@@ -18,6 +18,8 @@ confidence: medium
 cweId: 0
 wascId: 13  # WASC-13: Information Leakage
 status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/CookieHTTPOnly.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
 `);
 }
 

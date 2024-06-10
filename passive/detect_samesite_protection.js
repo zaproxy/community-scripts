@@ -32,6 +32,8 @@ confidence: high
 cweId: 352  # CWE-352: Cross-Site Request Forgery (CSRF)
 wascId: 9  # WASC-9: Cross Site Request Forgery
 status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/detect_samesite_protection.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
 `);
 }
 
