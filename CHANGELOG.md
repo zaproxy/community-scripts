@@ -29,6 +29,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - passive/Find Emails.js
   - passive/Find Hashes.js
   - passive/Find HTML Comments.js
+  - passive/Find IBANs.js
+  - passive/Find Internal IPs.js
+  - passive/find_reflected_params.py
+  - passive/HUNT.py
+  - passive/Mutliple Security Header Check.js
 
 ## [18] - 2024-01-29
 ### Added
