@@ -49,10 +49,7 @@ function authenticate(helper, paramsValues, credentials) {
 
   // Step 1: Initialize the login flow
   const kratosBaseUri = paramsValues.get("Kratos Base URL");
-  const initLoginUri = new URI(
-    kratosBaseUri + "/self-service/login/api",
-    true
-  );
+  const initLoginUri = new URI(kratosBaseUri + "/self-service/login/api", true);
   const initLoginMsg = helper.prepareMessage();
   initLoginMsg.setRequestHeader(
     new HttpRequestHeader(
