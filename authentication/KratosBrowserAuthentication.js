@@ -3,10 +3,10 @@
  *
  * Authentication Verification can be configured with the following rule:
  * - Verification Strategy: Poll the Specified URL
- * - Regex Pattern used to identify Logged In message: \Qactive.*
+ * - Regex Pattern used to identify Logged In message: active.*
  * - URL to poll: <Kratos Base URL>/sessions/whoami
  *
- * Zap must be configured to use cookie-based session management.
+ * ZAP must be configured to use cookie-based session management.
  *
  * @author Edouard Maleix <ed@getlarge.eu>
  * @see https://www.ory.sh/docs/kratos/self-service/flows/user-login#login-for-server-side-browser-clients
@@ -52,7 +52,7 @@ function authenticate(helper, paramsValues, credentials) {
   const kratosBaseUri = paramsValues.get("Kratos Base URL");
   const initLoginUri = new URI(
     kratosBaseUri + "/self-service/login/browser",
-    false
+    true
   );
   const initLoginMsg = helper.prepareMessage();
   initLoginMsg.setRequestHeader(
