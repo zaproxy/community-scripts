@@ -9,7 +9,8 @@ If you might want to contribute to the repo then you can also clone it to a loca
 
 Please upload your scripts via pull requests!
 
-For more information on ZAP scripts see:
+For more information on ZAP scripts:
+* Display the [`Scripts Tab`](https://www.zaproxy.org/docs/desktop/addons/script-console/tree/) by `View->Show Tab->Scripts Tab` to manage the scripts.
 * https://www.zaproxy.org/docs/desktop/addons/script-console/
 * https://github.com/zaproxy/zaproxy/wiki/InternalScripting
  
