@@ -8,7 +8,7 @@ import org.zaproxy.gradle.addon.misc.ConvertMarkdownToHtml
 
 plugins {
     `java-library`
-    id("org.zaproxy.add-on") version "0.10.0"
+    id("org.zaproxy.add-on") version "0.11.0"
     id("org.zaproxy.crowdin") version "0.4.0"
     id("com.diffplug.spotless")
     id("com.github.node-gradle.node") version "7.0.2"
@@ -22,7 +22,7 @@ val scriptsDir = layout.buildDirectory.dir("scripts")
 zapAddOn {
     addOnId.set("communityScripts")
     addOnName.set("Community Scripts")
-    zapVersion.set("2.14.0")
+    zapVersion.set("2.15.0")
     addOnStatus.set(AddOnStatus.ALPHA)
 
     releaseLink.set("https://github.com/zaproxy/community-scripts/compare/v@PREVIOUS_VERSION@...v@CURRENT_VERSION@")
@@ -49,12 +49,12 @@ crowdin {
 }
 
 dependencies {
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    testImplementation("commons-io:commons-io:2.13.0")
-    testImplementation("org.assertj:assertj-core:3.24.2")
-    testImplementation("org.apache.commons:commons-lang3:3.12.0")
+    testImplementation("commons-io:commons-io:2.16.1")
+    testImplementation("org.assertj:assertj-core:3.26.0")
+    testImplementation("org.apache.commons:commons-lang3:3.14.0")
 
     // The following versions should match the ones of the add-ons.
     testImplementation("org.codehaus.groovy:groovy-all:3.0.14")
@@ -62,7 +62,7 @@ dependencies {
     testImplementation("org.graalvm.js:js:$graalJsVersion")
     testImplementation("org.graalvm.js:js-scriptengine:$graalJsVersion")
     testImplementation("org.jruby:jruby-complete:1.7.4")
-    testImplementation("org.zaproxy:zest:0.18.0")
+    testImplementation("org.zaproxy:zest:0.21.0")
     testImplementation("org.python:jython-standalone:2.7.2")
 }
 
