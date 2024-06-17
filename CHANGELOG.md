@@ -15,7 +15,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 - Use Prettier to format all JavaScript scripts.
-- Update the following scripts to implement the `getMetadata()` function:
+- Update the following scripts to implement the `getMetadata()` function with revised metadata:
   - active/Cross Site WebSocket Hijacking.js
   - active/cve-2019-5418.js
   - active/gof_lite.js
@@ -36,6 +36,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - passive/find_reflected_params.py
   - passive/HUNT.py
   - passive/Mutliple Security Header Check.js
+  - passive/google_api_keys_finder.js
+  - passive/JavaDisclosure.js
+  - passive/Report non static sites.js
+  - passive/RPO.js
+  - passive/s3.js
 
 ## [18] - 2024-01-29
 ### Added

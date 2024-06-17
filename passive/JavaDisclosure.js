@@ -1,15 +1,28 @@
 //Passive scan for Java error messages containing sensitive information (CWE-209)
 
-function scan(ps, msg, src) {
-  var alertRisk = 2;
-  var alertConfidence = 3;
-  var alertTitle = "Java stack trace disclosure";
-  var alertDesc = "Java stack trace disclosure (or similar) was found";
-  var alertSolution =
-    "Investigate Java stack trace disclosures found in the response, remove or mask as required";
-  var cweId = 209;
-  var wascId = 0;
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
 
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100035
+name: Information Disclosure - Java Stack Trace
+description: A Java stack trace was found in the HTTP response body.
+solution: >
+  Catch and handle exceptions properly, avoiding the exposure of stack traces to users.
+  Configure the web server or application framework to log stack traces instead of displaying them.
+risk: medium
+confidence: high
+cweId: 209  # CWE-209: Generation of Error Message Containing Sensitive Information
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/JavaDisclosure.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
+
+function scan(helper, msg, src) {
   var re = /springframework|\.java|rootBeanClass/i;
 
   var contentType = msg.getResponseHeader().getHeader("Content-Type");
@@ -27,21 +40,13 @@ function scan(ps, msg, src) {
 
   var body = msg.getResponseBody().toString();
   if (re.test(body)) {
-    let url = msg.getRequestHeader().getURI().toString();
-    ps.raiseAlert(
-      alertRisk,
-      alertConfidence,
-      alertTitle,
-      alertDesc,
-      url,
-      "",
-      "",
-      body,
-      alertSolution,
-      body,
-      cweId,
-      wascId,
-      msg
-    );
+    re.lastIndex = 0;
+    var match = re.exec(body)[0];
+    helper
+      .newAlert()
+      .setEvidence(match)
+      .setOtherInfo(body)
+      .setMessage(msg)
+      .raise();
   }
 }

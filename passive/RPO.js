@@ -3,17 +3,32 @@
 // for more info see http://www.thespanner.co.uk/2014/03/21/rpo/
 // *WARNING* this is a Beta version of this detection and may give many false positives!
 
-function scan(ps, msg, src) {
-  var url = msg.getRequestHeader().getURI().toString();
-  var alertRisk = 2;
-  var alertConfidence = 2;
-  var alertTitle = "Potential Relative Path Overwrite - RPO(beta script)";
-  var alertDesc = "Potential RPO (Relative Path Overwrite) found ";
-  var alertSolution =
-    "Make sure all style sheets are refered by full paths rather than relative paths.";
+var ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
 
-  var cweId = 0;
-  var wascId = 0;
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100018
+name: Relative Path Overwrite
+description: >
+  Potential RPO (Relative Path Overwrite) found.
+  RPO allows attackers to manipulate URLs to include unintended paths,
+  potentially leading to the execution of malicious scripts or the disclosure of sensitive information.
+solution: >
+  Use absolute paths in URLs and resources to prevent manipulation.
+  Validate and sanitize all user inputs that are used to construct URLs.
+risk: medium
+confidence: medium
+cweId: 20  # CWE-20: Improper Input Validation
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/RPO.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
+
+function scan(helper, msg, src) {
   // regex must appear within /( and )/g
   var re = /(href\=\"((?!\/|http|www)).*\.css\")/g;
 
@@ -41,21 +56,12 @@ function scan(ps, msg, src) {
       while ((comm = re.exec(body))) {
         foundRPO.push(comm[0]);
       }
-      ps.raiseAlert(
-        alertRisk,
-        alertConfidence,
-        alertTitle,
-        alertDesc,
-        url,
-        "",
-        "",
-        foundRPO.toString(),
-        alertSolution,
-        "",
-        cweId,
-        wascId,
-        msg
-      );
+      helper
+        .newAlert()
+        .setEvidence(foundRPO[0])
+        .setOtherInfo(`Other instances: ${foundRPO.slice(1).toString()}`)
+        .setMessage(msg)
+        .raise();
     }
   }
 }
