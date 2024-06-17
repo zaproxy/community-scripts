@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - authentication/KratosBrowserAuthentication.js - A script to authenticate with Kratos using the browser flow
 
 ### Changed
+- Update minimum ZAP version to 2.15.0.
 - Use Prettier to format all JavaScript scripts.
 - Update the following scripts to implement the `getMetadata()` function with revised metadata:
   - active/Cross Site WebSocket Hijacking.js
