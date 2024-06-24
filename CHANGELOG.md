@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - passive/Report non static sites.js
   - passive/RPO.js
   - passive/s3.js
+- httpsender/Alert on Unexpected Content Types.js now checks for common content-types (`json`, `xml`, and `yaml`) more consistently.
 
 ## [18] - 2024-01-29
 ### Added
