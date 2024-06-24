@@ -10,20 +10,9 @@ var extensionAlert = control
   .getExtensionLoader()
   .getExtension(org.zaproxy.zap.extension.alert.ExtensionAlert.NAME);
 
-var expectedTypes = [
-  "application/health+json",
-  "application/json",
-  "application/octet-stream",
-  "application/problem+json",
-  "application/problem+xml",
-  "application/soap+xml",
-  "application/vnd.api+json",
-  "application/xml",
-  "application/x-yaml",
-  "text/x-json",
-  "text/json",
-  "text/yaml",
-];
+var expectedTypes = ["application/octet-stream", "text/plain"];
+
+var expectedTypeGroups = ["json", "yaml", "xml"];
 
 function sendingRequest(msg, initiator, helper) {
   // Nothing to do
@@ -40,7 +29,10 @@ function responseReceived(msg, initiator, helper) {
       if (ctype.indexOf(";") > 0) {
         ctype = ctype.substring(0, ctype.indexOf(";"));
       }
-      if (expectedTypes.indexOf(ctype) < 0) {
+      if (
+        !msg.getResponseHeader().hasContentType(expectedTypeGroups) &&
+        expectedTypes.indexOf(ctype) < 0
+      ) {
         // Another rule will complain if theres no type
 
         var risk = 1; // Low
