@@ -56,6 +56,6 @@ def scan(helper, msg, src):
                 reflected_params.append(param.getName())
 
     if reflected_params and not RESULT_PER_FINDING:
-        other_info = 'Other instances: ' + u",".join(reflected_params[1:])
+        other_info = 'Other instances: ' + u",".join(reflected_params[1:]) if len(reflected_params) > 1 else ''
         helper.newAlert().setParam(param.getName()).setEvidence(reflected_params[0]).setOtherInfo(
             other_info).setMessage(msg).raise()

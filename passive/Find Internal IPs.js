@@ -55,10 +55,14 @@ function scan(helper, msg, src) {
       while ((comm = re.exec(body))) {
         foundIP.push(comm[0]);
       }
+      const otherInfo =
+        foundIP.length > 1
+          ? `Other instances: ${foundIP.slice(1).toString()}`
+          : "";
       helper
         .newAlert()
         .setEvidence(foundIP[0])
-        .setOtherInfo(`Other instances: ${foundIP.slice(1).toString()}`)
+        .setOtherInfo(otherInfo)
         .setMessage(msg)
         .raise();
     }

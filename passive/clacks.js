@@ -27,6 +27,13 @@ helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
 function scan(helper, msg, src) {
   var headers = msg.getResponseHeader().getHeaders("X-Clacks-Overhead");
   if (headers != null) {
-    helper.newAlert().setMessage(msg).setEvidence(headers).raise();
+    const otherInfo =
+      headers.length > 1 ? `Other values: ${headers.slice(1).toString()}` : "";
+    helper
+      .newAlert()
+      .setMessage(msg)
+      .setEvidence(headers[0])
+      .setOtherInfo(otherInfo)
+      .raise();
   }
 }

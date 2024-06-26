@@ -1,41 +1,45 @@
 // Server Header Check by freakyclown@gmail.com
 // Server Version leaks found via header field by prateek.rana@getastra.com
 
+const ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
+
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100019
+name: Information Disclosure - Server Header
+description: >
+  The web/application server is leaking version information via the 'Server' HTTP response header.
+  Access to such information may facilitate attackers identifying other vulnerabilities your web/application server 
+  is subject to.
+solution: >
+  Ensure that your web server, application server, load balancer, etc. is configured to suppress the 'Server' header 
+  or provide generic details.
+risk: low
+confidence: medium
+cweId: 200  # CWE-200: Exposure of Sensitive Information to an Unauthorized Actor
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/Server%20Header%20Disclosure.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
+
 var VERSION_PATTERN = new RegExp("(?:\\d+\\.)+\\d+");
 
-function scan(ps, msg, src) {
-  var alertRisk = 1;
-  var alertConfidence = 2;
-  var alertTitle =
-    "Server Leaks Version Information via 'Server' HTTP Response Header Field(script)";
-  var alertDesc =
-    "The web/application server is leaking version information via the 'Server' HTTP response header. Access to such information may facilitate attackers identifying other vulnerabilities your web/application server is subject to.";
-  var alertSolution =
-    "Ensure that your web server, application server, load balancer, etc. is configured to suppress the 'Server' header or provide generic details.";
-
-  var cweId = 200;
-  var wascId = 13;
-
-  var url = msg.getRequestHeader().getURI().toString();
+function scan(helper, msg, src) {
   var headers = msg.getResponseHeader().getHeaders("Server");
 
   if (headers != null && containsPotentialSemver(headers)) {
-    var headersString = headers.toString();
-    ps.raiseAlert(
-      alertRisk,
-      alertConfidence,
-      alertTitle,
-      alertDesc,
-      url,
-      "",
-      "",
-      "",
-      alertSolution,
-      headersString,
-      cweId,
-      wascId,
-      msg
-    );
+    const otherInfo =
+      headers.length > 1 ? `Other values: ${headers.slice(1).toString()}` : "";
+    helper
+      .newAlert()
+      .setEvidence(headers[0])
+      .setOtherInfo(otherInfo)
+      .setMessage(msg)
+      .raise();
   }
 }
 

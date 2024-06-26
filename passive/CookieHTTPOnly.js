@@ -27,8 +27,17 @@ function scan(helper, msg, src) {
   var cookies = msg.getResponseHeader().getHeaders("Set-Cookie");
   if (cookies != null) {
     var re_noflag = /([Hh][Tt][Tt][Pp][Oo][Nn][Ll][Yy])/g;
-    if (!re_noflag.test(cookies)) {
-      helper.newAlert().setMessage(msg).setEvidence(cookies).raise();
+    if (!re_noflag.test(cookies.toString())) {
+      const otherInfo =
+        cookies.length > 1
+          ? `Other values: ${cookies.slice(1).toString()}`
+          : "";
+      helper
+        .newAlert()
+        .setMessage(msg)
+        .setEvidence(cookies[0])
+        .setOtherInfo(otherInfo)
+        .raise();
     }
   }
 }

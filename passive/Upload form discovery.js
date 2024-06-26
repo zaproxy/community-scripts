@@ -1,45 +1,50 @@
 // Lazily crafted by Anthony Cozamanis - kurobeats@yahoo.co.jp
 
-function scan(ps, msg, src) {
-  var url = msg.getRequestHeader().getURI().toString();
-  var body = msg.getResponseBody().toString();
-  var alertRisk = [0, 1, 2, 3, 4]; // risk: 0: info, 1: low, 2: medium, 3: high
-  var alertConfidence = [0, 1, 2, 3, 4]; // confidence: 0: falsePositive, 1: low, 2: medium, 3: high, 4: confirmed
-  var alertTitle = ["An upload form appeared! (script)", ""];
-  var alertDesc = [
-    "An upload form exists. This isn't an issue, but it could be a lot of fun! Go check it out!.",
-    "",
-  ];
-  var alertSolution = [
-    "This isn't an issue, but it could be a lot of fun!",
-    "",
-  ];
-  var cweId = [0, 1];
-  var wascId = [0, 1];
+const ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
 
-  var uploadForm = /(type\s*=\s*['"]?file['"]?)/g;
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100022
+name: Upload Form Discovered
+description: >
+  The presence of a file upload form can lead to various security vulnerabilities, such as uploading malicious files or
+  overwriting existing files, if proper validation and restrictions are not implemented.
+  This can result in unauthorized code execution, data breaches, or denial of service attacks.
+solution: >
+    Implement strict validation and restrictions on uploaded files, including file type, size, and content.
+    Use security measures like antivirus scanning and file storage outside the web root.
+risk: info
+confidence: medium
+cweId: 434  # CWE-434: Unrestricted Upload of File with Dangerous Type
+wascId: 20  # WASC-20: Improper Input Handling
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/Upload%20form%20discovery.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
+
+function scan(helper, msg, src) {
+  const body = msg.getResponseBody().toString();
+  const uploadForm = /(type\s*=\s*['"]?file['"]?)/g;
 
   if (uploadForm.test(body)) {
     uploadForm.lastIndex = 0;
-    var founduploadForm = [];
-    var comm;
+    const foundUploadForm = [];
+    let comm;
     while ((comm = uploadForm.exec(body))) {
-      founduploadForm.push(comm[0]);
+      foundUploadForm.push(comm[0]);
     }
-    ps.raiseAlert(
-      alertRisk[0],
-      alertConfidence[2],
-      alertTitle[0],
-      alertDesc[0],
-      url,
-      "",
-      "",
-      founduploadForm.toString(),
-      alertSolution[0],
-      "",
-      cweId[0],
-      wascId[0],
-      msg
-    );
+    const otherInfo =
+      foundUploadForm.length > 1
+        ? `Other instances: ${foundUploadForm.slice(1).toString()}`
+        : "";
+    helper
+      .newAlert()
+      .setEvidence(foundUploadForm[0])
+      .setOtherInfo(otherInfo)
+      .setMessage(msg)
+      .raise();
   }
 }

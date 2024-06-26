@@ -65,10 +65,14 @@ function scan(helper, msg, src) {
           }
         }
         if (foundCard.length != 0) {
+          const otherInfo =
+            foundCard.length > 1
+              ? `Other instances: ${foundCard.slice(1).toString()}`
+              : "";
           helper
             .newAlert()
             .setEvidence(foundCard[0])
-            .setOtherInfo(`Other instances: ${foundCard.slice(1).toString()}`)
+            .setOtherInfo(otherInfo)
             .setMessage(msg)
             .raise();
         }
