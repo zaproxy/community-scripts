@@ -12,6 +12,8 @@
 // rule1: pure JSON , no CODE
 // rule2: correct body (make edits only after conversion)
 
+var requester = control.getExtensionLoader().getExtension("ExtensionRequester");
+
 function invokeWith(msg) {
   var body = '<?xml version="1.0" encoding="UTF-8"?>\n';
   var reqb = msg.getRequestBody().toString();
@@ -37,10 +39,7 @@ function invokeWith(msg) {
     body.length
   );
   msg.setRequestHeader(header);
-  var ext = new org.parosproxy.paros.extension.history.ExtensionHistory();
-  var man = ext.getResendDialog();
-  man.setMessage(msg.cloneRequest());
-  man.setVisible(true);
+  requester.displayMessage(msg.cloneRequest());
 }
 
 function isJson(str) {
