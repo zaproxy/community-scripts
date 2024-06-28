@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - passive/RPO.js
   - passive/s3.js
 - httpsender/Alert on Unexpected Content Types.js now checks for common content-types (`json`, `xml`, and `yaml`) more consistently.
+- targeted/request_to_xml.js no longer uses deprecated method to show the message in the editor dialogue.
 
 ## [18] - 2024-01-29
 ### Added
