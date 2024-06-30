@@ -56,10 +56,14 @@ function scan(helper, msg, src) {
       while ((comm = re.exec(body))) {
         foundRPO.push(comm[0]);
       }
+      const otherInfo =
+        foundRPO.length > 1
+          ? `Other instances: ${foundRPO.slice(1).toString()}`
+          : "";
       helper
         .newAlert()
         .setEvidence(foundRPO[0])
-        .setOtherInfo(`Other instances: ${foundRPO.slice(1).toString()}`)
+        .setOtherInfo(otherInfo)
         .setMessage(msg)
         .raise();
     }

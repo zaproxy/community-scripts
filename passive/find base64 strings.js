@@ -60,10 +60,14 @@ function scan(helper, msg, src) {
         foundstrings.push(comm[0]);
       }
       if (RESULT_PER_URL == true) {
+        const otherInfo =
+          foundstrings.length > 1
+            ? `Other instances: ${foundstrings.slice(1).toString()}`
+            : "";
         helper
           .newAlert()
           .setEvidence(foundstrings[0])
-          .setOtherInfo(`Other instances: ${foundstrings.slice(1).toString()}`)
+          .setOtherInfo(otherInfo)
           .setMessage(msg)
           .raise();
       }

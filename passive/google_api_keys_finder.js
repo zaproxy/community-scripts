@@ -56,11 +56,14 @@ function scan(helper, msg, src) {
     while ((key = re.exec(body))) {
       foundKeys.push(key[0]);
     }
-
+    const otherInfo =
+      foundKeys.length > 1
+        ? `Other instances: ${foundKeys.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setEvidence(foundKeys[0])
-      .setOtherInfo(`Other instances: ${foundKeys.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }

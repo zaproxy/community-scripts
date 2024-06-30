@@ -63,10 +63,14 @@ function scan(helper, msg, src) {
         foundEmail.push(comm[0]);
       }
       // woohoo we found an email lets make an alert for it
+      const otherInfo =
+        foundEmail.length > 1
+          ? `Other instances: ${foundEmail.slice(1).toString()}`
+          : "";
       helper
         .newAlert()
         .setEvidence(foundEmail[0])
-        .setOtherInfo(`Other instances: ${foundEmail.slice(1).toString()}`)
+        .setOtherInfo(otherInfo)
         .setMessage(msg)
         .raise();
     }

@@ -46,10 +46,14 @@ function scan(helper, msg, src) {
         founds3bucket.push(buckets[0]);
       }
       //raise the alert
+      const otherInfo =
+        founds3bucket.length > 1
+          ? `Other instances: ${founds3bucket.slice(1).toString()}`
+          : "";
       helper
         .newAlert()
         .setEvidence(founds3bucket[0])
-        .setOtherInfo(`Other instances: ${founds3bucket.slice(1).toString()}`)
+        .setOtherInfo(otherInfo)
         .setMessage(msg)
         .raise();
     }

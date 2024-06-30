@@ -86,10 +86,14 @@ function scan(helper, msg, src) {
         foundComments.push(comm[0]);
       }
       if (RESULT_PER_URL == true) {
+        const otherInfo =
+          foundComments.length > 1
+            ? `Other instances: ${foundComments.slice(1).toString()}`
+            : "";
         helper
           .newAlert()
           .setEvidence(foundComments[0])
-          .setOtherInfo(`Other instances: ${foundComments.slice(1).toString()}`)
+          .setOtherInfo(otherInfo)
           .setMessage(msg)
           .raise();
       }

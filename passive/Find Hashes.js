@@ -69,12 +69,16 @@ function scan(helper, msg, src) {
     while ((comm = wordpress.exec(body))) {
       foundwordpress.push(comm[0]);
     }
+    const otherInfo =
+      foundwordpress.length > 1
+        ? `Other instances: ${foundwordpress.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setName(alertTitle[0])
       .setDescription(alertDesc[0])
       .setEvidence(foundwordpress[0])
-      .setOtherInfo(`Other instances: ${foundwordpress.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }
@@ -85,12 +89,16 @@ function scan(helper, msg, src) {
     while ((comm = sha512.exec(body))) {
       foundsha512.push(comm[0]);
     }
+    const otherInfo =
+      foundsha512.length > 1
+        ? `Other instances: ${foundsha512.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setName(alertTitle[1])
       .setDescription(alertDesc[1])
       .setEvidence(foundsha512[0])
-      .setOtherInfo(`Other instances: ${foundsha512.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }
@@ -100,12 +108,16 @@ function scan(helper, msg, src) {
     while ((comm = phpbb3.exec(body))) {
       foundphpbb3.push(comm[0]);
     }
+    const otherInfo =
+      foundphpbb3.length > 1
+        ? `Other instances: ${foundphpbb3.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setName(alertTitle[2])
       .setDescription(alertDesc[2])
       .setEvidence(foundphpbb3[0])
-      .setOtherInfo(`Other instances: ${foundphpbb3.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }
@@ -116,12 +128,16 @@ function scan(helper, msg, src) {
     while ((comm = mysqlold.exec(body))) {
       foundmysqlold.push(comm[0]);
     }
+    const otherInfo =
+      foundmysqlold.length > 1
+        ? `Other instances: ${foundmysqlold.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setName(alertTitle[3])
       .setDescription(alertDesc[3])
       .setEvidence(foundmysqlold[0])
-      .setOtherInfo(`Other instances: ${foundmysqlold.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }
@@ -132,12 +148,16 @@ function scan(helper, msg, src) {
     while ((comm = joomla.exec(body))) {
       foundjoomla.push(comm[0]);
     }
+    const otherInfo =
+      foundjoomla.length > 1
+        ? `Other instances: ${foundjoomla.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setName(alertTitle[4])
       .setDescription(alertDesc[4])
       .setEvidence(foundjoomla[0])
-      .setOtherInfo(`Other instances: ${foundjoomla.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }
@@ -147,12 +167,16 @@ function scan(helper, msg, src) {
     while ((comm = drupal.exec(body))) {
       founddrupal.push(comm[0]);
     }
+    const otherInfo =
+      founddrupal.length > 1
+        ? `Other instances: ${founddrupal.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setName(alertTitle[5])
       .setDescription(alertDesc[5])
       .setEvidence(founddrupal[0])
-      .setOtherInfo(`Other instances: ${founddrupal.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }
@@ -163,12 +187,16 @@ function scan(helper, msg, src) {
     while ((comm = blowfish.exec(body))) {
       foundblowfish.push(comm[0]);
     }
+    const otherInfo =
+      foundblowfish.length > 1
+        ? `Other instances: ${foundblowfish.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setName(alertTitle[6])
       .setDescription(alertDesc[6])
       .setEvidence(foundblowfish[0])
-      .setOtherInfo(`Other instances: ${foundblowfish.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }
@@ -179,12 +207,16 @@ function scan(helper, msg, src) {
     while ((comm = vbull.exec(body))) {
       foundvbull.push(comm[0]);
     }
+    const otherInfo =
+      foundvbull.length > 1
+        ? `Other instances: ${foundvbull.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setName(alertTitle[7])
       .setDescription(alertDesc[7])
       .setEvidence(foundvbull[0])
-      .setOtherInfo(`Other instances: ${foundvbull.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }
@@ -195,13 +227,17 @@ function scan(helper, msg, src) {
     while ((comm = md45.exec(body))) {
       foundmd45.push(comm[0]);
     }
+    const otherInfo =
+      foundmd45.length > 1
+        ? `Other instances: ${foundmd45.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setName(alertTitle[8])
       .setDescription(alertDesc[8])
       .setConfidence(1)
       .setEvidence(foundmd45[0])
-      .setOtherInfo(`Other instances: ${foundmd45.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }

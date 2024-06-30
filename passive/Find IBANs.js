@@ -55,10 +55,14 @@ function scan(helper, msg, src) {
       foundIBAN.push(comm[0]);
     }
     // woohoo we found an IBAN lets make an alert for it
+    const otherInfo =
+      foundIBAN.length > 1
+        ? `Other instances: ${foundIBAN.slice(1).toString()}`
+        : "";
     helper
       .newAlert()
       .setEvidence(foundIBAN[0])
-      .setOtherInfo(`Other instances: ${foundIBAN.slice(1).toString()}`)
+      .setOtherInfo(otherInfo)
       .setMessage(msg)
       .raise();
   }

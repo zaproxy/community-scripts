@@ -4,17 +4,39 @@
 // (c) 2017 Harrison Neal
 // http://www.apache.org/licenses/LICENSE-2.0
 
-function scan(ps, msg, src) {
-  var alertRisk = org.parosproxy.paros.core.scanner.Alert.RISK_HIGH;
-  var alertTitle =
-    "Telerik UI for ASP.NET AJAX CVE-2017-9248 Cryptographic Weakness";
-  var alertDesc =
-    "A request has been made that appears to conform to poor cryptography used by Telerik UI for ASP.NET AJAX prior to v2017.2.621.  An attacker could manipulate the value of the dp parameter to possibly learn the machine key and upload arbitrary files, which could then lead to the compromise of ASP.NET ViewStates and arbitrary code execution respectively.  CVE-2017-9248 has a CVSSv3 score of 9.8.  ";
-  var alertSolution =
-    "See http://www.telerik.com/support/kb/aspnet-ajax/details/cryptographic-weakness for update/mitigation guidance.";
-  var cweId = 327;
-  var wascId = 0;
-  var url = msg.getRequestHeader().getURI().toString();
+const ScanRuleMetadata = Java.type(
+  "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
+);
+
+function getMetadata() {
+  return ScanRuleMetadata.fromYaml(`
+id: 100021
+name: Telerik UI for ASP.NET AJAX Cryptographic Weakness (CVE-2017-9248)
+description: >
+  A request has been made that appears to conform to poor cryptography used by Telerik UI for ASP.NET AJAX prior to
+  v2017.2.621.
+  
+  An attacker could manipulate the value of the dp parameter to possibly learn the machine key and upload
+  arbitrary files, which could then lead to the compromise of ASP.NET ViewStates and arbitrary code execution
+  respectively.
+  
+  CVE-2017-9248 has a CVSSv3 score of 9.8.
+solution: >
+  See https://docs.telerik.com/devtools/aspnet-ajax/knowledge-base/common-cryptographic-weakness for update/mitigation
+  guidance.
+references:
+  - https://docs.telerik.com/devtools/aspnet-ajax/knowledge-base/common-cryptographic-weakness
+risk: high
+confidence: medium
+cweId: 327  # CWE-327: Use of a Broken or Risky Cryptographic Algorithm
+wascId: 13  # WASC-13: Information Leakage
+status: alpha
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/passive/Telerik%20Using%20Poor%20Crypto.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
+`);
+}
+
+function scan(helper, msg, src) {
   var param = "dp";
 
   var dp = null;
@@ -179,35 +201,25 @@ function scan(ps, msg, src) {
     return;
   }
 
-  var alertConfidence = null;
+  let alertConfidence;
+  let otherInfo;
 
+  const url = msg.getRequestHeader().getURI().toString();
   if (url.contains("DialogHandler.aspx")) {
     alertConfidence = org.parosproxy.paros.core.scanner.Alert.CONFIDENCE_HIGH;
-    alertDesc +=
-      "The URI strongly suggests this is a Telerik.Web.UI.DialogHandler instance; confidence is HIGH.";
+    otherInfo =
+      "The URI strongly suggests this is a Telerik.Web.UI.DialogHandler instance.";
   } else {
     alertConfidence = org.parosproxy.paros.core.scanner.Alert.CONFIDENCE_MEDIUM;
-    alertDesc +=
-      "The URI is not typical for a Telerik.Web.UI.DialogHandler instance, so it may have been changed (e.g., in web.config), or this may be a false positive; confidence is MEDIUM.";
+    otherInfo =
+      "The URI is not typical for a Telerik.Web.UI.DialogHandler instance, so it may have been changed (e.g., in web.config), or this may be a false positive.";
   }
 
-  alertDesc = alertDesc
-    .split("  ")
-    .join(java.lang.System.getProperty("line.separator"));
-
-  ps.raiseAlert(
-    alertRisk,
-    alertConfidence,
-    alertTitle,
-    alertDesc,
-    url,
-    param,
-    "",
-    "",
-    alertSolution,
-    "",
-    cweId,
-    wascId,
-    msg
-  );
+  helper
+    .newAlert()
+    .setConfidence(alertConfidence)
+    .setParam(param)
+    .setOtherInfo(otherInfo)
+    .setMessage(msg)
+    .raise();
 }
