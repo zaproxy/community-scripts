@@ -3,7 +3,7 @@ All notable changes to this add-on will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## [Unreleased]
+## [19] - 2024-07-01
 ### Added
 - extender/arpSyndicateSubdomainDiscovery.js - uses the API of [ARPSyndicate's Subdomain Center](https://www.subdomain.center/)
   to find and add subdomains to the Sites Tree.
@@ -255,7 +255,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 - First packaged version
 
-[Unreleased]: https://github.com/zaproxy/community-scripts/compare/v18...HEAD
+[19]: https://github.com/zaproxy/community-scripts/compare/v18...v19
 [18]: https://github.com/zaproxy/community-scripts/compare/v17...v18
 [17]: https://github.com/zaproxy/community-scripts/compare/v16...v17
 [16]: https://github.com/zaproxy/community-scripts/compare/v15...v16
