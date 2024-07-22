@@ -1,9 +1,11 @@
-community-scripts
-=================
+# Community Scripts
 
 A collection of ZAP scripts provided by the community, i.e. you lot :)
 
 The easiest way to use this repo in ZAP is to install the 'Community Scripts' add-on from the ZAP Marketplace.
+
+> [!CAUTION]
+> While we do review all scripts to ensure they don't do anything obviously malicious, you should still review them and use them with caution.
 
 If you might want to contribute to the repo then you can also clone it to a local directory and then add that to ZAP using the Options / Scripts screen.
 
@@ -20,11 +22,11 @@ To discuss any aspect of ZAP scripting please join the zaproxy-scripts group: ht
 
 Please ensure that scripts submitted have the correct extension for the language they are written in.
 
-All scripts in the repo are released under the Apache v2.0 licence.
+All scripts in the repo are released under the Apache v2.0 license.
 
 You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0 
 
-By submitting your scripts to this repo you are releasing them under the Apache v2.0 licence, however you may optionally also release them under more lenient licenses via comments in the scripts.
+By submitting your scripts to this repo you are releasing them under the Apache v2.0 license, however you may optionally also release them under more lenient licenses via comments in the scripts.
 
 ## Building
 

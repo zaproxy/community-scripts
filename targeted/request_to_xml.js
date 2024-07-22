@@ -5,7 +5,7 @@
 // it may be helpful in finding XXE or other vulnerabilities.
 // this script is intended to  act as an assistant
 // you can  add anything like [!ENTITY] to test in detail
-// released under the Apache v2.0 licence.
+// released under the Apache v2.0 license.
 // You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 // Author : @haseebeqx (GitHub, Twitter)
 // tested on: ZAP 2.7.0

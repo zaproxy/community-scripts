@@ -1,7 +1,7 @@
 //csrf poc generater supporting json csrf
 //also supports multipart/form-data.
 //it will copy the results to clipboard and print them to the zap script console
-// released under the Apache v2.0 licence.
+// released under the Apache v2.0 license.
 //You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //Author : @haseebeqx
 
