@@ -1,5 +1,5 @@
 //it will generate and copy curl command based on the request
-//released under the Apache v2.0 licence.
+//released under the Apache v2.0 license.
 //You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //author:@haseebeqx
 
