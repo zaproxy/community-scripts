@@ -50,10 +50,13 @@ function scan(helper, msg, src) {
     "Most modern Web browsers support the X-Frame-Options HTTP header. Ensure it's set on all web pages returned by your site (if you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY.  ALLOW-FROM allows specific websites to frame the web page in supported web browsers).",
     "",
   ];
+  var responseHeader = msg.getResponseHeader().toString();
 
   // test sts
   if (msg.getRequestHeader().isSecure()) {
-    if (msg.getResponseHeader().getHeaders("Strict-Transport-Security") == null)
+    if (
+      msg.getResponseHeader().getHeaders("Strict-Transport-Security") == null
+    ) {
       helper
         .newAlert()
         .setName(alertTitle[0])
@@ -61,6 +64,7 @@ function scan(helper, msg, src) {
         .setSolution(alertSolution[0])
         .setMessage(msg)
         .raise();
+    }
   }
   // test csp
   if (
@@ -69,7 +73,7 @@ function scan(helper, msg, src) {
       "X-Content-Security-Policy",
       "X-WebKit-CSP",
     ])
-  )
+  ) {
     helper
       .newAlert()
       .setName(alertTitle[1])
@@ -77,6 +81,7 @@ function scan(helper, msg, src) {
       .setSolution(alertSolution[1])
       .setMessage(msg)
       .raise();
+  }
 
   // test xxs protection
   var re_xss = /(X\-XSS\-Protection\:.+1)/g;
