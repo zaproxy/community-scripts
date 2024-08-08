@@ -1,0 +1,86 @@
+---
+# A simple plan that performs a full authenticated scan against https://github.com/digininja/DVWA.
+# It only uses the standard spider as DVWA is a traditional app.
+# The spider will fail the plan if it finds less that 100 URLs as that implies something way wrong.
+# Various URLs are excluded to prevent the scan from breaking the app, 
+# e.g. by resetting the db or changing the admin password. 
+env:
+  contexts:
+  - name: "DVWA-form"
+    urls:
+    - "http://localhost:4280"
+    includePaths:
+    - "http://localhost:4280.*"
+    excludePaths:
+    - "http://localhost:4280/logout.php"
+    - "http://localhost:4280/login.php"
+    - "http://localhost:4280/setup.php"
+    - "http://localhost:4280/security.php"
+    - "http://localhost:4280/vulnerabilities/csrf.*"
+    authentication:
+      method: "form"
+      parameters:
+        loginRequestBody: "username={%username%}&password=password&Login=Login&user_token=f4c2be9fba02186111829f053797c917"
+        loginPageUrl: "http://localhost:4280/login.php"
+        loginRequestUrl: "http://localhost:4280/login.php"
+      verification:
+        method: "poll"
+        loggedInRegex: "\\Qadmin\\E"
+        pollFrequency: 60
+        pollUnits: "requests"
+        pollUrl: "http://localhost:4280/instructions.php"
+        pollPostData: ""
+    sessionManagement:
+      method: "headers"
+      parameters:
+        Cookie: "PHPSESSID={%cookie:PHPSESSID%}; security=low"
+    technology:
+      exclude: []
+      include: []
+    users:
+    - name: "test"
+      credentials:
+        password: "password"
+        username: "admin"
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+    continueOnFailure: false
+  vars: {}
+jobs:
+- parameters:
+    context: "DVWA-form"
+    user: "test"
+    url: ""
+    maxDuration: 0
+    maxDepth: 0
+    maxChildren: 0
+  name: "spider"
+  type: "spider"
+  tests:
+  - onFail: "ERROR"
+    statistic: "automation.spider.urls.added"
+    site: ""
+    operator: ">="
+    value: 100
+    name: "At least 100 URLs found"
+    type: "stats"
+- parameters:
+    context: "DVWA-form"
+    user: "test"
+    policy: ""
+    maxRuleDurationInMins: 0
+    maxScanDurationInMins: 0
+    maxAlertsPerRule: 0
+  name: "activeScan"
+  type: "activeScan"
+- parameters: {}
+  name: "passiveScan-wait"
+  type: "passiveScan-wait"
+- parameters:
+    template: "modern"
+    reportTitle: "ZAP Scanning Report"
+    reportDescription: ""
+  name: "report"
+  type: "report"
