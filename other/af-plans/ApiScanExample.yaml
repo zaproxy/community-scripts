@@ -1,0 +1,335 @@
+---
+# This plan is the equivalent of the Packaged API scan https://www.zaproxy.org/docs/docker/api-scan/
+# The plan that will not do anything until you:
+#   Set a "ZAP_TARGET" env var (or change the plan of course).
+#   Define at least one graphql, openapi, or soap endpoint, then you can delete the API jobs that don't have one.
+env:
+  contexts:
+  - name: "Example"
+    urls:
+    - "${ZAP_TARGET}"
+    includePaths: []
+    excludePaths: []
+  parameters:
+    failOnError: true
+    failOnWarning: false
+    progressToStdout: true
+  vars: {}
+jobs:
+- parameters:
+    scanOnlyInScope: true
+    enableTags: false
+  rules: []
+  name: "passiveScan-config"
+  type: "passiveScan-config"
+
+- type: script
+  parameters:
+    action: add
+    type: httpsender
+    engine: "ECMAScript : Graal.js"
+    name: AlertOnHttpResponseCodeErrors.js
+    inline: |    
+        var Pattern = Java.type("java.util.regex.Pattern")
+    
+        pluginid = 100000   // https://github.com/zaproxy/zaproxy/blob/main/docs/scanners.md
+        
+        function sendingRequest(msg, initiator, helper) {
+            // Nothing to do
+        }
+        
+        function responseReceived(msg, initiator, helper) {
+            if (isGloballyExcluded(msg)) {
+                // Not of interest.
+                return
+            }
+        
+            var extensionAlert = control.getExtensionLoader().getExtension(org.zaproxy.zap.extension.alert.ExtensionAlert.NAME)
+            if (extensionAlert != null) {
+                var code = msg.getResponseHeader().getStatusCode()
+                if (code < 400 || code >= 600) {
+                    // Do nothing
+                } else {
+                    var risk = 0    // Info
+                    var title = "A Client Error response code was returned by the server"
+                    if (code >= 500) {
+                        // Server error
+                        risk = 1    // Low
+                        title = "A Server Error response code was returned by the server"
+                    }
+                    // CONFIDENCE_HIGH = 3 (we can be pretty sure we're right)
+                    var alert = new org.parosproxy.paros.core.scanner.Alert(pluginid, risk, 3, title)
+                    var ref = msg.getHistoryRef()
+                    if (ref != null && org.parosproxy.paros.model.HistoryReference.getTemporaryTypes().contains(
+                                java.lang.Integer.valueOf(ref.getHistoryType()))) {
+                        // Dont use temporary types as they will get deleted
+                        ref = null
+                    }
+                    if (ref == null) {
+                        // map the initiator
+                        var type
+                        switch (initiator) {
+                            case 1: // PROXY_INITIATOR
+                                type = 1 // Proxied 
+                                break
+                            case 2: // ACTIVE_SCANNER_INITIATOR
+                                type = 3 // Scanner 
+                                break
+                            case 3: // SPIDER_INITIATOR
+                                type = 2 // Spider 
+                                break
+                            case 4: // FUZZER_INITIATOR
+                                type = 8 // Fuzzer 
+                                break
+                            case 5: // AUTHENTICATION_INITIATOR
+                                type = 15 // User 
+                                break
+                            case 6: // MANUAL_REQUEST_INITIATOR
+                                type = 15 // User 
+                                break
+                            case 8: // BEAN_SHELL_INITIATOR
+                                type = 15 // User 
+                                break
+                            case 9: // ACCESS_CONTROL_SCANNER_INITIATOR
+                                type = 13 // Access control 
+                                break
+                            default:
+                                type = 15 // User - fallback
+                                break
+                        }
+                        ref = new org.parosproxy.paros.model.HistoryReference(model.getSession(), type, msg)
+                    }
+                    alert.setMessage(msg)
+                    alert.setUri(msg.getRequestHeader().getURI().toString())
+                    alert.setDescription("A response code of " + code + " was returned by the server.\n" +
+                        "This may indicate that the application is failing to handle unexpected input correctly.\n" +
+                        "Raised by the 'Alert on HTTP Response Code Error' script");
+                    // Use a regex to extract the evidence from the response header
+                    var regex = new RegExp("^HTTP.*" + code)
+                    alert.setEvidence(msg.getResponseHeader().toString().match(regex))
+                    alert.setCweId(388) // CWE CATEGORY: Error Handling
+                    alert.setWascId(20) // WASC  Improper Input Handling
+                    extensionAlert.alertFound(alert , ref)
+                }
+            }
+        }
+        
+        function isGloballyExcluded(msg) {
+            var url = msg.getRequestHeader().getURI().toString()
+            var regexes = model.getSession().getGlobalExcludeURLRegexs()
+            for (var i in regexes) {
+                if (Pattern.compile(regexes[i], Pattern.CASE_INSENSITIVE).matcher(url).matches()) {
+                    return true
+                }
+            }
+            return false
+        }
+
+- type: script
+  parameters:
+    action: add
+    type: httpsender
+    engine: "ECMAScript : Graal.js"
+    name: AlertOnUnexpectedContentTypes.js
+    inline: |    
+        var Pattern = Java.type("java.util.regex.Pattern")
+        
+        var pluginid = 100001   // https://github.com/zaproxy/zaproxy/blob/main/docs/scanners.md
+        
+        var extensionAlert = control.getExtensionLoader().getExtension(org.zaproxy.zap.extension.alert.ExtensionAlert.NAME)
+        
+        var expectedTypes = [
+                "application/octet-stream",
+                "text/plain"
+            ]
+        
+        var expectedTypeGroups = ["json", "yaml", "xml"]
+        
+        function sendingRequest(msg, initiator, helper) {
+            // Nothing to do
+        }
+        
+        function responseReceived(msg, initiator, helper) {
+            if (isGloballyExcluded(msg)) {
+                // Not of interest.
+                return
+            }
+        
+            if (extensionAlert != null) {
+                var ctype = msg.getResponseHeader().getHeader("Content-Type")
+                if (ctype != null) {
+                    if (ctype.indexOf(";") > 0) {
+                        ctype = ctype.substring(0, ctype.indexOf(";"))
+                    }
+                    if (!msg.getResponseHeader().hasContentType(expectedTypeGroups) && expectedTypes.indexOf(ctype) < 0) {
+                        // Another rule will complain if theres no type
+                
+                        var risk = 1    // Low
+                        var title = "Unexpected Content-Type was returned"
+                        // CONFIDENCE_HIGH = 3 (we can be pretty sure we're right)
+                        var alert = new org.parosproxy.paros.core.scanner.Alert(pluginid, risk, 3, title)
+                        var ref = msg.getHistoryRef()
+                        if (ref != null && org.parosproxy.paros.model.HistoryReference.getTemporaryTypes().contains(
+                                    java.lang.Integer.valueOf(ref.getHistoryType()))) {
+                            // Dont use temporary types as they will get deleted
+                            ref = null
+                        }
+                        if (ref == null) {
+                            // map the initiator
+                            var type
+                            switch (initiator) {
+                                case 1: // PROXY_INITIATOR
+                                    type = 1 // Proxied 
+                                    break
+                                case 2: // ACTIVE_SCANNER_INITIATOR
+                                    type = 3 // Scanner 
+                                    break
+                                case 3: // SPIDER_INITIATOR
+                                    type = 2 // Spider 
+                                    break
+                                case 4: // FUZZER_INITIATOR
+                                    type = 8 // Fuzzer 
+                                    break
+                                case 5: // AUTHENTICATION_INITIATOR
+                                    type = 15 // User 
+                                    break
+                                case 6: // MANUAL_REQUEST_INITIATOR
+                                    type = 15 // User 
+                                    break
+                                case 8: // BEAN_SHELL_INITIATOR
+                                    type = 15 // User 
+                                    break
+                                case 9: // ACCESS_CONTROL_SCANNER_INITIATOR
+                                    type = 13 // Access control 
+                                    break
+                                default:
+                                    type = 15 // User - fallback
+                                    break
+                            }
+                            ref = new org.parosproxy.paros.model.HistoryReference(model.getSession(), type, msg)
+                        }
+                        alert.setMessage(msg)
+                        alert.setUri(msg.getRequestHeader().getURI().toString())
+                        alert.setDescription("A Content-Type of " + ctype + " was returned by the server.\n" +
+                            "This is not one of the types expected to be returned by an API.\n" +
+                            "Raised by the 'Alert on Unexpected Content Types' script");
+                        alert.setEvidence(ctype)
+                        extensionAlert.alertFound(alert , ref)
+                    }
+                }
+            }
+        }
+        
+        function isGloballyExcluded(msg) {
+            var url = msg.getRequestHeader().getURI().toString()
+            var regexes = model.getSession().getGlobalExcludeURLRegexs()
+            for (var i in regexes) {
+                if (Pattern.compile(regexes[i], Pattern.CASE_INSENSITIVE).matcher(url).matches()) {
+                    return true
+                }
+            }
+            return false
+        }
+
+- type: "graphql"
+  parameters:
+    endpoint:           # String: the endpoint URL, default: null, no schema is imported
+    schemaUrl:          # String: URL pointing to a GraphQL Schema, default: null, import using introspection on endpoint
+    schemaFile:         # String: Local file path of a GraphQL Schema, default: null, import using schemaUrl
+
+- type: "openapi"
+  parameters:
+    apiFile:            # String: Local file containing the OpenAPI definition, default: null, no definition will be imported
+    apiUrl:             # String: URL containing the OpenAPI definition, default: null, no definition will be imported
+    targetUrl:          # String: URL which overrides the target defined in the definition, default: null, the target will not be overridden
+
+- type: "soap"
+  parameters:
+    wsdlFile:           # String: Local file path of the WSDL, default: null, no definition will be imported
+    wsdlUrl:            # String: URL pointing to the WSDL, default: null, no definition will be imported
+
+- parameters:
+  policyDefinition:
+    defaultStrength: "medium"
+    defaultThreshold: "Off"
+    rules:
+    - id: 0
+      name: "Directory Browsing"
+      threshold: "medium"
+    - id: 7
+      name: "Remote File Inclusion"
+      threshold: "medium"
+    - id: 20019
+      name: "External Redirect"
+      threshold: "medium"
+    - id: 30001
+      name: "Buffer Overflow"
+      threshold: "medium"
+    - id: 30002
+      name: "Format String Error"
+      threshold: "medium"
+    - id: 30003
+      name: "Integer Overflow Error"
+      threshold: "medium"
+    - id: 40003
+      name: "CRLF Injection"
+      threshold: "medium"
+    - id: 40008
+      name: "Parameter Tampering"
+      threshold: "medium"
+    - id: 40009
+      name: "Server Side Include"
+      threshold: "medium"
+    - id: 40018
+      name: "   SQL Injection"
+      threshold: "medium"
+    - id: 40042
+      name: "Spring Actuator Information Leak"
+      threshold: "medium"
+    - id: 40044
+      name: "Exponential Entity Expansion (Billion Laughs Attack)"
+      threshold: "medium"
+    - id: 90017
+      name: "XSLT Injection"
+      threshold: "medium"
+    - id: 90019
+      name: "Server Side Code Injection"
+      threshold: "medium"
+    - id: 90020
+      name: "Remote OS Command Injection"
+      threshold: "medium"
+    - id: 90021
+      name: "XPath Injection"
+      threshold: "medium"
+    - id: 90023
+      name: "XML External Entity Attack"
+      threshold: "medium"
+    - id: 90025
+      name: "Expression Language Injection"
+      threshold: "medium"
+    - id: 90026
+      name: "SOAP Action Spoofing"
+      threshold: "medium"
+    - id: 90029
+      name: "SOAP XML Injection"
+      threshold: "medium"
+    - id: 90034
+      name: "Cloud Metadata Potentially Exposed"
+    - id: 90035
+      name: "Server Side Template Injection"
+      threshold: "medium"
+    - id: 90036
+      name: "Server Side Template Injection (Blind)"
+      threshold: "medium"
+
+  name: "activeScan"
+  type: "activeScan"
+- parameters: {}
+  name: "passiveScan-wait-pre-report"
+  type: "passiveScan-wait"
+- parameters:
+    template: "modern"
+    reportTitle: "ZAP Scanning Report"
+    reportDescription: ""
+  name: "report"
+  type: "report"
