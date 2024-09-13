@@ -125,7 +125,7 @@ spotless {
     }
     javascript {
         target("**/*.js")
-        targetExclude("extender/HTTP Message Logger.js", "standalone/domainFinder.js")
+        targetExclude("extender/HTTP Message Logger.js", "extender/ScanMonitor.js", "standalone/domainFinder.js")
         // get the npm executable path from gradle-node-plugin
         val npmDir = (tasks.named("npmSetup").get().property("npmDir") as TransformBackedProvider<*, *>).get().toString()
         val npmExecutable = if (System.getProperty("os.name").lowercase().contains("windows")) "/npm.cmd" else "/bin/npm"

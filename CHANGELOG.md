@@ -7,6 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - Standalone script 'PrivateMethodAccess.js'
 - Variant script 'AddUrlParams.js'
+- Extender script 'ScanMonitor.js'
 ### Changed
 - Add cautionary note to help and readme.
 ### Fixed 
