@@ -9,6 +9,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Variant script 'AddUrlParams.js'
 ### Changed
 - Add cautionary note to help and readme.
+- Maintenance and documentation changes.
+
 ### Fixed 
 - Bug in 'Mutliple Security Header Check.js'.
 

@@ -1,7 +1,7 @@
 // This HttpSender script adds headers to all messages transmitted by zaproxy,
-// including automated tools. Refer to the HttpSender class definition:
-// https://github.com/zaproxy/zaproxy/blob/main/zap/src/main/java/org/parosproxy/paros/network/HttpSender.java
-// for a list of 'initiator' values (although we don't use them).
+// including automated tools. Refer to the constants documentation:
+// https://www.zaproxy.org/docs/constants/
+// for a list of 'initiator' (Request Initiator) values (although we don't use them).
 
 var ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 
