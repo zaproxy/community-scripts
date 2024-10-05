@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Standalone script 'PrivateMethodAccess.js'
 - Variant script 'AddUrlParams.js'
 - Extender script 'ScanMonitor.js'
+- Targeted script 'add_junk.py'
 ### Changed
 - Add cautionary note to help and readme.
 - Maintenance and documentation changes.
