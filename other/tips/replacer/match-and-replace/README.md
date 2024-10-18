@@ -260,7 +260,34 @@ extReplacer.getParams().addRule(newRule);
 
 ## Misc
 
-- Help companies to identify your traffic and separate it from malicious traffic by adding a custom header
+- Help companies to identify your traffic and separate it from malicious traffic by adding a custom header (ex: `X-Bug-Bounty`, or `X-Header-Hackerone`).
+
+![](images/xbb-header.png)
+
+For example a header that: 
+- includes your username: `X-Bug-Bounty: YourBBUsername` or email: `X-Bug-Bounty: user@domain.com`
+- includes a unique or identifiable flag: `X-Bug-Bounty: ID-<sha256-flag>`
+
+Source: <https://danaepp.com/why-the-x-bug-bounty-header-matters-for-hackers>
+
+<details>
+<summary>Add X-Bug-Bounty header</summary>
+
+```js
+// This script adds a Replacer rule
+var extReplacer = control.getExtensionLoader().getExtension("ExtensionReplacer");
+
+var replacerRule = Java.type("org.zaproxy.zap.extension.replacer.ReplacerParamRule");
+// Match types: REQ_HEADER, REQ_HEADER_STR, REQ_BODY_STR, RESP_HEADER, RESP_HEADER_STR, RESP_BODY_STR
+var matchType = Java.type("org.zaproxy.zap.extension.replacer.ReplacerParamRule.MatchType");
+
+// https://github.com/zaproxy/zap-extensions/blob/e072df8ca4f7aff54d6e2dda98cfd8503810fa2c/addOns/replacer/src/main/java/org/zaproxy/zap/extension/replacer/ReplacerParamRule.java#L93-L107
+var newRule = new replacerRule("Add XBB header", "", matchType.REQ_HEADER, "X-Bug-Bounty", false, "YourBBUsername", null, false, false);
+extReplacer.getParams().addRule(newRule);
+```
+
+</details>
+
 
 ![](images/hackerone-header.png)
 
