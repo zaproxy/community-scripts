@@ -8,12 +8,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Standalone script 'PrivateMethodAccess.js'
 - Variant script 'AddUrlParams.js'
 - Extender script 'ScanMonitor.js'
+
 ### Changed
 - Add cautionary note to help and readme.
 - Maintenance and documentation changes.
 
 ### Fixed 
-- Bug in 'Mutliple Security Header Check.js'.
+- The following scripts were not being loaded as scan rules:
+  - active/SSTI.js
+  - passive/Mutliple Security Header Check.js
 
 ## [19] - 2024-07-01
 ### Added
