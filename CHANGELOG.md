@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Extender script 'ScanMonitor.js'
 
 ### Changed
+- Update minimum ZAP version to 2.16.0 and compile with Java 17.
 - Add cautionary note to help and readme.
 - Maintenance and documentation changes.
 
