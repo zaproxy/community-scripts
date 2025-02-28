@@ -104,7 +104,7 @@ class VerifyScripts {
 
     private static Stream<Arguments> scriptsJavaScript() {
         // Graal JS version being used does not yet support Java 22+
-        if (JRE.JAVA_22.compareTo(JRE.currentVersion()) <= 0) {
+        if (JRE.JAVA_22.compareTo(JRE.currentJre()) <= 0) {
             return testData(".js", script -> {});
         }
         Engine engine =
