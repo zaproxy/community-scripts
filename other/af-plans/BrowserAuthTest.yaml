@@ -1,0 +1,66 @@
+---
+# A plan which aims to work out how to configure authentication given the following env vars:
+#   ZAP_SITE         The target site, e.g. https://www.example.com - must not include the path or a trailing slash
+#   ZAP_LOGIN_URL    The URL of the login page, e.g. https://www.example.com/login
+#   ZAP_USER         A valid username
+#   ZAP_PASSWORD     The associated password
+#
+# The report generated will give full details of the session handling and verification details found.
+# For details see https://www.zaproxy.org/docs/desktop/addons/authentication-helper/auth-report-json/
+env:
+  contexts:
+  - name: Default Context
+    urls:
+    - ${ZAP_SITE}
+    includePaths:
+    - ${ZAP_SITE}.*
+    authentication:
+      method: browser
+      parameters:
+        browserId: firefox-headless
+        loginPageUrl: ${ZAP_LOGIN_URL}
+        loginPageWait: 5
+      verification:
+        method: autodetect
+    sessionManagement:
+      method: autodetect
+    technology: {}
+    users:
+    - name: test-user
+      credentials:
+        username: ${ZAP_USER}
+        password: ${ZAP_PASSWORD}
+  parameters: {}
+jobs:
+- type: passiveScan-config
+  parameters:
+    disableAllRules: true
+  rules:
+  - name: Authentication Request Identified
+    id: 10111
+    threshold: medium
+  - name: Session Management Response Identified
+    id: 10112
+    threshold: medium
+  - name: Verification Request Identified
+    id: 10113
+    threshold: medium
+- type: requestor
+  parameters:
+    user: test-user
+  requests:
+  - url: ${ZAP_SITE}
+- type: passiveScan-wait
+  parameters: {}
+- name: auth-test-report
+  type: report
+  parameters:
+    template: auth-report-json
+    theme: null
+    reportDir: .
+    reportFile: auth-report.json
+    reportTitle: ZAP by Checkmarx Scanning Report
+  sections:
+  - summary
+  - afenv
+  - statistics

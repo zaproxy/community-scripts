@@ -9,12 +9,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Variant script 'AddUrlParams.js'
 - Extender script 'ScanMonitor.js'
 - Targeted script 'AddJunk.py'
+
 ### Changed
+- Update minimum ZAP version to 2.16.0 and compile with Java 17.
 - Add cautionary note to help and readme.
 - Maintenance and documentation changes.
 
 ### Fixed 
-- Bug in 'Mutliple Security Header Check.js'.
+- The following scripts were not being loaded as scan rules:
+  - active/SSTI.js
+  - passive/Mutliple Security Header Check.js
 
 ## [19] - 2024-07-01
 ### Added

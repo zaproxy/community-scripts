@@ -14,6 +14,7 @@ var log = LoggerManager.getLogger("SSTI");
 var ScanRuleMetadata = Java.type(
   "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
 );
+var CommonAlertTag = Java.type("org.zaproxy.addon.commonlib.CommonAlertTag");
 
 function getMetadata() {
   return ScanRuleMetadata.fromYaml(`

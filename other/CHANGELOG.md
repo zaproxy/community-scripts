@@ -3,6 +3,9 @@ All notable changes to the 'other' section of this repository will be documented
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### 2025-02-21
+- Added af-plans/BrowserAuthTest.yaml
+
 ### 2024-08-30
 - Added af-plans/ApiScanExample.yaml
 
