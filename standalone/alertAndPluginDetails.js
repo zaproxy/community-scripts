@@ -11,7 +11,7 @@ extAlert = control
 
 extPscan = control
   .getExtensionLoader()
-  .getExtension(org.zaproxy.zap.extension.pscan.ExtensionPassiveScan.NAME);
+  .getExtension(org.zaproxy.addon.pscan.ExtensionPassiveScan2.NAME);
 
 var pf = Java.type("org.parosproxy.paros.core.scanner.PluginFactory");
 
@@ -43,7 +43,9 @@ function printAlert(alert) {
     }
   }
   if (alert.getSource() == Alert.Source.PASSIVE && extPscan != null) {
-    plugin = extPscan.getPluginPassiveScanner(alert.getPluginId());
+    plugin = extPscan
+      .getPassiveScannersManager()
+      .getScanRule(alert.getPluginId());
     if (plugin != null) {
       scanner = plugin.getName();
     }

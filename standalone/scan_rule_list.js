@@ -29,9 +29,9 @@ for (var i = 0; i < plugins.length; i++) {
 
 extPscan = control
   .getExtensionLoader()
-  .getExtension(org.zaproxy.zap.extension.pscan.ExtensionPassiveScan.NAME);
+  .getExtension(org.zaproxy.addon.pscan.ExtensionPassiveScan2.NAME);
 
-plugins = extPscan.getPluginPassiveScanners().toArray();
+plugins = extPscan.getPassiveScannersManager().getScanRules();
 
 for (var i = 0; i < plugins.length; i++) {
   try {
