@@ -2,9 +2,6 @@
 // -------------------------------------------------------------------
 // Swagger Secrets & Version Detector - ZAP Active Scan Rule Script
 // -------------------------------------------------------------------
-// Modern ZAP registration using getMetadata() function
-// Import required ZAP Java types for modern registration
-
 var URI = Java.type("org.apache.commons.httpclient.URI");
 var ScanRuleMetadata = Java.type(
   "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
@@ -29,8 +26,8 @@ alertTags:
   ${CommonAlertTag.OWASP_2021_A05_SEC_MISCONFIG.getTag()}: ${CommonAlertTag.OWASP_2021_A05_SEC_MISCONFIG.getValue()}
   ${CommonAlertTag.OWASP_2017_A06_SEC_MISCONFIG.getTag()}: ${CommonAlertTag.OWASP_2017_A06_SEC_MISCONFIG.getValue()}
 status: alpha
-codeLink: https://example.com/swagger-ui-detector.js
-helpLink: https://www.example.com/
+codeLink: https://github.com/zaproxy/community-scripts/blob/main/active/swagger-secret-detector.js
+helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
 `);
 }
 
@@ -342,10 +339,8 @@ function detectSecrets(as, requestMsg, fullPath, body) {
       .setDescription(
         "Swagger UI endpoint exposes sensitive secrets such as client secrets, API keys, or OAuth tokens. These secrets may be accessible in the HTML source and should not be exposed publicly, as this can lead to compromise."
       )
-      // .setEvidence(redactedEvidence.join("\n"))
       .setEvidence(redactedEvidence[0])
       .setOtherInfo("All secrets exposed:\n" + redactedEvidence.join("\n"))
-      //.setOtherInfo("Discovered at: " + fullPath)
       .setSolution(
         "Remove hardcoded secrets from documentation and ensure the endpoint is protected with authentication."
       )
