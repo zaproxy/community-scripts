@@ -2,7 +2,7 @@
 
 ## Naming Scripts
 
-The script names should be camel case (e.g.` CamelCase.ext`).
+The script names should be pascal case (e.g. `PascalCase.ext`).
 
 ## Changelog
 
