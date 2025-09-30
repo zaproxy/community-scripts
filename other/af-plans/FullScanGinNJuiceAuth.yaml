@@ -1,0 +1,65 @@
+---
+# A simple plan for performing an authenticated scan against Gin n Juice Shop.
+# It does not currently support OAST which is required for some of the known vulnerabilities.
+env:
+  contexts:
+  - name: Gin N Juice Shop
+    urls:
+    - https://ginandjuice.shop
+    includePaths:
+    - https://ginandjuice.shop.*
+    excludePaths:
+    - https://ginandjuice.shop/logout
+    authentication:
+      method: browser
+      parameters:
+        loginPageUrl: https://ginandjuice.shop/login
+        browserId: firefox-headless
+        loginPageWait: 1
+        steps: []
+      verification:
+        method: poll
+        loggedInRegex: \Q 200 OK\E
+        loggedOutRegex: \Q 302 Found\E
+        pollFrequency: 60
+        pollUnits: requests
+        pollUrl: https://ginandjuice.shop/my-account
+        pollPostData: ""
+    sessionManagement:
+      method: headers
+    users:
+    - name: carlos
+      credentials:
+        password: hunter2
+        username: carlos
+  parameters: {}
+jobs:
+- type: spider
+  parameters:
+    context: Gin N Juice Shop
+    user: carlos
+- type: spiderAjax
+  parameters:
+    context: Gin N Juice Shop
+    user: carlos
+    browserId: firefox-headless
+    excludedElements:
+    - description: Logout
+      element: a
+      text: Log out
+- type: passiveScan-wait
+  parameters: {}
+- type: activeScan
+  parameters:
+    context: Gin N Juice Shop
+    user: carlos
+  policyDefinition:
+    defaultStrength: medium
+    defaultThreshold: medium
+- parameters:
+    template: "modern"
+    reportTitle: "ZAP Scanning Report"
+    reportDescription: ""
+  name: "report"
+  type: "report"
+
