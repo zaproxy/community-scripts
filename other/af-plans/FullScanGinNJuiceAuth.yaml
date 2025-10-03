@@ -22,7 +22,7 @@ env:
         loggedInRegex: \Q 200 OK\E
         loggedOutRegex: \Q 302 Found\E
         pollFrequency: 60
-        pollUnits: requests
+        pollUnits: seconds
         pollUrl: https://ginandjuice.shop/my-account
         pollPostData: ""
     sessionManagement:
