@@ -248,6 +248,47 @@ jobs:
     wsdlFile:           # String: Local file path of the WSDL, default: null, no definition will be imported
     wsdlUrl:            # String: URL pointing to the WSDL, default: null, no definition will be imported
 
+# Example usages:
+- type: "postman"
+  parameters:
+    collectionFile: postman.json # The target is defined in the collection.
+
+- type: "postman"
+  parameters:
+    collectionUrl: "https://api.example.com/postman.json" # The target is defined in the collection.
+
+- type: "graphql"
+  parameters:
+    endpoint: "https://www.example.com/api/"
+    schemaFile: file.graphql
+
+- type: "graphql"
+  parameters:
+    endpoint: "https://www.example.com/api/"
+    schemaUrl: "https://www.example.com/api/file.graphql" # If no schemaFile nor schemaUrl is provided, introspection is done on the endpoint.
+
+- type: "openapi"
+  parameters:
+    apiFile: openapi.json # Assumes the definition has the target URL.
+
+- type: "openapi"
+  parameters:
+    apiUrl: "https://api.example.com/openapi.json" # Imports from URL, if the definition does not have the target it will use the domain of the import URL.
+
+- type: "openapi"
+  parameters:
+    apiFile: openapi.json
+    targetUrl: "https://api.example.com/" # The definition does not have the target, we provide it in the job instead.
+
+- type: "soap"
+  parameters:
+    wsdlFile: file.wsdl # The WSDL needs to specify the target locations.
+
+- type: "soap"
+  parameters:
+    wsdlUrl: "https://api.example.com/file.wsdl" # The WSDL needs to specify the target locations.
+
+
 - parameters:
   policyDefinition:
     defaultStrength: "medium"
