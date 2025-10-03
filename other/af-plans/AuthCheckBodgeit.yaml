@@ -22,7 +22,7 @@ env:
         loggedInRegex: "\\QUser: <a href=\"password.jsp\">\\E"
         loggedOutRegex: "\\QGuest user\\E"
         pollFrequency: 60
-        pollUnits: "requests"
+        pollUnits: "seconds"
         pollUrl: ""
         pollPostData: ""
     sessionManagement:

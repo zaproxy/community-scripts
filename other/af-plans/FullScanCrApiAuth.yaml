@@ -1,0 +1,102 @@
+---
+# A simple plan for performing an authenticated scan against OWASP crAPI.
+# The plan includes the request needed to register the user used for authentication.
+# The plan is intended to be run with ZAP in a Docker container connected to the correct network,
+# as per https://www.zaproxy.org/docs/testapps/crapi/
+# If you are running this plan in the ZAP Desktop then change all instances of "crapi-web" to "localhost:8888"
+# (or whatever host:port that crAPI is accessible on)
+env:
+  contexts:
+  - name: crAPI
+    urls:
+    - http://crapi-web
+    includePaths:
+    - http://crapi-web.*
+    authentication:
+      method: browser
+      parameters:
+        loginPageUrl: http://crapi-web/login
+        loginPageWait: 5
+        browserId: firefox-headless
+        stepDelay: 1
+        steps: []
+      verification:
+        method: poll
+        loggedInRegex: \Q 200\E
+        loggedOutRegex: \Q 404\E
+        pollFrequency: 60
+        pollUnits: seconds
+        pollUrl: http://crapi-web/identity/api/v2/user/dashboard
+        pollPostData: ""
+        pollAdditionalHeaders:
+        - header: content-type
+          value: application/json
+        - header: referer
+          value: http://crapi-web/login
+    sessionManagement:
+      method: headers
+      parameters:
+        Authorization: "Bearer {%json:token%}"
+    technology: {}
+    structure: {}
+    users:
+    - name: user@example.com
+      credentials:
+        password: Password123!
+        username: user@example.com
+  parameters: {}
+jobs:
+- type: passiveScan-config
+  parameters: {}
+- type: requestor
+  parameters:
+    user: ""
+  requests:
+  - url: http://crapi-web/identity/api/auth/signup
+    method: POST
+    headers:
+    - Content-Type:application/json
+    data: "{\"name\":\"test\",\"email\":\"user@example.com\",\"number\":\"1234567890\"\
+      ,\"password\":\"Password123!\"}"
+    responseCode: 200
+- type: spider
+  parameters:
+    context: crAPI
+    user: user@example.com
+    logoutAvoidance: true
+  tests:
+  - name: At least 100 URLs found
+    type: stats
+    onFail: INFO
+    statistic: automation.spider.urls.added
+    operator: '>='
+    value: 100
+- type: spiderAjax
+  parameters:
+    context: crAPI
+    user: user@example.com
+    browserId: firefox-headless
+    scopeCheck: Flexible
+    logoutAvoidance: true
+  tests:
+  - name: At least 100 URLs found
+    type: stats
+    onFail: INFO
+    statistic: spiderAjax.urls.added
+    operator: '>='
+    value: 100
+- type: passiveScan-wait
+  parameters: {}
+- type: activeScan
+  parameters:
+    context: crAPI
+    user: user@example.com
+  policyDefinition:
+    defaultStrength: medium
+    defaultThreshold: medium
+- parameters:
+    template: "modern"
+    reportTitle: "ZAP Scanning Report"
+    reportDescription: ""
+  name: "report"
+  type: "report"

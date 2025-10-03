@@ -3,6 +3,10 @@ All notable changes to the 'other' section of this repository will be documented
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### 2025-10-03
+- Added af-plans/FullScanCrApiAuth.yaml
+- Changed auth AF plans to use seconds instead of requests for pollUnits.
+
 ### 2025-09-30
 - Added af-plans/FullScanGinNJuiceAuth.yaml
 
