@@ -1,0 +1,59 @@
+---
+# A simple plan for performing an authenticated scan against Testfire (AltoroJ).
+# 
+env:
+  contexts:
+  - name: testfire
+    urls:
+    - https://demo.testfire.net
+    includePaths:
+    - https://demo.testfire.net.*
+    authentication:
+      method: browser
+      parameters:
+        loginPageUrl: https://demo.testfire.net/login.jsp
+        browserId: firefox-headless
+        loginPageWait: 2
+      verification:
+        method: poll
+        loggedInRegex: \Q 200 OK\E
+        loggedOutRegex: \Q 302 Found\E
+        pollFrequency: 60
+        pollUnits: seconds
+        pollUrl: https://demo.testfire.net/bank/main.jsp
+        pollPostData: ""
+    sessionManagement:
+      method: headers
+    users:
+    - name: jsmith
+      credentials:
+        password: demo1234
+        username: jsmith
+  parameters: {}
+jobs:
+- type: openapi
+  parameters:
+    apiUrl: https://demo.testfire.net/swagger/properties.json
+    context: testfire
+    user: jsmith
+- type: spider
+  parameters:
+    context: testfire
+    user: jsmith
+    url: https//demo.testfire.net
+- type: passiveScan-wait
+  parameters: {}
+- type: activeScan
+  parameters:
+    context: testfire
+    user: jsmith
+    policy:
+  policyDefinition:
+    defaultStrength: medium
+    defaultThreshold: medium
+- parameters:
+    template: "modern"
+    reportTitle: "ZAP Scanning Report"
+    reportDescription: ""
+  name: "report"
+  type: "report"
