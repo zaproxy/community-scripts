@@ -42,7 +42,7 @@ function sendGetWithOriginalHeaders(originalReqHeader, url) {
         var sender = new HttpSender(
             Model.getSingleton().getOptionsParam().getConnectionParam(),
             true,
-            HttpSender.CHECK_FOR_UPDATES_INITIATOR
+            HttpSender.MANUAL_REQUEST_INITIATOR
         );
         sender.sendAndReceive(msg, true);
         return msg;
