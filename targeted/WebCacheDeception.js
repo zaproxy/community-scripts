@@ -252,5 +252,6 @@ try {
         print("[!] Traversal error: " + e);
     }
 
+    
     divider();
 }
