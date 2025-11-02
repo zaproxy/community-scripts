@@ -38,7 +38,7 @@ function sendGetWithOriginalHeaders(originalReqHeader, url) {
         var port = uri.getPort();
         msg.getRequestHeader().setHeader("Host", port > 0 && port !== 80 && port !== 443 ? host + ":" + port : host);
 
-        // Send it
+        // Send it as manual request ( this will show in history )
         var sender = new HttpSender(
             Model.getSingleton().getOptionsParam().getConnectionParam(),
             true,
