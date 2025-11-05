@@ -9,18 +9,47 @@ These detect potential vulnerabilities by actively attacking the target, run as 
 // Note that new active scripts will initially be disabled
 // Right click the script in the Scripts tree and select "enable"  
 
+const ScanRuleMetadata = Java.type("org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata");
+
+function getMetadata() {
+	return ScanRuleMetadata.fromYaml(`
+id: 12345
+name: Active Vulnerability Title
+description: Full description
+solution: The solution
+references:
+  - https://www.example.org/reference1
+  - https://www.example.org/reference2
+category: INJECTION  # info_gather, browser, server, misc, injection
+risk: INFO  # info, low, medium, high
+confidence: LOW  # false_positive, low, medium, high, user_confirmed
+cweId: 0
+wascId: 0
+alertTags:
+  name1: value1
+  name2: value2
+otherInfo: Any other Info
+status: alpha
+alertRefOverrides:
+  12345-1: {}
+  12345-2:
+    name: Active Vulnerability - Type XYZ
+    description: Overridden description
+`);
+}
+
 /**
  * Scans a "node", i.e. an individual entry in the Sites Tree.
  * The scanNode function will typically be called once for every page. 
  * 
  * @param as - the ActiveScan parent object that will do all the core interface tasks 
  *     (i.e.: sending and receiving messages, providing access to Strength and Threshold settings,
- *     raising alerts, etc.). This is an ScriptsActiveScanner object.
+ *     raising alerts, etc.). This is an ActiveScriptHelper object.
  * @param msg - the HTTP Message being scanned. This is an HttpMessage object.
  */
 function scanNode(as, msg) {
-	// Debugging can be done using println like this
-	print('scan called for url=' + msg.getRequestHeader().getURI().toString());
+	// Debugging can be done using print like this
+	print('scanNode called for url=' + msg.getRequestHeader().getURI().toString());
 
 	// Copy requests before reusing them
 	msg = msg.cloneRequest();
@@ -50,18 +79,32 @@ function scanNode(as, msg) {
 }
 
 /**
+ * Scans a host.
+ * The scanHost function will be called once per host being scanned.
+ * @param as - the ActiveScan parent object that will do all the core interface tasks
+ *     (i.e.: sending and receiving messages, providing access to Strength and Threshold settings,
+ *     raising alerts, etc.). This is an ActiveScriptHelper object.
+ * @param msg - the HTTP Message being scanned. This is an HttpMessage object.
+ */
+function scanHost(as, msg) {
+	// Debugging can be done using print like this
+	const uri = msg.getRequestHeader().getURI();
+	print(`scanHost called for host=${uri.getHost()}` + (uri.getPort() !== -1 ? `:${uri.getPort()}` : ""));
+}
+
+/**
  * Scans a specific parameter in an HTTP message.
  * The scan function will typically be called for every parameter in every URL and Form for every page.
  * 
  * @param as - the ActiveScan parent object that will do all the core interface tasks 
  *     (i.e.: sending and receiving messages, providing access to Strength and Threshold settings,
- *     raising alerts, etc.). This is an ScriptsActiveScanner object.
+ *     raising alerts, etc.). This is an ActiveScriptHelper object.
  * @param msg - the HTTP Message being scanned. This is an HttpMessage object.
  * @param {string} param - the name of the parameter being manipulated for this test/scan.
  * @param {string} value - the original parameter value.
  */
 function scan(as, msg, param, value) {
-	// Debugging can be done using println like this
+	// Debugging can be done using print like this
 	print('scan called for url=' + msg.getRequestHeader().getURI().toString() + 
 		' param=' + param + ' value=' + value);
 	
@@ -76,21 +119,11 @@ function scan(as, msg, param, value) {
 	
 	// Test the response here, and make other requests as required
 	if (true) {	// Change to a test which detects the vulnerability
-		// risk: 0: info, 1: low, 2: medium, 3: high
-		// confidence: 0: falsePositive, 1: low, 2: medium, 3: high, 4: confirmed
-		as.newAlert()
-			.setRisk(1)
-			.setConfidence(1)
-			.setName('Active Vulnerability title')
-			.setDescription('Full description')
+        // Call newAlert() if you're not using alertRefOverrides
+		as.newAlert("12345-1")
 			.setParam(param)
 			.setAttack('Your attack')
 			.setEvidence('Evidence')
-			.setOtherInfo('Any other info')
-			.setSolution('The solution')
-			.setReference('References')
-			.setCweId(0)
-			.setWascId(0)
 			.setMessage(msg)
 			.raise();
 	}
@@ -111,8 +144,3 @@ function scan(as, msg, param, value) {
 * Jruby : [Active default template.rb](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jruby/src/main/zapHomeFiles/scripts/templates/active/Active%20default%20template.rb)
 * Jython : [Active default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/active/Active%20default%20template.py)
 * Zest : [Active default template.zst](https://github.com/zaproxy/zap-extensions/blob/main/addOns/zest/src/main/zapHomeFiles/scripts/templates/active/Active%20default%20template.zst)
-
-
-## Official Videos
-
-[ZAP In Ten: Active Scan Scripts](https://play.sonatype.com/watch/aEwqErXFMTYdDDQbTgnJeA) (11:38)

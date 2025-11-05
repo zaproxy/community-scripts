@@ -30,7 +30,3 @@ function invokeWith(msg) {
 * Jruby : [Targeted default template.rb](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jruby/src/main/zapHomeFiles/scripts/templates/targeted/Targeted%20default%20template.rb)
 * Jython : [Targeted default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/targeted/Targeted%20default%20template.py)
 * Zest : [Targeted default template.zst](https://github.com/zaproxy/zap-extensions/blob/main/addOns/zest/src/main/zapHomeFiles/scripts/templates/targeted/Targeted%20default%20template.zst)
-
-## Official Videos
-
-[ZAP In Ten: Targeted Scripts](https://play.sonatype.com/watch/JzX1YkJqdk7BYTMHikh433) (10:01)
