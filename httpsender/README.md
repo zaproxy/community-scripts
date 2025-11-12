@@ -52,6 +52,3 @@ function responseReceived(msg, initiator, helper) {
 * Jython : [HttpSender default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/httpsender/HttpSender%20default%20template.py)
 * Zest : [HttpSender default template.zst](https://github.com/zaproxy/zap-extensions/blob/main/addOns/zest/src/main/zapHomeFiles/scripts/templates/httpsender/HttpSender%20default%20template.zst)
 
-## Official Videos
-
-[ZAP In Ten: Proxy and HttpSender Scripts](https://play.sonatype.com/watch/4no8EY1iB8RdnQLPFpYi2a) (10:14)

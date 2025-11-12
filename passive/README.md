@@ -11,7 +11,35 @@ These detect potential vulnerabilities by passively analysing traffic to and fro
 // Note that new passive scripts will initially be disabled
 // Right click the script in the Scripts tree and select "enable"  
 
-var PluginPassiveScanner = Java.type("org.zaproxy.zap.extension.pscan.PluginPassiveScanner");
+const PluginPassiveScanner = Java.type("org.zaproxy.zap.extension.pscan.PluginPassiveScanner");
+const ScanRuleMetadata = Java.type("org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata");
+
+function getMetadata() {
+	return ScanRuleMetadata.fromYaml(`
+id: 12345
+name: Passive Vulnerability Title
+description: Full description
+solution: The solution
+references:
+  - https://www.example.org/reference1
+  - https://www.example.org/reference2
+risk: INFO  # info, low, medium, high
+confidence: LOW  # false_positive, low, medium, high, user_confirmed
+cweId: 0
+wascId: 0
+alertTags:
+  name1: value1
+  name2: value2
+otherInfo: Any other info
+status: alpha
+alertRefOverrides:
+  12345-1: {}
+  12345-2:
+    name: Passive Vulnerability - Type XYZ
+    description: Overridden description
+`);
+}
+
 
 /**
  * Passively scans an HTTP message. The scan function will be called for 
@@ -20,7 +48,7 @@ var PluginPassiveScanner = Java.type("org.zaproxy.zap.extension.pscan.PluginPass
  * 
  * @param ps - the PassiveScan parent object that will do all the core interface tasks 
  *     (i.e.: providing access to Threshold settings, raising alerts, etc.). 
- *     This is an ScriptsPassiveScanner object.
+ *     This is a PassiveScriptHelper object.
  * @param msg - the HTTP Message being scanned. This is an HttpMessage object.
  * @param src - the Jericho Source representation of the message being scanned.
  */
@@ -29,22 +57,14 @@ function scan(ps, msg, src) {
 	if (true) {	// Change to a test which detects the vulnerability
 		// risk: 0: info, 1: low, 2: medium, 3: high
 		// confidence: 0: falsePositive, 1: low, 2: medium, 3: high, 4: confirmed
-		ps.newAlert()
-			.setRisk(1)
-			.setConfidence(1)
-			.setName('Passive Vulnerability title')
-			.setDescription('Full description')
+        // Call newAlert() if you're not using alertRefOverrides
+		ps.newAlert("12345-1")
 			.setParam('The param')
 			.setEvidence('Evidence')
-			.setOtherInfo('Any other info')
-			.setSolution('The solution')
-			.setReference('References')
-			.setCweId(0)
-			.setWascId(0)
 			.raise();
 		
-		//addTag(String tag)
-		ps.addTag('tag')			
+		//addHistoryTag(String tag)
+		ps.addHistoryTag('tag')
 	}
 	
 	// Raise less reliable alert (that is, prone to false positives) when in LOW alert threshold
@@ -84,6 +104,4 @@ function appliesToHistoryType(historyType) {
 * Jython : [Passive default template.py](https://github.com/zaproxy/zap-extensions/blob/main/addOns/jython/src/main/zapHomeFiles/scripts/templates/passive/Passive%20default%20template.py)
 * Zest : [Passive default template.zst](https://github.com/zaproxy/zap-extensions/blob/main/addOns/zest/src/main/zapHomeFiles/scripts/templates/passive/Passive%20default%20template.zst)
 
-## Official Videos
 
-[ZAP In Ten: Passive Scan Scripts](https://play.sonatype.com/watch/HfENJ3GJB3zbD6sMscDrjD) (11:55)
