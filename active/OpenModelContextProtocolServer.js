@@ -8,7 +8,7 @@ var CommonAlertTag = Java.type("org.zaproxy.addon.commonlib.CommonAlertTag");
 
 function getMetadata() {
   return ScanRuleMetadata.fromYaml(`
-id: 100030
+id: 100045
 name: Open MCP Server Detection
 description: >
   This script detects potentially exposed Model Context Protocol (MCP) servers
