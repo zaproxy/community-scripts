@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
+- Targeted script 'WebCacheDeception.js`
 - Standalone script 'PrivateMethodAccess.js'
 - Variant script 'AddUrlParams.js'
 - Extender script 'ScanMonitor.js'
