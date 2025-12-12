@@ -11,6 +11,12 @@
 // tested on: ZAP 2.7.0
 // rule1: pure JSON , no CODE
 // rule2: correct body (make edits only after conversion)
+const CONTENT_TYPE = Java.type(
+  "org.parosproxy.paros.network.HttpHeader.CONTENT_TYPE"
+);
+const CONTENT_LENGTH = Java.type(
+  "org.parosproxy.paros.network.HttpHeader.CONTENT_LENGTH"
+);
 
 var requester = control.getExtensionLoader().getExtension("ExtensionRequester");
 
@@ -30,14 +36,8 @@ function invokeWith(msg) {
   msg.setRequestBody(body);
   msg.getRequestHeader().setContentLength(msg.getRequestBody().length());
   var header = msg.getRequestHeader();
-  header.setHeader(
-    org.parosproxy.paros.network.HttpHeader.CONTENT_TYPE,
-    "application/xml"
-  );
-  header.setHeader(
-    org.parosproxy.paros.network.HttpHeader.CONTENT_LENGTH,
-    body.length
-  );
+  header.setHeader(CONTENT_TYPE, "application/xml");
+  header.setHeader(CONTENT_LENGTH, body.length);
   msg.setRequestHeader(header);
   requester.displayMessage(msg.cloneRequest());
 }
@@ -52,9 +52,7 @@ function isJson(str) {
 }
 
 function ismultipart(header) {
-  var type = header.getHeader(
-    org.parosproxy.paros.network.HttpHeader.CONTENT_TYPE
-  );
+  var type = header.getHeader(CONTENT_TYPE);
   if (type == null) return false;
   if (type.contains("multipart/form-data")) return true;
   return false;
@@ -149,9 +147,7 @@ function toXml(key, value, att) {
   }
 }
 function multiToJson(msg) {
-  var type = msg
-    .getRequestHeader()
-    .getHeader(org.parosproxy.paros.network.HttpHeader.CONTENT_TYPE);
+  var type = msg.getRequestHeader().getHeader(CONTENT_TYPE);
   var delim = type.substring(type.search("=") + 1, type.length());
   var h = msg
     .getRequestBody()

@@ -4,6 +4,9 @@
 // Note that new passive scripts will initially be disabled
 // Right click the script in the Scripts tree and select "enable"
 
+const PluginPassiveScanner = Java.type(
+  "org.zaproxy.zap.extension.pscan.PluginPassiveScanner"
+);
 var ScanRuleMetadata = Java.type(
   "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
 );
@@ -73,7 +76,5 @@ function appliesToHistoryType(historyType) {
   // return historyType == org.parosproxy.paros.model.HistoryReference.TYPE_SPIDER;
 
   // Default behaviour scans default types.
-  return org.zaproxy.zap.extension.pscan.PluginPassiveScanner.getDefaultHistoryTypes().contains(
-    historyType
-  );
+  return PluginPassiveScanner.getDefaultHistoryTypes().contains(historyType);
 }
