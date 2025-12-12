@@ -4,6 +4,11 @@
 // released under the Apache v2.0 license.
 //You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 //Author : @haseebeqx
+const CONTENT_TYPE = Java.type(
+  "org.parosproxy.paros.network.HttpHeader.CONTENT_TYPE"
+);
+const StringSelection = Java.type("java.awt.datatransfer.StringSelection");
+const Toolkit = java.type("java.awt.Toolkit");
 
 function invokeWith(msg) {
   var string = "<!DOCTYPE html>\n";
@@ -32,9 +37,7 @@ function invokeWith(msg) {
     if (body.length() != 0)
       if (!isJson(body)) {
         if (ismultipart(msg.getRequestHeader())) {
-          var type = msg
-            .getRequestHeader()
-            .getHeader(org.parosproxy.paros.network.HttpHeader.CONTENT_TYPE);
+          var type = msg.getRequestHeader().getHeader(CONTENT_TYPE);
           var delim = type.substring(type.search("=") + 1, type.length());
           var h = body.split("--" + delim);
           var k = 0;
@@ -98,8 +101,8 @@ function invokeWith(msg) {
   string += "\n</body></html>";
   print("\n\n\n");
   print(string);
-  var selected = new java.awt.datatransfer.StringSelection(string);
-  var clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+  var selected = new StringSelection(string);
+  var clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
   clipboard.setContents(selected, null);
 }
 

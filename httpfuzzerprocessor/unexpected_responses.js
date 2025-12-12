@@ -14,7 +14,7 @@
 
 // This script needs Diff add-on
 
-var DiffTool = Java.type("org.zaproxy.zap.extension.diff.diff_match_patch");
+const DiffTool = Java.type("org.zaproxy.zap.extension.diff.diff_match_patch");
 
 /*
  * Declare parameters

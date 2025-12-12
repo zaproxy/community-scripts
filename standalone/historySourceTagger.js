@@ -5,6 +5,8 @@
 // if they don't already have a tag that starts with TAG_PREFIX as defined below.
 // Author: kingthorin
 // 20160207: Initial release
+// 20251212: Maintenance changes
+const ScriptVars = Java.type("org.zaproxy.zap.extension.script.ScriptVars");
 
 extHist = control
   .getExtensionLoader()
@@ -13,7 +15,7 @@ extHist = control
 TAG_PREFIX = "SRC_";
 
 if (extHist != null) {
-  i = org.zaproxy.zap.extension.script.ScriptVars.getGlobalVar("tagged_ref"); // Check for global reference
+  i = ScriptVars.getGlobalVar("tagged_ref"); // Check for global reference
   if (i == null) {
     i = 1; // Global reference was null so 1
   }
@@ -48,8 +50,5 @@ if (extHist != null) {
     }
     i++;
   }
-  org.zaproxy.zap.extension.script.ScriptVars.setGlobalVar(
-    "tagged_ref",
-    lastRef + 1
-  ); // Set global reference
+  ScriptVars.setGlobalVar("tagged_ref", lastRef + 1); // Set global reference
 }
