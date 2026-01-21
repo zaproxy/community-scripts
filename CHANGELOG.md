@@ -8,7 +8,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Standalone script 'PrivateMethodAccess.js'
 - Variant script 'AddUrlParams.js'
 - Extender script 'ScanMonitor.js'
-- Active script 'SwaggerSecretDetector.js'
 
 ### Changed
 - Update minimum ZAP version to 2.16.0 and compile with Java 17.
