@@ -9,17 +9,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Standalone script 'PrivateMethodAccess.js'
 - Variant script 'AddUrlParams.js'
 - Extender script 'ScanMonitor.js'
-- Active script 'SwaggerSecretDetector.js'
 
 ### Changed
 - Update minimum ZAP version to 2.16.0 and compile with Java 17.
 - Add cautionary note to help and readme.
 - Maintenance and documentation changes.
+- Active and passive READMEs to include lastest JS script examples.
 
 ### Fixed 
 - The following scripts were not being loaded as scan rules:
   - active/SSTI.js
   - passive/Mutliple Security Header Check.js
+
+### Removed
+- Links to videos which no longer exist.
 
 ## [19] - 2024-07-01
 ### Added
