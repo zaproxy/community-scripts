@@ -2,13 +2,22 @@
 // By default it will raise 'Low' level alerts for content types that are not expected to be returned by APIs.
 // But it can be easily changed.
 
-var Pattern = Java.type("java.util.regex.Pattern");
+const Integer = Java.type("java.lang.Integer");
+const Pattern = Java.type("java.util.regex.Pattern");
+
+const Alert = Java.type("org.parosproxy.paros.core.scanner.Alert");
+const ExtensionAlert = Java.type(
+  "org.zaproxy.zap.extension.alert.ExtensionAlert"
+);
+const HistoryReference = Java.type(
+  "org.parosproxy.paros.model.HistoryReference"
+);
+
+const extensionAlert = control
+  .getExtensionLoader()
+  .getExtension(ExtensionAlert.NAME);
 
 var pluginid = 100001; // https://github.com/zaproxy/zaproxy/blob/main/docs/scanners.md
-
-var extensionAlert = control
-  .getExtensionLoader()
-  .getExtension(org.zaproxy.zap.extension.alert.ExtensionAlert.NAME);
 
 var expectedTypes = ["application/octet-stream", "text/plain"];
 
@@ -23,6 +32,7 @@ function responseReceived(msg, initiator, helper) {
     // Not of interest.
     return;
   }
+
   if (extensionAlert != null) {
     var ctype = msg.getResponseHeader().getHeader("Content-Type");
     if (ctype != null) {
@@ -38,17 +48,12 @@ function responseReceived(msg, initiator, helper) {
         var risk = 1; // Low
         var title = "Unexpected Content-Type was returned";
         // CONFIDENCE_HIGH = 3 (we can be pretty sure we're right)
-        var alert = new org.parosproxy.paros.core.scanner.Alert(
-          pluginid,
-          risk,
-          3,
-          title
-        );
+        var alert = new Alert(pluginid, risk, 3, title);
         var ref = msg.getHistoryRef();
         if (
           ref != null &&
-          org.parosproxy.paros.model.HistoryReference.getTemporaryTypes().contains(
-            java.lang.Integer.valueOf(ref.getHistoryType())
+          HistoryReference.getTemporaryTypes().contains(
+            Integer.valueOf(ref.getHistoryType())
           )
         ) {
           // Dont use temporary types as they will get deleted
@@ -86,11 +91,7 @@ function responseReceived(msg, initiator, helper) {
               type = 15; // User - fallback
               break;
           }
-          ref = new org.parosproxy.paros.model.HistoryReference(
-            model.getSession(),
-            type,
-            msg
-          );
+          ref = new HistoryReference(model.getSession(), type, msg);
         }
         alert.setMessage(msg);
         alert.setUri(msg.getRequestHeader().getURI().toString());

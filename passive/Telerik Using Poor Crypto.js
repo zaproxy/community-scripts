@@ -7,6 +7,7 @@
 const ScanRuleMetadata = Java.type(
   "org.zaproxy.addon.commonlib.scanrules.ScanRuleMetadata"
 );
+const Base64 = Java.type("org.apache.commons.codec.binary.Base64");
 
 function getMetadata() {
   return ScanRuleMetadata.fromYaml(`
@@ -54,11 +55,11 @@ function scan(helper, msg, src) {
     return;
   }
 
-  if (!org.apache.commons.codec.binary.Base64.isBase64(dp)) {
+  if (!Base64.isBase64(dp)) {
     return;
   }
 
-  var dpBytes = org.apache.commons.codec.binary.Base64.decodeBase64(dp);
+  var dpBytes = Base64.decodeBase64(dp);
 
   if (dpBytes.length < 48) {
     return;
