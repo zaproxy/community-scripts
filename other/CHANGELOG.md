@@ -3,6 +3,9 @@ All notable changes to the 'other' section of this repository will be documented
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
+### 2026-02-18
+- Changed 2 last auth AF plans to use seconds instead of requests for pollUnits.
+
 ### 2025-10-06
 - Added af-plans/FullScanTestfireAuth.yaml
 
