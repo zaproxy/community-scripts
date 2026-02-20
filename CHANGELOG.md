@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Extender script 'ScanMonitor.js'
 - Active script 'OpenModelContextProtocolServer.js' - Attempts to detect Model Context Protocol (MCP) servers lacking authentication.
 - Encode/Decode script 'CyberChefExample.js' - A script which communicates with CyberChef-server Docker image for processing.
+- Active script 'WebCacheDeception.js' - Attempts to detect Web Cache Deception.
 
 ### Changed
 - Update minimum ZAP version to 2.16.0 and compile with Java 17.
