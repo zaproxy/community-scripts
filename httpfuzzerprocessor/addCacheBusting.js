@@ -1,3 +1,8 @@
+const HtmlParameter = Java.type("org.parosproxy.paros.network.HtmlParameter");
+const URL_TYPE = Java.type(
+  "org.parosproxy.paros.network.HtmlParameter.Type.url"
+);
+
 function processMessage(utils, message) {
   var cbValue = "" + Math.floor(Math.random() * 10000);
   setCacheBusting(message, cbValue);
@@ -5,8 +10,6 @@ function processMessage(utils, message) {
 }
 
 function setCacheBusting(message, cbValue) {
-  var HtmlParameter = Java.type("org.parosproxy.paros.network.HtmlParameter");
-  var URL_TYPE = org.parosproxy.paros.network.HtmlParameter.Type.url;
   var params = message.getUrlParams();
   var newParam = new HtmlParameter(
     URL_TYPE,

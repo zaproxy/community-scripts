@@ -2,6 +2,9 @@
 // the script was invoked with.
 // The default criteria is leaf nodes with a response code of 302 but you can change that to anything you need
 // Targeted scripts can only be invoked by you, the user, eg via a right-click option on the Sites or History tabs
+const PopupMenuPurgeSites = Java.type(
+  "org.zaproxy.zap.extension.history.PopupMenuPurgeSites"
+);
 
 function recurseDown(sitestree, node) {
   //print('recurseDown node: ' + node.getHierarchicNodeName() + " " + node.getChildCount())
@@ -15,10 +18,7 @@ function recurseDown(sitestree, node) {
   }
   if (deleteThis(node)) {
     print("Removing node: " + node.getHierarchicNodeName());
-    org.zaproxy.zap.extension.history.PopupMenuPurgeSites.purge(
-      sitestree,
-      node
-    );
+    PopupMenuPurgeSites.purge(sitestree, node);
     return true;
   }
   return false;
