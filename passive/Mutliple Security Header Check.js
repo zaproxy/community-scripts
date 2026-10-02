@@ -11,7 +11,7 @@ name: Missing Security Headers
 description: >
   Some of the following security headers are missing from the HTTP response:
   Strict-Transport-Security, Content-Security-Policy,
-  X-XSS-Protection, X-Content-Type-Options, X-Frame-Options.
+  X-XSS-Protection, X-Content-Type-Options, X-Frame-Options, Referrer-Policy.
 solution: >
   Ensure that your web server, application server, load balancer, etc.
   is configured to set the missing security headers.
@@ -26,12 +26,13 @@ helpLink: https://www.zaproxy.org/docs/desktop/addons/community-scripts/
 }
 
 function scan(helper, msg, src) {
-  var alertTitle = [
+var alertTitle = [
     "Strict-Transport-Security (HSTS) Header Not Set (script)",
     "Content-Security-Policy (script)",
     "Web Browser XSS Protection Not Enabled (script)",
     "X-Content-Type-Options Header Missing (script)",
     "X-Frame-Options Header Not Set (script)",
+    "Referrer-Policy Header Not Set (script)",
     "",
   ];
   var alertDesc = [
@@ -40,6 +41,7 @@ function scan(helper, msg, src) {
     "Web Browser XSS Protection is not enabled, or is disabled by the configuration of the 'X-XSS-Protection' HTTP response header on the web server",
     "The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.",
     "X-Frame-Options header is not included in the HTTP response to protect against 'ClickJacking' attacks.",
+    "The Referrer-Policy header is not set. This header controls how much referrer information is included with requests, helping to protect user privacy and prevent information leakage.",
     "",
   ];
   var alertSolution = [
@@ -48,6 +50,7 @@ function scan(helper, msg, src) {
     "Ensure that the web browser's XSS filter is enabled, by setting the X-XSS-Protection HTTP response header to '1'.",
     "Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff' for all web pages. If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.",
     "Most modern Web browsers support the X-Frame-Options HTTP header. Ensure it's set on all web pages returned by your site (if you expect the page to be framed only by pages on your server (e.g. it's part of a FRAMESET) then you'll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY.  ALLOW-FROM allows specific websites to frame the web page in supported web browsers).",
+    "Ensure that your web server, application server, load balancer, etc. is configured to set the Referrer-Policy header. Recommended value: 'strict-origin-when-cross-origin'.",
     "",
   ];
   var responseHeader = msg.getResponseHeader().toString();
@@ -124,6 +127,17 @@ function scan(helper, msg, src) {
       .raise();
   }
 }
+
+// test Referrer-Policy
+  if (msg.getResponseHeader().getHeaders("Referrer-Policy") == null) {
+    helper
+      .newAlert()
+      .setName(alertTitle[5])
+      .setDescription(alertDesc[5])
+      .setSolution(alertSolution[5])
+      .setMessage(msg)
+      .raise();
+  }
 
 function hasAnyHeader(header, headers) {
   for (var i in headers) {
