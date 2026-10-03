@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
+- Standalone script 'LlmAlertExplainer.js' - Sends alerts to an OpenAI-compatible chat completions endpoint and prints explanations plus remediation guidance.
 - Standalone script 'PrivateMethodAccess.js'
 - Variant script 'AddUrlParams.js'
 - Extender script 'ScanMonitor.js'
