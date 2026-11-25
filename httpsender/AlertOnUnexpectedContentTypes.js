@@ -19,7 +19,7 @@ const extensionAlert = control
 
 var pluginid = 100001; // https://github.com/zaproxy/zaproxy/blob/main/docs/scanners.md
 
-var expectedTypes = ["application/octet-stream", "text/plain"];
+var expectedTypes = ["application/octet-stream", "text/plain", "application/grpc", "application/grpc+proto", "application/grpc-web", "application/grpc-web+proto", "application/grpc-web-text"];
 
 var expectedTypeGroups = ["json", "yaml", "xml"];
 
