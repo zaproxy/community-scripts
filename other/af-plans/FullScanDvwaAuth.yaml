@@ -17,6 +17,7 @@ env:
     - "http://localhost:4280/setup.php"
     - "http://localhost:4280/security.php"
     - "http://localhost:4280/vulnerabilities/csrf.*"
+    - "http://localhost:4280/vulnerabilities/cryptography.*"
     authentication:
       method: "form"
       parameters:
